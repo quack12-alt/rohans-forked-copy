@@ -3,463 +3,463 @@
 <html>
 
 <head>
-	<title>CauseCircuit - About Us</title>
-	<meta charset="utf-8" />
-	<link rel="shortcut icon" type="x-icon" href="images/causecircuit-logo.png">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
-	<style>
-		/* Custom styles for About Us page */
-		/* Header Override Styles */
-		#header {
-			position: fixed !important;
-			top: 0 !important;
-			left: 0 !important;
-			right: 0 !important;
-			width: 100% !important;
-			z-index: 10000 !important;
-			background: rgba(44, 62, 80, 0.95) !important;
-			backdrop-filter: blur(10px) !important;
-			opacity: 1 !important;
-			visibility: visible !important;
-			transform: translateY(0) !important;
-			transition: all 0.3s ease !important;
-		}
+    <title>CauseCircuit - About Us</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="x-icon" href="images/causecircuit-logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
+    <style>
+        /* Custom styles for About Us page */
+        /* Header Override Styles */
+        #header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 10000 !important;
+            background: rgba(44, 62, 80, 0.95) !important;
+            backdrop-filter: blur(10px) !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
+            transition: all 0.3s ease !important;
+        }
 
-		#header h1 a {
-			color: white !important;
-		}
+        #header h1 a {
+            color: white !important;
+        }
 
-		#header #nav ul.links li a {
-			color: white !important;
-		}
+        #header #nav ul.links li a {
+            color: white !important;
+        }
 
-		#header #nav ul.links li a:hover {
-			color: white !important;
-		}
+        #header #nav ul.links li a:hover {
+            color: white !important;
+        }
 
-		#header #mobile-menu-toggle {
-			color: white !important;
-		}
+        #header #mobile-menu-toggle {
+            color: white !important;
+        }
 
-		body {
-			background: #f8f9fa;
-			font-family: 'Arial', sans-serif;
-			overflow-x: hidden;
-			padding-top: 80px; /* Add space for fixed header */
-		}
+        body {
+            background: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            padding-top: 80px; /* Add space for fixed header */
+        }
 
-		/* Hero Section */
-		.hero-section {
-			background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-			height: 100vh;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			text-align: center;
-			position: relative;
-			overflow: hidden;
-		}
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-		.hero-content {
-			color: white;
-			max-width: 800px;
-			padding: 0 20px;
-			animation: fadeInUp 1.5s ease-out;
-		}
+        .hero-content {
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeInUp 1.5s ease-out;
+        }
 
-		.hero-content h1 {
-			font-size: 4rem;
-			font-weight: 700;
-			margin-bottom: 20px;
-			letter-spacing: -2px;
-		}
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
 
-		.hero-content p {
-			font-size: 1.4rem;
-			margin-bottom: 30px;
-			opacity: 0.9;
-			line-height: 1.6;
-			font-family: Raleway, Helvetica, sans-serif;
-		}
+        .hero-content p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+            font-family: Raleway, Helvetica, sans-serif;
+        }
 
-		/* Floating particles */
-		.particle {
-			position: absolute;
-			background: rgba(255, 255, 255, 0.3);
-			border-radius: 50%;
-			animation: float 6s ease-in-out infinite;
-		}
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
 
-		/* Main Content Sections */
-		.content-section {
-			padding: 100px 0;
-			position: relative;
-			background: #4C5C96;
-		}
+        /* Main Content Sections */
+        .content-section {
+            padding: 100px 0;
+            position: relative;
+            background: #4C5C96;
+        }
 
-		.section-alt {
-			background: #45558D;
-		}
+        .section-alt {
+            background: #45558D;
+        }
 
-		.container {
-			max-width: 1200px;
-			margin: 0 auto;
-			padding: 0 50px;
-		}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
 
-		.section-header {
-			text-align: center;
-			margin-bottom: 80px;
-			opacity: 0;
-			transform: translateY(30px);
-			transition: all 0.8s ease;
-		}
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
 
-		.section-header.animate {
-			opacity: 1;
-			transform: translateY(0);
-		}
+        .section-header.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-		.section-header h2 {
-			font-size: 3rem;
-			color: #f8f9fa;
-			margin-bottom: 20px;
-			font-weight: 600;
-			position: relative;
-		}
+        .section-header h2 {
+            font-size: 3rem;
+            color: #f8f9fa;
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+        }
 
-		.section-header h2::after {
-			content: '';
-			position: absolute;
-			bottom: -10px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 80px;
-			height: 4px;
-			background: white;
-			border-radius: 2px;
-		}
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+        }
 
-		.section-header p {
-			font-size: 1.2rem;
-			color: #f8f9fa;
-			line-height: 1.8;
-			max-width: 600px;
-			margin: 0 auto;
-			font-family: Raleway, Helvetica, sans-serif;
-		}
+        .section-header p {
+            font-size: 1.2rem;
+            color: #f8f9fa;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: Raleway, Helvetica, sans-serif;
+        }
 
-		/* Mission Cards */
-		.mission-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-			gap: 40px;
-			margin-top: 60px;
-		}
+        /* Mission Cards */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
 
-		.mission-card {
-			background: white;
-			padding: 50px 40px;
-			border-radius: 20px;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-			text-align: center;
-			transition: all 0.4s ease;
-			opacity: 0;
-			transform: translateY(40px);
-			position: relative;
-			overflow: hidden;
-		}
+        .mission-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            position: relative;
+            overflow: hidden;
+        }
 
-		.mission-card::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-			transition: left 0.6s ease;
-		}
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
 
-		.mission-card:hover::before {
-			left: 100%;
-		}
+        .mission-card:hover::before {
+            left: 100%;
+        }
 
-		.mission-card.animate {
-			opacity: 1;
-			transform: translateY(0);
-		}
+        .mission-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-		.mission-card:hover {
-			transform: translateY(-10px);
-			box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-		}
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
 
-		.mission-icon {
-			width: 80px;
-			height: 80px;
-			background: #34495e;
-			border-radius: 50%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			margin: 0 auto 30px;
-			font-size: 2rem;
-			color: white;
-			transition: all 0.4s ease;
-		}
+        .mission-icon {
+            width: 80px;
+            height: 80px;
+            background: #34495e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 2rem;
+            color: white;
+            transition: all 0.4s ease;
+        }
 
-		.mission-card:hover .mission-icon {
-			transform: scale(1.1) rotate(5deg);
-		}
+        .mission-card:hover .mission-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
 
-		.mission-card h3 {
-			font-size: 1.5rem;
-			color: #2c3e50;
-			margin-bottom: 20px;
-			font-weight: 600;
-		}
+        .mission-card h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
 
-		.mission-card p {
-			color: #464c4d;
-			line-height: 1.6;
-			font-family: Raleway, Helvetica, sans-serif;
-		}
+        .mission-card p {
+            color: #464c4d;
+            line-height: 1.6;
+            font-family: Raleway, Helvetica, sans-serif;
+        }
 
-		/* Team Section Styles */
-		.team-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-			gap: 40px;
-			margin-top: 60px;
-		}
+        /* Team Section Styles */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
 
-		.team-member {
-			background: white;
-			border-radius: 20px;
-			padding: 40px;
-			text-align: center;
-			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-			transition: all 0.4s ease;
-		}
+        .team-member {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
 
-		.team-member:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-		}
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
 
-		.team-photo {
-			width: 120px;
-			height: 120px;
-			border-radius: 50%;
-			background: linear-gradient(135deg, #34495e, #2c3e50);
-			margin: 0 auto 25px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 3rem;
-			color: white;
-		}
+        .team-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
 
-		.team-member h4 {
-			font-size: 1.5rem;
-			color: #2c3e50;
-			margin-bottom: 10px;
-			font-weight: 600;
-		}
+        .team-member h4 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
 
-		.role {
-			color: #34495e;
-			font-weight: 500;
-			margin-bottom: 15px;
-			text-transform: uppercase;
-			font-size: 0.9rem;
-			letter-spacing: 1px;
-		}
+        .role {
+            color: #34495e;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
 
-		.team-member p {
-			color: #7f8c8d;
-			line-height: 1.6;
-		}
+        .team-member p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
 
 
 
-		/* Animations */
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(40px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-		@keyframes float {
-			0%, 100% {
-				transform: translateY(0px) rotate(0deg);
-			}
-			50% {
-				transform: translateY(-20px) rotate(180deg);
-			}
-		}
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
 
-		/* Responsive Design */
-		@media (max-width: 768px) {
-			.hero-content h1 {
-				font-size: 2.5rem;
-			}
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
 
-			.hero-content p {
-				font-size: 1.1rem;
-			}
+            .hero-content p {
+                font-size: 1.1rem;
+            }
 
-			.container {
-				padding: 0 25px;
-			}
+            .container {
+                padding: 0 25px;
+            }
 
-			.section-header h2 {
-				font-size: 2rem;
-			}
+            .section-header h2 {
+                font-size: 2rem;
+            }
 
-			.mission-grid,
-			.team-grid {
-				grid-template-columns: 1fr;
-				gap: 30px;
-			}
+            .mission-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
 
-			.content-section {
-				padding: 60px 0;
-			}
+            .content-section {
+                padding: 60px 0;
+            }
 
-			.stats-grid {
-				grid-template-columns: repeat(2, 1fr);
-			}
-		}
-	</style>
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 
 <body class="is-preload">
 
-	<!-- Page Wrapper -->
-	<div id="page-wrapper">
+    <!-- Page Wrapper -->
+    <div id="page-wrapper">
 
-		<!-- Header -->
-		<header id="header">
-			<h1><a href="index.html">CauseCircuit</a></h1>
-			<!-- Desktop Navigation -->
-			<nav id="nav">
-				<ul class="links">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="aboutus.html">About Us</a></li>
-					<li><a href="opportunities.html">Opportunities</a></li>
-				</ul>
-			</nav>
-			<!-- Mobile Menu Toggle -->
-			<a href="#mobile-menu" id="mobile-menu-toggle">
-				<span class="icon fa-bars"></span>
-			</a>
-		</header>
+        <!-- Header -->
+        <header id="header">
+            <h1><a href="index.html">CauseCircuit</a></h1>
+            <!-- Desktop Navigation -->
+            <nav id="nav">
+                <ul class="links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="opportunities.html">Opportunities</a></li>
+                </ul>
+            </nav>
+            <!-- Mobile Menu Toggle -->
+            <a href="#mobile-menu" id="mobile-menu-toggle">
+                <span class="icon fa-bars"></span>
+            </a>
+        </header>
 
-		<!-- Hero Section -->
-		<section class="hero-section">
-			<div class="hero-content">
-				<h1>About CauseCircuit</h1>
-				<p>Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering. We cultivate compassion, leadership, and civic responsibility.</p>
-			</div>
-			<!-- Floating Particles -->
-			<div class="particle" style="top: 20%; left: 10%; width: 8px; height: 8px; animation-delay: 0s;"></div>
-			<div class="particle" style="top: 60%; left: 85%; width: 12px; height: 12px; animation-delay: 2s;"></div>
-			<div class="particle" style="top: 80%; left: 20%; width: 6px; height: 6px; animation-delay: 4s;"></div>
-			<div class="particle" style="top: 30%; left: 75%; width: 10px; height: 10px; animation-delay: 1s;"></div>
-			<div class="particle" style="top: 70%; left: 60%; width: 8px; height: 8px; animation-delay: 3s;"></div>
-		</section>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>About CauseCircuit</h1>
+                <p>Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering. We cultivate compassion, leadership, and civic responsibility.</p>
+            </div>
+            <!-- Floating Particles -->
+            <div class="particle" style="top: 20%; left: 10%; width: 8px; height: 8px; animation-delay: 0s;"></div>
+            <div class="particle" style="top: 60%; left: 85%; width: 12px; height: 12px; animation-delay: 2s;"></div>
+            <div class="particle" style="top: 80%; left: 20%; width: 6px; height: 6px; animation-delay: 4s;"></div>
+            <div class="particle" style="top: 30%; left: 75%; width: 10px; height: 10px; animation-delay: 1s;"></div>
+            <div class="particle" style="top: 70%; left: 60%; width: 8px; height: 8px; animation-delay: 3s;"></div>
+        </section>
 
-		<!-- Mission Section -->
-		<section class="content-section">
-			<div class="container">
-				<div class="section-header">
-					<h2>Our Mission</h2>
-					<p>Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering. We strive to cultivate a culture of compassion, leadership, and civic responsibility by connecting students with opportunities that make a real difference in their communities.</p>
-				</div>
-				<div class="mission-grid">
-					<div class="mission-card">
-						<div class="mission-icon">🤝</div>
-						<h3>Connect</h3>
-						<p>We bring together student volunteers and community organizations, creating meaningful partnerships that drive positive change in the Durham region.</p>
-					</div>
-					<div class="mission-card">
-						<div class="mission-icon">🎯</div>
-						<h3>Empower</h3>
-						<p>By providing easy access to volunteer opportunities, we empower high school students to contribute their unique skills and talents where they're needed most.</p>
-					</div>
+        <!-- Mission Section -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Mission</h2>
+                    <p>Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering. We strive to cultivate a culture of compassion, leadership, and civic responsibility by connecting students with opportunities that make a real difference in their communities.</p>
+                </div>
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="mission-icon">🤝</div>
+                        <h3>Connect</h3>
+                        <p>We bring together student volunteers and community organizations, creating meaningful partnerships that drive positive change in the Durham region.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">🎯</div>
+                        <h3>Empower</h3>
+                        <p>By providing easy access to volunteer opportunities, we empower high school students to contribute their unique skills and talents where they're needed most.</p>
+                    </div>
 
-				</div>
-			</div>
-		</section>
+                </div>
+            </div>
+        </section>
 
-		<!-- Vision Section -->
-		<section class="content-section section-alt">
-			<div class="container">
-				<div class="section-header">
-					<h2>Our Vision</h2>
-					<p>We envision a vibrant and connected Durham Region where every high school student is inspired and equipped to contribute to positive change. By bridging the gap between youth and local organizations, Cause Circuit fosters a community where engagement, empathy, and collaboration thrive.</p>
-				</div>
-			</div>
-		</section>
+        <!-- Vision Section -->
+        <section class="content-section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Vision</h2>
+                    <p>We envision a vibrant and connected Durham Region where every high school student is inspired and equipped to contribute to positive change. By bridging the gap between youth and local organizations, Cause Circuit fosters a community where engagement, empathy, and collaboration thrive.</p>
+                </div>
+            </div>
+        </section>
 
 
 
-	</div>
+    </div>
 
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
-	<script>
-		// Intersection Observer for animations
-		const observerOptions = {
-			threshold: 0.1,
-			rootMargin: '0px 0px -50px 0px'
-		};
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					entry.target.classList.add('animate');
-				}
-			});
-		}, observerOptions);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
 
-		// Observe elements for animation
-		document.addEventListener('DOMContentLoaded', () => {
-			const elementsToAnimate = document.querySelectorAll('.section-header, .mission-card');
-			elementsToAnimate.forEach(el => observer.observe(el));
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll('.section-header, .mission-card');
+            elementsToAnimate.forEach(el => observer.observe(el));
 
-			// Add staggered animation delays
-			document.querySelectorAll('.mission-card').forEach((card, index) => {
-				card.style.transitionDelay = `${index * 0.2}s`;
-			});
-		});
+            // Add staggered animation delays
+            document.querySelectorAll('.mission-card').forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.2}s`;
+            });
+        });
 
-		// Smooth parallax effect for hero section
-		window.addEventListener('scroll', () => {
-			const scrolled = window.pageYOffset;
-			const heroContent = document.querySelector('.hero-content');
-			if (heroContent) {
-				heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
-			}
-		});
-	</script>
+        // Smooth parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
 
 </body>
 
