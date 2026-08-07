@@ -11,191 +11,12 @@
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/site-theme.css" />
     <style>
-        /* Custom styles for About Us page */
-        :root {
-            --ink: #2c3e50;
-            --ink-soft: #34495e;
-            --surface-deep: #0f172a;
-            --panel-blue: #4C5C96;
-            --panel-alt: #45558D;
-            --text-muted: #cbd5e1;
-            --accent: #3b82f6;
-            --accent-dark: #1d4ed8;
-            --accent-light: #60a5fa;
-            --radius-lg: 22px;
-            --radius-md: 14px;
-            --radius-sm: 10px;
-            --ease: cubic-bezier(0.22, 1, 0.36, 1);
-            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --font-display: Raleway, var(--font-body);
-        }
-
-        /* Header Override Styles */
-        #header {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100% !important;
-            z-index: 10000 !important;
-            background: rgba(44, 62, 80, 0.96) !important;
-            backdrop-filter: blur(14px) saturate(140%) !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: translateY(0) !important;
-            transition: all 0.3s ease !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-        }
-
-        #header h1 a {
-            color: white !important;
-        }
-
-        #header #nav ul.links li a {
-            color: white !important;
-        }
-
-        #header #nav ul.links li a:hover {
-            color: white !important;
-        }
-
-        #header #mobile-menu-toggle {
-            color: white !important;
-        }
-
-        body {
-            background: #f8f9fa;
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            padding-top: 80px; /* Add space for fixed header */
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
-            min-height: 62vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 50% 0%, rgba(96, 165, 250, 0.16), transparent 60%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            color: white;
-            max-width: 780px;
-            padding: 60px 20px 20px;
-            animation: fadeInUp 1.2s var(--ease);
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.6rem, 5vw, 3.75rem);
-            font-weight: 700;
-            margin-bottom: 18px;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            opacity: 0.85;
-            line-height: 1.65;
-            font-family: var(--font-display);
-            font-weight: 300;
-        }
-
-        /* Floating particles */
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Main Content Sections */
-        .content-section {
-            padding: 76px 0;
-            position: relative;
-            background: var(--panel-blue);
-        }
-
-        .section-alt {
-            background: var(--panel-alt);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 50px;
-        }
-
-        .section-eyebrow {
-            display: inline-block;
-            color: var(--accent-light);
-            font-family: var(--font-display);
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .section-header.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #f8f9fa;
-            margin-bottom: 16px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            position: relative;
-        }
-
-        .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: white;
-            border-radius: 2px;
-        }
-
-        .section-header p {
-            font-size: 1.2rem;
-            color: #f8f9fa;
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto;
-            font-family: Raleway, Helvetica, sans-serif;
-        }
+        /* Page-specific styles for About Us (mission/value cards) */
 
         /* Mission Cards */
         .mission-grid {
@@ -207,7 +28,7 @@
 
         .mission-card {
             background: white;
-            padding: 40px 34px;
+            padding: var(--space-lg) var(--space-md);
             border-radius: var(--radius-lg);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: left;
@@ -325,56 +146,12 @@
             font-family: var(--font-display);
             margin: 0;
         }
-
-
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-            }
-        }
-
-        /* Responsive Design */
+        /* Responsive Design: page-specific-only (shared breakpoints live in site-theme.css) */
         @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1.1rem;
-            }
-
-            .container {
-                padding: 0 25px;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
             .mission-grid,
             .value-grid {
                 grid-template-columns: 1fr;
                 gap: 24px;
-            }
-
-            .content-section {
-                padding: 50px 0;
             }
         }
     </style>
@@ -387,7 +164,7 @@
 
         <!-- Header -->
         <header id="header">
-            <h1><a href="index.html">CauseCircuit</a></h1>
+            <h1><a href="index.html"><img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="header-logo">CauseCircuit</a></h1>
             <!-- Desktop Navigation -->
             <nav id="nav">
                 <ul class="links">
@@ -409,11 +186,11 @@
                 <p>Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering. We cultivate compassion, leadership, and civic responsibility.</p>
             </div>
             <!-- Floating Particles -->
-            <div class="particle" style="top: 20%; left: 10%; width: 8px; height: 8px; animation-delay: 0s;"></div>
-            <div class="particle" style="top: 60%; left: 85%; width: 12px; height: 12px; animation-delay: 2s;"></div>
-            <div class="particle" style="top: 80%; left: 20%; width: 6px; height: 6px; animation-delay: 4s;"></div>
-            <div class="particle" style="top: 30%; left: 75%; width: 10px; height: 10px; animation-delay: 1s;"></div>
-            <div class="particle" style="top: 70%; left: 60%; width: 8px; height: 8px; animation-delay: 3s;"></div>
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
         </section>
 
         <!-- Mission Section -->
@@ -478,6 +255,21 @@
         </section>
 
     </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-brand">
+                <img src="images/causecircuit-logo.png" alt="CauseCircuit Logo">
+                CauseCircuit
+            </div>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="opportunities.html">Opportunities</a></li>
+            </ul>
+            <p class="footer-copy">&copy; 2026 CauseCircuit. Serving the Durham Region.</p>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>

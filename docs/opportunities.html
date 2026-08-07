@@ -13,142 +13,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/site-theme.css" />
     <style>
-        /* Custom styles matching the About Us visual theme, polished */
+        /* Page-specific styles for Opportunities (filters, tracker CTA, popup location tag) */
 
-        :root {
-            --ink: #2c3e50;
-            --ink-soft: #34495e;
-            --surface-deep: #0f172a;
-            --surface: #1e293b;
-            --surface-soft: #334155;
-            --panel-blue: #4C5C96;
-            --border-soft: rgba(148, 163, 184, 0.18);
-            --text-muted: #cbd5e1;
-            --accent: #3b82f6;
-            --accent-dark: #1d4ed8;
-            --accent-light: #60a5fa;
-            --success: #10b981;
-            --success-dark: #059669;
-            --radius-lg: 22px;
-            --radius-md: 14px;
-            --radius-sm: 10px;
-            --ease: cubic-bezier(0.22, 1, 0.36, 1);
-            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --font-display: Raleway, var(--font-body);
-        }
-
-        /* Header Override Styles */
-        #header {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100% !important;
-            z-index: 10000 !important;
-            background: rgba(44, 62, 80, 0.96) !important;
-            backdrop-filter: blur(14px) saturate(140%) !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: translateY(0) !important;
-            transition: all 0.3s ease !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-        }
-
-        #header h1 a {
-            color: white !important;
-        }
-
-        #header #nav ul.links li a {
-            color: white !important;
-        }
-
-        #header #nav ul.links li a:hover {
-            color: var(--accent-light) !important;
-        }
-
-        #header #mobile-menu-toggle {
-            color: white !important;
-        }
-
-        body {
-            background: #f8f9fa;
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            padding-top: 80px; /* Add space for fixed header */
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Hero Section (Exact copy of About Us backdrop) */
-        .hero-section {
-            background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
-            min-height: 34vh;
-            padding: 40px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 50% 0%, rgba(96, 165, 250, 0.16), transparent 60%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            color: white;
-            max-width: 760px;
-            padding: 0 20px;
-            animation: fadeInUp 1.2s var(--ease);
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.6rem, 5vw, 3.75rem);
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
-        .hero-content p {
-            font-size: 1.25rem;
-            margin-bottom: 30px;
-            opacity: 0.85;
-            line-height: 1.65;
-            font-family: var(--font-display);
-            font-weight: 300;
-        }
-
-        /* Floating particles */
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        /* Main Content Sections */
-        .content-section {
-            padding: 60px 0 80px;
-            position: relative;
-            background: var(--panel-blue);
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 32px;
-        }
-
-        /* Filters Section (Designed to be discovered when scrolling) */
+        /* Filters Section */
         .filter-container {
             display: flex;
             gap: 22px;
@@ -307,14 +176,6 @@
             transform: translateX(4px);
         }
 
-        /* Grid and Opportunity Cards */
-        .opportunities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
-            gap: 22px;
-            margin-top: 8px;
-        }
-
         .no-results {
             text-align: center;
             color: #e2e8f0;
@@ -323,389 +184,8 @@
             grid-column: 1 / -1;
         }
 
-        .opportunity-card {
-            background: white;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
-            opacity: 0;
-            transform: translateY(28px);
-            position: relative;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-            cursor: pointer;
-            border: 1px solid rgba(15, 23, 42, 0.04);
-        }
-
-        .opportunity-card.animate {
-            opacity: 1;
-            transform: translateY(0);
-            transition: transform 0.5s var(--ease), box-shadow 0.35s var(--ease), opacity 0.5s var(--ease);
-        }
-
-        .opportunity-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.16);
-        }
-
-        .card-image-container {
-            position: relative;
-            height: 190px;
-            overflow: hidden;
-            background: #eef1f5;
-        }
-
-        .opportunity-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s var(--ease);
-        }
-
-        .opportunity-card:hover img {
-            transform: scale(1.06);
-        }
-
-        .location-tag {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(10px);
-            color: var(--accent-light);
-            padding: 6px 13px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            border: 1px solid rgba(96, 165, 250, 0.28);
-            z-index: 2;
-        }
-
-        .card-content {
-            padding: 22px 24px 24px;
-            position: relative;
-            z-index: 2;
-            text-align: left;
-        }
-
-        .card-content h3 {
-            font-size: 1.4rem;
-            color: var(--ink);
-            margin-bottom: 6px;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            line-height: 1.3;
-        }
-
-        .card-org {
-            margin-bottom: 10px;
-            color: var(--accent-dark);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .card-content p {
-            color: #5b6472;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            font-family: var(--font-body);
-        }
-
-        .commitment-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-
-        .commitment-tag {
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-dark);
-            padding: 4px 11px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-        }
-
-        .hours-per-week {
-            color: #8792a2;
-            font-size: 0.9rem;
-            margin-bottom: 18px;
-        }
-
-        .card-btn {
-            display: inline-flex;
-            align-items: center;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            color: white !important;
-            padding: 11px 22px;
-            text-decoration: none;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            transition: all 0.25s ease;
-            cursor: pointer;
-            border: none;
-            font-size: 0.9rem;
-            gap: 6px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
-        }
-
-        .card-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 22px rgba(37, 99, 235, 0.36);
-        }
-
-        .card-btn:after {
-            content: ' →';
-            transition: transform 0.25s ease;
-        }
-
-        .card-btn:hover:after {
-            transform: translateX(3px);
-        }
-
-        /* Popup Design */
-        .popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(8, 12, 24, 0.72);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.35s var(--ease), visibility 0.35s var(--ease);
-            z-index: 10001;
-            padding: 20px;
-        }
-
-        .popup.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .popup-content {
-            background: linear-gradient(160deg, var(--surface) 0%, var(--surface-soft) 100%);
-            border: 1px solid var(--border-soft);
-            border-radius: 24px;
-            max-width: min(90vw, 680px);
-            width: 100%;
-            max-height: 85vh;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
-            transform: scale(0.94) translateY(24px);
-            transition: transform 0.35s var(--ease);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .popup.active .popup-content {
-            transform: scale(1) translateY(0);
-        }
-
-        .popup-header {
-            position: relative;
-            height: clamp(180px, 28vw, 280px);
-            overflow: hidden;
-        }
-
-        .popup-header img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .popup-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 90px;
-            background: linear-gradient(transparent, rgba(30, 41, 59, 0.95));
-        }
-
-        .popup-title {
-            color: #f8fafc;
-            padding: 22px 26px 8px;
-            margin: 0;
-            font-size: 1.7rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-        }
-
-        .popup-scroll-content {
-            overflow-y: auto;
-            padding: 0 26px 22px;
-            flex: 1;
-        }
-
-        .popup-body {
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 1.02rem;
-        }
-
-        .popup-info-panel {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-md);
-            padding: 4px 18px;
-            margin-bottom: 20px;
-        }
-
-        .popup-info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            padding: 13px 0;
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .popup-info-row:last-child {
-            border-bottom: none;
-        }
-
-        .popup-info-label {
-            color: var(--text-muted);
-            font-size: 0.76rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .popup-info-value {
-            color: #f1f5f9;
-            font-weight: 500;
-            font-size: 0.95rem;
-            text-align: right;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .popup-info-value.muted {
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        .popup-info-value a {
-            color: var(--accent-light);
-            text-decoration: none;
-        }
-
-        .popup-info-value a:hover {
-            text-decoration: underline;
-        }
-
-        .popup-actions {
-            padding: 18px 26px;
-            background: rgba(15, 23, 42, 0.35);
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            border-top: 1px solid var(--border-soft);
-        }
-
-        .volunteer-btn {
-            background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
-            color: white;
-            text-decoration: none;
-            padding: 11px 22px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-size: 0.92rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.25s ease;
-        }
-
-        .volunteer-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .popup-close {
-            background: rgba(255, 255, 255, 0.08);
-            color: #f1f5f9;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 11px 22px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-size: 0.92rem;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-
-        .popup-close:hover {
-            background: rgba(255, 255, 255, 0.16);
-        }
-
-        .popup-location-tag {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(15, 23, 42, 0.85);
-            color: var(--accent-light);
-            padding: 7px 15px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            border: 1px solid rgba(96, 165, 250, 0.28);
-            z-index: 2;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(28px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-            }
-        }
-
-        /* Responsive Design */
+        /* Responsive: page-specific-only overrides (shared breakpoints live in site-theme.css) */
         @media (max-width: 768px) {
-            .hero-section {
-                min-height: 280px;
-            }
-
-            .hero-content p {
-                font-size: 1.05rem;
-            }
-
-            .container {
-                padding: 0 18px;
-            }
-
-            .opportunities-grid {
-                gap: 16px;
-            }
-
             .filter-container {
                 flex-direction: column;
                 align-items: stretch;
@@ -739,69 +219,6 @@
                 width: 100%;
                 justify-content: center;
             }
-
-            .card-content {
-                padding: 18px 20px 20px;
-            }
-
-            .popup-content {
-                max-height: calc(100vh - 40px);
-                border-radius: 18px;
-            }
-
-            .popup-header {
-                height: 180px;
-            }
-
-            .popup-location-tag {
-                top: 14px;
-                padding: 7px 13px;
-                font-size: 0.78rem;
-            }
-
-            .popup-info-row {
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-
-            .popup-info-value {
-                text-align: left;
-                white-space: normal;
-                width: 100%;
-            }
-
-            .popup-actions {
-                flex-direction: column;
-            }
-
-            .volunteer-btn, .popup-close {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        /* Scrollbar Styling */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(96, 165, 250, 0.3) transparent;
-        }
-
-        *::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        *::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        *::-webkit-scrollbar-thumb {
-            background: rgba(96, 165, 250, 0.3);
-            border-radius: 10px;
-        }
-
-        *::-webkit-scrollbar-thumb:hover {
-            background: rgba(96, 165, 250, 0.5);
         }
     </style>
 
@@ -816,7 +233,7 @@
     <div id="page-wrapper">
 
         <header id="header">
-            <h1><a href="index.html">CauseCircuit</a></h1>
+            <h1><a href="index.html"><img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="header-logo">CauseCircuit</a></h1>
             <nav id="nav">
                 <ul class="links">
                     <li><a href="index.html">Home</a></li>
@@ -834,11 +251,11 @@
                 <h1>Volunteer Opportunities</h1>
                 <p>Discover meaningful ways to give back, learn new skills, and connect with your community across the Durham Region.</p>
             </div>
-            <div class="particle" style="top: 20%; left: 10%; width: 8px; height: 8px; animation-delay: 0s;"></div>
-            <div class="particle" style="top: 60%; left: 85%; width: 12px; height: 12px; animation-delay: 2s;"></div>
-            <div class="particle" style="top: 80%; left: 20%; width: 6px; height: 6px; animation-delay: 4s;"></div>
-            <div class="particle" style="top: 30%; left: 75%; width: 10px; height: 10px; animation-delay: 1s;"></div>
-            <div class="particle" style="top: 70%; left: 60%; width: 8px; height: 8px; animation-delay: 3s;"></div>
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
         </section>
 
         <section class="content-section">
@@ -893,7 +310,7 @@
                             <h3>Host an Opportunity</h3>
                             <p>Are you a local business or non-profit organization looking for passionate volunteers? Submit your upcoming events or positions through our registration form to feature them directly on CauseCircuit.</p>
                         </div>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScPTGMjG8bAwur0PfyHHqny6MrITTyP1jQ2j-aAMlXtHO_wMQ/viewform?usp=header" target="_blank" class="tracker-btn">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScPTGMjG8bAwur0PfyHHqny6MrITTyP1jQ2j-aAMlXtHO_wMQ/viewform?usp=header" target="_blank" class="btn btn-success tracker-btn">
                             Post an Opportunity <span>→</span>
                         </a>
                     </div>
@@ -904,6 +321,21 @@
             </div>
         </section>
     </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-brand">
+                <img src="images/causecircuit-logo.png" alt="CauseCircuit Logo">
+                CauseCircuit
+            </div>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="opportunities.html">Opportunities</a></li>
+            </ul>
+            <p class="footer-copy">&copy; 2026 CauseCircuit. Serving the Durham Region.</p>
+        </div>
+    </footer>
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery.scrollex.min.js"></script>
@@ -967,7 +399,7 @@
 
                 let buttonHTML = '';
                 if (targetUrl && targetUrl !== '#') {
-                    buttonHTML = `<a href="${targetUrl}" target="_blank" class="card-btn" style="text-decoration: none; display: inline-flex; align-items: center;">Learn More</a>`;
+                    buttonHTML = `<a href="${targetUrl}" target="_blank" class="card-btn">Learn More</a>`;
                 } else {
                     buttonHTML = `<button class="card-btn special">Learn More</button>`;
                 }
@@ -1137,7 +569,7 @@
                     </div>
                 </div>
                 <div class="popup-actions">
-                    <button class="popup-close">Close</button>
+                    <button class="btn btn-ghost popup-close">Close</button>
                 </div>
             `;
             popup.classList.add('active');

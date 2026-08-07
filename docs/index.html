@@ -9,142 +9,12 @@
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
 	</noscript>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="assets/css/site-theme.css" />
 	<style>
-		:root {
-			--ink: #2c3e50;
-			--ink-soft: #34495e;
-			--surface-deep: #0f172a;
-			--surface: #1e293b;
-			--panel-blue: #4C5C96;
-			--panel-alt: #45558D;
-			--border-soft: rgba(148, 163, 184, 0.18);
-			--text-muted: #cbd5e1;
-			--accent: #3b82f6;
-			--accent-dark: #1d4ed8;
-			--accent-light: #60a5fa;
-			--radius-lg: 22px;
-			--radius-md: 14px;
-			--radius-sm: 10px;
-			--ease: cubic-bezier(0.22, 1, 0.36, 1);
-			--font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-			--font-display: Raleway, var(--font-body);
-		}
-
-		/* Header Override Styles */
-		#header {
-			position: fixed !important;
-			top: 0 !important;
-			left: 0 !important;
-			right: 0 !important;
-			width: 100% !important;
-			z-index: 10000 !important;
-			background: rgba(44, 62, 80, 0.96) !important;
-			backdrop-filter: blur(14px) saturate(140%) !important;
-			opacity: 1 !important;
-			visibility: visible !important;
-			transform: translateY(0) !important;
-			transition: all 0.3s ease !important;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-		}
-
-		#header h1 {
-			display: flex !important;
-			align-items: center !important;
-		}
-
-		#header h1 a {
-			color: white !important;
-			display: flex !important;
-			align-items: center !important;
-		}
-
-		/* Header Logo Styling */
-		.header-logo {
-			width: 40px;
-			height: 40px;
-			border-radius: 50%;
-			margin-right: 15px;
-			object-fit: cover;
-		}
-
-		#header #nav ul.links li a {
-			color: white !important;
-		}
-
-		#header #nav ul.links li a:hover {
-			color: white !important;
-		}
-
-		#header #mobile-menu-toggle {
-			color: white !important;
-		}
-
-		body {
-			background: #f8f9fa;
-			font-family: var(--font-body);
-			overflow-x: hidden;
-			padding-top: 80px;
-			-webkit-font-smoothing: antialiased;
-		}
-
-		/* Hero Section */
-		.hero-section {
-			background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
-			min-height: 72vh;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			text-align: center;
-			position: relative;
-			overflow: hidden;
-		}
-
-		.hero-section::before {
-			content: '';
-			position: absolute;
-			inset: 0;
-			background: radial-gradient(ellipse at 50% 0%, rgba(96, 165, 250, 0.16), transparent 60%);
-			pointer-events: none;
-		}
-
-		.hero-content {
-			color: white;
-			max-width: 800px;
-			padding: 60px 20px 20px;
-			animation: fadeInUp 1.2s var(--ease);
-			position: relative;
-			z-index: 1;
-		}
-
-		/* Hero Logo Styling */
-		.logo {
-			margin-bottom: 28px;
-		}
-
-		.logo-img {
-			width: 96px;
-			height: 96px;
-			border-radius: 50%;
-			object-fit: cover;
-			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-		}
-
-		.hero-content h1 {
-			font-size: clamp(2.6rem, 5vw, 3.75rem);
-			font-weight: 700;
-			margin-bottom: 16px;
-			letter-spacing: -0.03em;
-			line-height: 1.1;
-		}
-
-		.hero-content p {
-			font-size: 1.25rem;
-			margin-bottom: 8px;
-			opacity: 0.85;
-			line-height: 1.6;
-			font-family: var(--font-display);
-			font-weight: 300;
-		}
+		/* Page-specific styles for Home (stats strip, about/social grids) */
 
 		/* Quick Stats Strip */
 		.stats-strip {
@@ -181,128 +51,6 @@
 			font-family: var(--font-display);
 			letter-spacing: 0.03em;
 			text-transform: uppercase;
-		}
-
-		/* Floating particles */
-		.particle {
-			position: absolute;
-			background: rgba(255, 255, 255, 0.3);
-			border-radius: 50%;
-			animation: float 6s ease-in-out infinite;
-		}
-
-		.particle-1 {
-			top: 20%; 
-			left: 10%; 
-			width: 8px; 
-			height: 8px; 
-			animation-delay: 0s;
-		}
-
-		.particle-2 {
-			top: 60%; 
-			left: 85%; 
-			width: 12px; 
-			height: 12px; 
-			animation-delay: 2s;
-		}
-
-		.particle-3 {
-			top: 80%; 
-			left: 20%; 
-			width: 6px; 
-			height: 6px; 
-			animation-delay: 4s;
-		}
-
-		.particle-4 {
-			top: 30%; 
-			left: 75%; 
-			width: 10px; 
-			height: 10px; 
-			animation-delay: 1s;
-		}
-
-		.particle-5 {
-			top: 70%; 
-			left: 60%; 
-			width: 8px; 
-			height: 8px; 
-			animation-delay: 3s;
-		}
-
-		/* Content Sections */
-		.content-section {
-			padding: 76px 0;
-			position: relative;
-		}
-
-		.section-blue {
-			background: var(--panel-blue);
-		}
-
-		.section-alt {
-			background: var(--panel-alt);
-		}
-
-		.container {
-			max-width: 1200px;
-			margin: 0 auto;
-			padding: 0 50px;
-		}
-
-		.section-eyebrow {
-			display: inline-block;
-			color: var(--accent-light);
-			font-family: var(--font-display);
-			font-size: 0.82rem;
-			font-weight: 700;
-			letter-spacing: 0.12em;
-			text-transform: uppercase;
-			margin-bottom: 12px;
-		}
-
-		.section-header {
-			text-align: center;
-			margin-bottom: 50px;
-			opacity: 0;
-			transform: translateY(30px);
-			transition: all 0.8s ease;
-		}
-
-		.section-header.animate {
-			opacity: 1;
-			transform: translateY(0);
-		}
-
-		.section-header h2 {
-			font-size: 2.5rem;
-			color: #f8f9fa;
-			margin-bottom: 16px;
-			font-weight: 700;
-			letter-spacing: -0.02em;
-			position: relative;
-		}
-
-		.section-header h2::after {
-			content: '';
-			position: absolute;
-			bottom: -10px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 80px;
-			height: 4px;
-			background: white;
-			border-radius: 2px;
-		}
-
-		.section-header p {
-			font-size: 1.2rem;
-			color: #f8f9fa;
-			line-height: 1.8;
-			max-width: 600px;
-			margin: 0 auto;
-			font-family: Raleway, Helvetica, sans-serif;
 		}
 
 		/* About Section Grid */
@@ -366,28 +114,6 @@
 			letter-spacing: 0.02em;
 		}
 
-		.learn-more-btn {
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			background: white;
-			color: var(--ink);
-			padding: 13px 26px;
-			text-decoration: none;
-			border-radius: var(--radius-sm);
-			font-weight: 600;
-			font-size: 0.95rem;
-			transition: all 0.25s var(--ease);
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-		}
-
-		.learn-more-btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
-			background: var(--accent-light);
-			color: white !important;
-		}
-
 		/* Social Media Section */
 		.social-grid {
 			display: grid;
@@ -431,330 +157,28 @@
 			object-fit: cover;
 		}
 
-		/* Opportunities Grid */
-		.opportunities-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-			gap: 30px;
-			margin-top: 10px;
+		.cta-row {
+			text-align: center;
+			margin-bottom: 36px;
+			display: flex;
+			justify-content: center;
+			gap: 15px;
+			flex-wrap: wrap;
 		}
 
-		.opportunity-card {
-			background: white;
-			border-radius: var(--radius-lg);
-			overflow: hidden;
-			transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
-			opacity: 0;
-			transform: translateY(28px);
-			position: relative;
-			box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
-			border: 1px solid rgba(15, 23, 42, 0.04);
-			cursor: pointer;
-		}
-
-		.opportunity-card.animate {
-			opacity: 1;
-			transform: translateY(0);
-		}
-
-		.opportunity-card:hover {
-			transform: translateY(-6px);
-			box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
-		}
-
-		.opportunity-card img {
-			width: 100%;
-			height: 180px;
-			object-fit: cover;
-			transition: transform 0.5s var(--ease);
-		}
-
-		.opportunity-card:hover img {
-			transform: scale(1.06);
-		}
-
-		.card-content {
-			padding: 26px 28px 28px;
-		}
-
-		.card-content h3 {
-			font-size: 1.22rem;
-			color: var(--ink);
-			margin-bottom: 4px;
-			font-weight: 700;
-			letter-spacing: -0.01em;
-		}
-
-		.card-content p {
-			color: #5b6472;
-			line-height: 1.55;
-			margin-bottom: 20px;
-			font-size: 0.92rem;
-			font-family: var(--font-display);
-		}
-
-		.card-btn {
-			display: inline-flex;
-			align-items: center;
-			background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+		.shuffle-btn {
+			background: var(--ink-soft);
 			color: white;
-			padding: 11px 22px;
-			text-decoration: none;
-			border-radius: var(--radius-sm);
-			font-weight: 600;
-			font-size: 0.9rem;
-			transition: all 0.25s ease;
-			cursor: pointer;
 			border: none;
-			box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+			display: none;
 		}
 
-		.card-btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 10px 22px rgba(37, 99, 235, 0.36);
-		}
-
-		.browse-all-btn {
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			background: white;
-			color: var(--ink);
-			padding: 13px 30px;
-			text-decoration: none;
-			border-radius: var(--radius-sm);
-			font-weight: 600;
-			font-size: 1rem;
-			transition: all 0.25s var(--ease);
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-			margin-bottom: 0;
-		}
-
-		.browse-all-btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
-			background: var(--accent-light);
-			color: white !important;
-		}
-
-		/* Modern Popup Styling */
-		.popup {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: rgba(0, 0, 0, 0.8);
-			backdrop-filter: blur(5px);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			opacity: 0;
-			visibility: hidden;
-			transition: all 0.3s ease;
-			z-index: 1000;
-		}
-
-		.popup.active {
-			opacity: 1;
-			visibility: visible;
-		}
-
-		.popup-content {
-			background: #2a2f3a;
-			border-radius: 20px;
-			padding: 0;
-			max-width: 600px;
-			width: 90%;
-			max-height: 80vh;
-			overflow-y: auto;
-			box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-			transform: scale(0.8);
-			transition: transform 0.3s ease;
-			position: relative;
-		}
-
-		.popup.active .popup-content {
-			transform: scale(1);
-		}
-
-		.popup-header {
-			position: relative;
-			border-radius: 20px 20px 0 0;
-			overflow: hidden;
-			height: 300px;
-		}
-
-		.popup-header img {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-
-		.popup-title {
-			padding: 30px 30px 20px 30px;
-			color: #ffffff;
-			font-size: 2.5rem;
-			font-weight: 600;
-			margin: 0;
-			background: #2a2f3a;
-		}
-
-		.popup-body {
-			padding: 0 30px 30px 30px;
-			color: #e8e8e8;
-			line-height: 1.8;
-			font-size: 1.2rem;
-		}
-
-		.popup-body p {
-			margin: 0 0 20px 0;
-		}
-
-		.popup-info-panel {
-			margin: 0 30px 20px;
-			background: rgba(255, 255, 255, 0.04);
-			border: 1px solid var(--border-soft);
-			border-radius: var(--radius-md);
-			padding: 4px 18px;
-		}
-
-		.popup-info-row {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			gap: 16px;
-			padding: 13px 0;
-			border-bottom: 1px solid var(--border-soft);
-		}
-
-		.popup-info-row:last-child {
-			border-bottom: none;
-		}
-
-		.popup-info-label {
-			color: var(--text-muted);
-			font-size: 0.76rem;
-			font-weight: 600;
-			letter-spacing: 0.06em;
-			text-transform: uppercase;
-			white-space: nowrap;
-		}
-
-		.popup-info-value {
-			color: #f1f5f9;
-			font-weight: 500;
-			font-size: 0.95rem;
-			text-align: right;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		.popup-info-value.muted {
-			color: var(--text-muted);
-			font-weight: 400;
-		}
-
-		.popup-info-value a {
-			color: var(--accent-light);
-			text-decoration: none;
-		}
-
-		.popup-info-value a:hover {
-			text-decoration: underline;
-		}
-
-		.popup-close {
-			position: static;
-			width: 100%;
-			height: 50px;
-			background: #4a90e2;
-			border: none;
-			border-radius: 0 0 20px 20px;
-			color: #ffffff;
-			font-size: 16px;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			transition: all 0.3s ease;
-			margin-top: 10px;
-			font-weight: 500;
-		}
-
-		.popup-close:hover {
-			background: #357abd;
-		}
-
-		.popup-close::before {
-			content: 'Close';
-			font-size: 16px;
-			line-height: 1;
-		}
-
-		/* Animations */
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(40px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		@keyframes float {
-			0%, 100% {
-				transform: translateY(0px);
-			}
-			50% {
-				transform: translateY(-20px);
-			}
-		}
-
-		/* Responsive Design */
+		/* Responsive Design: page-specific-only (shared breakpoints live in site-theme.css) */
 		@media (max-width: 768px) {
-			.hero-content h1 {
-				font-size: 2.5rem;
-			}
-
-			.hero-content p {
-				font-size: 1.1rem;
-			}
-
-			.container {
-				padding: 0 25px;
-			}
-			.section-header h2 {
-				font-size: 2rem;
-			}
-
 			.about-grid,
 			.social-grid {
 				grid-template-columns: 1fr;
 				gap: 30px;
-			}
-
-			.opportunities-grid {
-				grid-template-columns: 1fr;
-				gap: 30px;
-			}
-
-			.popup-info-row {
-				flex-wrap: wrap;
-				gap: 4px;
-			}
-
-			.popup-info-value {
-				text-align: left;
-				white-space: normal;
-				width: 100%;
-			}
-
-			.content-section {
-				padding: 50px 0;
 			}
 
 			.stats-strip .container {
@@ -764,36 +188,6 @@
 
 			.stat-item .stat-number {
 				font-size: 1.5rem;
-			}
-
-			.popup-content {
-				width: 95%;
-				margin: 20px;
-			}
-			
-			.popup-title {
-				font-size: 1.5rem;
-				padding: 15px 20px 10px 20px;
-			}
-			
-			.popup-body {
-				padding: 0 20px 20px 20px;
-				font-size: 1.1rem;
-			}
-
-			.popup-info {
-				padding: 0 20px 10px 20px;
-			}
-			
-			.popup-header {
-				height: 250px;
-			}
-
-			/* Mobile header logo adjustments */
-			.header-logo {
-				width: 35px;
-				height: 35px;
-				margin-right: 10px;
 			}
 		}
 	</style>
@@ -855,7 +249,7 @@
 			</div>
 		</section>
 
-		<section class="content-section section-blue">
+		<section class="content-section">
 			<div class="container">
 				<div class="about-grid">
 					<div class="about-image">
@@ -870,7 +264,7 @@
 							<span class="tag-pill">Durham Region</span>
 							<span class="tag-pill">Community Focused</span>
 						</div>
-						<a href="aboutus.html" class="learn-more-btn">Learn more →</a>
+						<a href="aboutus.html" class="btn btn-light">Learn more →</a>
 					</div>
 				</div>
 			</div>
@@ -887,7 +281,7 @@
 							<span class="tag-pill">Event Updates</span>
 							<span class="tag-pill">Behind the Scenes</span>
 						</div>
-						<a href="#" class="learn-more-btn">Learn more →</a>
+						<a href="#" class="btn btn-light">Learn more →</a>
 					</div>
 					<div class="social-image">
 						<img src="images/pic02.jpg" alt="Social Media" />
@@ -896,7 +290,7 @@
 			</div>
 		</section>
 
-		<section class="content-section section-blue">
+		<section class="content-section">
 			<div class="container">
 				<div class="section-header">
 					<span class="section-eyebrow">Get Involved</span>
@@ -904,21 +298,34 @@
 					<p>Here is a short list of some of the opportunities available in the Durham Region. Click "Learn more" to explore or shuffle through them!</p>
 				</div>
 
-				<div style="text-align: center; margin-bottom: 36px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-					<a href="opportunities.html" class="browse-all-btn" style="margin-bottom: 0;">Browse All Opportunities</a>
-					<button id="shuffle-btn" class="browse-all-btn" style="margin-bottom: 0; background: var(--ink-soft); color: white; border: none; cursor: pointer; display: none;">
+				<div class="cta-row">
+					<a href="opportunities.html" class="btn btn-light">Browse All Opportunities</a>
+					<button id="shuffle-btn" class="btn btn-light shuffle-btn">
 						🔄 Shuffle Grid
 					</button>
 				</div>
 
 				<div class="opportunities-grid" id="homepage-opportunities-container">
-					<div style="text-align: center; color: white; width: 100%; grid-column: 1/-1; padding: 40px;">
-						Loading live opportunities...
-					</div>
+					<div class="empty-state">Loading live opportunities...</div>
 				</div>
 			</div>
 		</section>
 	</div>
+
+	<footer class="site-footer">
+		<div class="container">
+			<div class="footer-brand">
+				<img src="images/causecircuit-logo.png" alt="CauseCircuit Logo">
+				CauseCircuit
+			</div>
+			<ul class="footer-links">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="aboutus.html">About Us</a></li>
+				<li><a href="opportunities.html">Opportunities</a></li>
+			</ul>
+			<p class="footer-copy">&copy; 2026 CauseCircuit. Serving the Durham Region.</p>
+		</div>
+	</footer>
 
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.scrollex.min.js"></script>
@@ -1017,8 +424,8 @@
 				});
 			} catch (error) {
 				console.error("Error loading live feed:", error);
-				document.getElementById('homepage-opportunities-container').innerHTML = 
-					'<div style="text-align:center; color:white; width:100%; grid-column:1/-1;">Failed to sync live opportunities. Please try again later.</div>';
+				document.getElementById('homepage-opportunities-container').innerHTML =
+					'<div class="empty-state">Failed to sync live opportunities. Please try again later.</div>';
 			}
 		}
 
@@ -1033,7 +440,7 @@
 				container.innerHTML = '';
 
 				if (homepageOpportunities.length === 0) {
-					container.innerHTML = '<div style="text-align:center; color:white; width:100%; grid-column:1/-1;">No opportunities available right now!</div>';
+					container.innerHTML = '<div class="empty-state">No opportunities available right now!</div>';
 					return;
 				}
 
@@ -1052,17 +459,18 @@
 
 					const targetUrl = resolveOpportunityUrl(opp);
 					const buttonHTML = (targetUrl && targetUrl !== '#')
-						? `<a href="${targetUrl}" target="_blank" class="card-btn" style="text-decoration: none;">Learn more</a>`
+						? `<a href="${targetUrl}" target="_blank" class="card-btn">Learn more</a>`
 						: `<button class="card-btn special">Learn more</button>`;
 
 					card.innerHTML = `
-						<img src="${opp.imagePath}" alt="${opp.name}" onerror="this.src='images/causecircuit-logo.png'" />
+						<div class="card-image-container">
+							<img src="${opp.imagePath}" alt="${opp.name}" onerror="this.src='images/causecircuit-logo.png'" />
+							<div class="location-tag">${opp.city}</div>
+						</div>
 						<div class="card-content">
 							<h3>${opp.name}</h3>
-							<p style="margin-bottom: 8px; color: #4a90e2; font-weight: 600;">${opp.company}</p>
-							<p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 72px;">
-								${opp.description}
-							</p>
+							<p class="card-org">${opp.company}</p>
+							<p class="card-desc-clamp">${opp.description}</p>
 							${buttonHTML}
 						</div>
 					`;
@@ -1104,28 +512,33 @@
 				: 'Not provided';
 
 			popupContent.innerHTML = `
-				<h2 class="popup-title">${opportunity.name}</h2>
 				<div class="popup-header">
 					<img src="${opportunity.imagePath}" alt="${opportunity.name}" onerror="this.src='images/causecircuit-logo.png'" />
+					<div class="popup-location-tag">${opportunity.city}</div>
 				</div>
-				<div class="popup-info-panel">
-					<div class="popup-info-row">
-						<span class="popup-info-label">Host</span>
-						<span class="popup-info-value">${opportunity.company}</span>
+				<h2 class="popup-title">${opportunity.name}</h2>
+				<div class="popup-scroll-content">
+					<div class="popup-info-panel">
+						<div class="popup-info-row">
+							<span class="popup-info-label">Host</span>
+							<span class="popup-info-value">${opportunity.company}</span>
+						</div>
+						<div class="popup-info-row">
+							<span class="popup-info-label">Website</span>
+							<span class="${websiteValueClass}">${websiteValueHTML}</span>
+						</div>
+						<div class="popup-info-row">
+							<span class="popup-info-label">Location</span>
+							<span class="popup-info-value">${opportunity.city}</span>
+						</div>
 					</div>
-					<div class="popup-info-row">
-						<span class="popup-info-label">Website</span>
-						<span class="${websiteValueClass}">${websiteValueHTML}</span>
-					</div>
-					<div class="popup-info-row">
-						<span class="popup-info-label">Location</span>
-						<span class="popup-info-value">${opportunity.city}</span>
+					<div class="popup-body">
+						<p>${opportunity.description}</p>
 					</div>
 				</div>
-				<div class="popup-body">
-					<p>${opportunity.description}</p>
+				<div class="popup-actions">
+					<button class="btn btn-ghost popup-close">Close</button>
 				</div>
-				<button class="popup-close"></button>
 			`;
 
 			popup.classList.add('active');
