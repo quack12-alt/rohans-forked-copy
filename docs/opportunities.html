@@ -16,6 +16,93 @@
     <link rel="stylesheet" href="assets/css/site-theme.css" />
     <style>
         /* Page-specific styles for Opportunities (filters, tracker CTA, popup location tag) */
+        /* This page uses a lighter blue palette than the rest of the site — these overrides
+           re-skin the shared header/hero/section/card rules from site-theme.css locally. */
+
+        body.opps-theme {
+            background: #d7e6f9;
+        }
+
+        body.opps-theme #header {
+            background: rgba(215, 230, 249, 0.85) !important;
+            border-bottom: 1px solid #b9d2f0 !important;
+        }
+
+        body.opps-theme #header h1 a,
+        body.opps-theme #header #nav ul.links li a,
+        body.opps-theme #header #mobile-menu-toggle {
+            color: #0f172a !important;
+        }
+
+        body.opps-theme #header #nav ul.links li a:hover {
+            color: #2563eb !important;
+        }
+
+        body.opps-theme .hero-section {
+            background: linear-gradient(160deg, #bcd6f5 0%, #d7e6f9 60%, #d7e6f9 100%);
+        }
+
+        body.opps-theme .hero-section::before {
+            display: none;
+        }
+
+        body.opps-theme .hero-content h1 {
+            color: #0f172a;
+        }
+
+        body.opps-theme .hero-content p {
+            color: #5b6472;
+            opacity: 1;
+        }
+
+        body.opps-theme .particle {
+            background: rgba(37, 99, 235, 0.28);
+        }
+
+        body.opps-theme .content-section {
+            background: transparent;
+        }
+
+        body.opps-theme .section-eyebrow {
+            color: #2563eb;
+        }
+
+        body.opps-theme .section-header h2 {
+            color: #0f172a;
+        }
+
+        body.opps-theme .section-header h2::after {
+            background: #2563eb;
+        }
+
+        body.opps-theme .section-header p {
+            color: #5b6472;
+        }
+
+        body.opps-theme .opportunity-card {
+            border: 1px solid #b9d2f0;
+        }
+
+        body.opps-theme .card-content h3 {
+            color: #0f172a;
+        }
+
+        body.opps-theme .card-org {
+            color: #2563eb;
+        }
+
+        body.opps-theme .card-content p {
+            color: #5b6472;
+        }
+
+        body.opps-theme .commitment-tag {
+            background: #eef4ff;
+            color: #2563eb;
+        }
+
+        body.opps-theme .hours-per-week {
+            color: #94a3b8;
+        }
 
         /* Filters Section */
         .filter-container {
@@ -23,15 +110,14 @@
             gap: 22px;
             justify-content: center;
             flex-wrap: wrap;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(18px) saturate(140%);
+            background: #c5dbf5;
+            border: 1px solid #a9c8ec;
             padding: 24px 28px;
             border-radius: var(--radius-lg);
             margin: 0 auto 44px auto;
             max-width: 1100px;
             align-items: center;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
         }
 
         .filter-group {
@@ -42,18 +128,18 @@
         }
 
         .filter-label {
-            color: rgba(255, 255, 255, 0.9);
+            color: #64748b;
             font-weight: 600;
             font-size: 0.9rem;
             letter-spacing: 0.01em;
         }
 
         .filter-dropdown {
-            background: var(--surface-deep);
-            color: white;
+            background: #fff;
+            color: #1e293b;
             padding: 10px 16px;
             border-radius: var(--radius-sm);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid #a9c8ec;
             font-size: 0.92rem;
             font-family: inherit;
             transition: all 0.25s ease;
@@ -64,26 +150,26 @@
         }
 
         .filter-dropdown option {
-            background: var(--surface);
-            color: #e2e8f0;
+            background: #fff;
+            color: #1e293b;
         }
 
         .filter-dropdown:hover {
-            border-color: rgba(255, 255, 255, 0.3);
+            border-color: #2563eb;
         }
 
         .filter-dropdown:focus {
             outline: none;
-            border-color: var(--accent-light);
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
         }
 
         .filter-search {
-            background: var(--surface-deep);
-            color: white;
+            background: #fff;
+            color: #1e293b;
             padding: 10px 16px;
             border-radius: var(--radius-sm);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid #a9c8ec;
             font-size: 0.92rem;
             font-family: inherit;
             transition: all 0.25s ease;
@@ -93,56 +179,55 @@
         }
 
         .filter-search::placeholder {
-            color: rgba(255, 255, 255, 0.45);
+            color: #94a3b8;
         }
 
         .filter-search:hover {
-            border-color: rgba(255, 255, 255, 0.3);
+            border-color: #2563eb;
         }
 
         .filter-search:focus {
             outline: none;
-            border-color: var(--accent-light);
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
         }
 
         /* Hours Tracker Section Styling */
         .hours-tracker-box {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: linear-gradient(135deg, #bcd6f5, #d7e6f9);
+            border: 1px solid #a9c8ec;
             border-radius: var(--radius-lg);
-            padding: 32px 36px;
-            margin-bottom: 46px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            padding: 26px 28px;
+            margin-bottom: 36px;
+            box-shadow: none;
         }
 
         .tracker-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 30px;
+            gap: 24px;
             flex-wrap: wrap;
         }
 
         .tracker-text {
             flex: 1;
-            min-width: 280px;
+            min-width: 260px;
         }
 
         .tracker-text h3 {
-            color: #f8fafc;
-            font-size: 1.4rem;
-            margin-bottom: 8px;
+            color: #0f172a;
+            font-size: 1.2rem;
+            margin-bottom: 6px;
             font-weight: 700;
             margin-top: 0;
             letter-spacing: -0.01em;
         }
 
         .tracker-text p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.65;
+            color: #5b6472;
+            font-size: 0.94rem;
+            line-height: 1.6;
             margin: 0;
             font-family: var(--font-display);
         }
@@ -150,17 +235,17 @@
         .tracker-btn {
             background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white !important;
-            padding: 14px 26px;
+            padding: 13px 24px;
             text-decoration: none;
             border-radius: var(--radius-sm);
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.94rem;
             transition: all 0.25s var(--ease);
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.28);
+            box-shadow: 0 8px 18px rgba(16, 185, 129, 0.24);
         }
 
         .tracker-btn:hover {
@@ -178,7 +263,7 @@
 
         .no-results {
             text-align: center;
-            color: #e2e8f0;
+            color: #64748b;
             font-size: 1.1rem;
             padding: 60px 20px;
             grid-column: 1 / -1;
@@ -225,7 +310,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 
-<body class="is-preload">
+<body class="is-preload opps-theme">
     <div class="popup" id="popup">
         <div class="popup-content" id="popup-content"></div>
     </div>
