@@ -107,6 +107,8 @@ body {
 #header h1 {
     display: flex !important;
     align-items: center !important;
+    margin: 0 !important;
+    line-height: 1 !important;
 }
 
 #header h1 a {
