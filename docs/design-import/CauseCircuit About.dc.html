@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#d7e6f9;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1e293b;-webkit-font-smoothing:antialiased}
+a{color:#2563eb;text-decoration:none}
+a:hover{color:#1d4ed8}
+@keyframes ccFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes ccFadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div style="max-width:100%;overflow-x:hidden">
+
+<header style="position:sticky;top:0;z-index:50;background:rgba(215,230,249,0.85);backdrop-filter:blur(14px) saturate(150%);border-bottom:1px solid #b9d2f0">
+<div style="max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+<a href="#" style="display:flex;align-items:center;gap:11px;color:#0f172a">
+<img src="docs/images/causecircuit-logo.png" alt="CauseCircuit" style="width:34px;height:34px;object-fit:cover;border-radius:50%">
+<span style="font-weight:800;font-size:1.12rem;letter-spacing:-0.02em">CauseCircuit</span>
+</a>
+<nav style="display:flex;align-items:center;gap:30px">
+<a href="#" style="color:#64748b;font-weight:500;font-size:0.92rem">Home</a>
+<a href="#" style="color:#0f172a;font-weight:600;font-size:0.92rem">About Us</a>
+<a href="#" style="color:#64748b;font-weight:500;font-size:0.92rem">Opportunities</a>
+<a href="#" style="display:inline-flex;align-items:center;gap:6px;background:#2563eb;color:#fff;font-weight:600;font-size:0.9rem;padding:9px 18px;border-radius:9px;box-shadow:0 6px 16px rgba(37,99,235,0.22)">Get Involved</a>
+</nav>
+</div>
+</header>
+
+<section style="position:relative;overflow:hidden;background:linear-gradient(160deg,#bcd6f5 0%,#d7e6f9 55%,#d7e6f9 100%);padding:74px 24px 56px;text-align:center">
+<div style="position:absolute;top:22%;left:12%;width:10px;height:10px;border-radius:50%;background:rgba(37,99,235,0.3);animation:ccFloat 6s ease-in-out infinite"></div>
+<div style="position:absolute;top:64%;left:84%;width:14px;height:14px;border-radius:50%;background:rgba(20,184,166,0.28);animation:ccFloat 7s ease-in-out infinite 1.5s"></div>
+<div style="position:absolute;top:78%;left:20%;width:8px;height:8px;border-radius:50%;background:rgba(249,115,22,0.32);animation:ccFloat 5.5s ease-in-out infinite 3s"></div>
+<div style="position:relative;z-index:1;max-width:680px;margin:0 auto;animation:ccFadeUp 1s cubic-bezier(0.22,1,0.36,1)">
+<h1 style="font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin:0 0 16px;color:#0f172a">About CauseCircuit</h1>
+<p style="font-size:1.12rem;line-height:1.65;color:#475569;font-family:'Raleway',sans-serif;margin:0">Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering.</p>
+</div>
+</section>
+
+<section style="max-width:1180px;margin:0 auto;padding:60px 32px 0">
+<div style="display:grid;grid-template-columns:0.85fr 1fr;gap:64px;align-items:start">
+<div style="position:sticky;top:96px">
+<span style="display:inline-block;color:#2563eb;font-family:'Raleway',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px">Why We Exist</span>
+<h2 style="font-size:2.1rem;font-weight:800;letter-spacing:-0.025em;color:#0f172a;margin:0 0 18px;line-height:1.15">Our Mission</h2>
+<p style="font-size:1.05rem;line-height:1.75;color:#475569;font-family:'Raleway',sans-serif;margin:0 0 22px">We strive to cultivate a culture of compassion, leadership, and civic responsibility by connecting students with opportunities that make a real difference in their communities.</p>
+<div style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 20px 40px rgba(15,23,42,0.14)">
+<img src="docs/images/pic01.jpg" alt="Students volunteering" style="width:100%;height:220px;object-fit:cover;display:block">
+</div>
+</div>
+<div>
+<sc-for list="{{ mission }}" as="m" hint-placeholder-count="3">
+<div style="display:flex;gap:24px;padding:28px 0;border-bottom:1px solid #a9c8ec">
+<span style="font-size:2.1rem;font-weight:800;color:#9cc0ea;letter-spacing:-0.02em;font-family:'Raleway',sans-serif;line-height:1;flex-shrink:0;width:52px">{{ m.num }}</span>
+<div>
+<h3 style="font-size:1.3rem;font-weight:700;color:#0f172a;margin:0 0 8px;letter-spacing:-0.01em">{{ m.title }}</h3>
+<p style="color:#5b6472;line-height:1.7;font-family:'Raleway',sans-serif;font-size:0.98rem;margin:0">{{ m.body }}</p>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="max-width:1180px;margin:80px auto 0;padding:0 32px">
+<div style="position:relative;border-radius:24px;overflow:hidden;min-height:260px;display:flex;align-items:center">
+<img src="docs/images/pic02.jpg" alt="Community impact" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(15,23,42,0.82) 20%,rgba(15,23,42,0.35) 75%)"></div>
+<p style="position:relative;z-index:1;max-width:620px;margin:0;padding:52px 56px;color:#f1f5f9;font-family:'Raleway',sans-serif;font-size:1.5rem;line-height:1.5;font-weight:500;letter-spacing:-0.01em">"By bridging the gap between youth and local organizations, Cause Circuit fosters a community where engagement, empathy, and collaboration thrive."</p>
+</div>
+</section>
+
+<section style="background:#0f172a;margin-top:80px">
+<div style="max-width:1180px;margin:0 auto;padding:76px 32px 84px">
+<div style="display:grid;grid-template-columns:0.85fr 1fr;gap:64px;align-items:start">
+<div>
+<span style="display:inline-block;color:#5eead4;font-family:'Raleway',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px">Where We're Headed</span>
+<h2 style="font-size:2.1rem;font-weight:800;letter-spacing:-0.025em;color:#fff;margin:0 0 18px;line-height:1.15">Our Vision</h2>
+<p style="font-size:1.05rem;line-height:1.75;color:#94a3b8;font-family:'Raleway',sans-serif;margin:0">We envision a vibrant and connected Durham Region where every high school student is inspired and equipped to contribute to positive change.</p>
+</div>
+<div>
+<sc-for list="{{ values }}" as="v" hint-placeholder-count="4">
+<div style="display:flex;gap:20px;padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.1)">
+<span style="color:#60a5fa;font-weight:800;font-size:0.85rem;letter-spacing:0.06em;flex-shrink:0;width:32px;padding-top:3px">{{ v.num }}</span>
+<div>
+<h4 style="color:#fff;font-size:1.12rem;font-weight:700;margin:0 0 6px;letter-spacing:-0.01em">{{ v.title }}</h4>
+<p style="color:#94a3b8;line-height:1.65;font-size:0.95rem;font-family:'Raleway',sans-serif;margin:0">{{ v.body }}</p>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</section>
+
+<footer style="background:#0f172a;border-top:1px solid rgba(255,255,255,0.06)">
+<div style="max-width:1180px;margin:0 auto;padding:40px 32px;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:11px;color:#fff;font-weight:700">
+<img src="docs/images/causecircuit-logo.png" alt="CauseCircuit" style="width:30px;height:30px;object-fit:cover;border-radius:50%">CauseCircuit</div>
+<div style="display:flex;gap:26px">
+<a href="#" style="color:#cbd5e1;font-size:0.9rem">Home</a>
+<a href="#" style="color:#cbd5e1;font-size:0.9rem">About Us</a>
+<a href="#" style="color:#cbd5e1;font-size:0.9rem">Opportunities</a>
+</div>
+<p style="color:#64748b;font-size:0.8rem;width:100%;text-align:center;margin:16px 0 0;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)">© 2026 CauseCircuit. Serving the Durham Region.</p>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      mission: [
+        { num: "01", title: "Connect", body: "We bring together student volunteers and community organizations, creating meaningful partnerships that drive positive change in the Durham region." },
+        { num: "02", title: "Empower", body: "By providing easy access to volunteer opportunities, we empower high school students to contribute their unique skills and talents where they're needed most." },
+        { num: "03", title: "Grow", body: "Every opportunity is a chance to build real-world skills, leadership experience, and confidence that students carry with them well beyond high school." }
+      ],
+      values: [
+        { num: "01", title: "Accessibility", body: "Removing barriers so every student, regardless of background, can find and act on opportunities to give back." },
+        { num: "02", title: "Community", body: "Strengthening ties between students and the local organizations that keep the Durham Region thriving." },
+        { num: "03", title: "Leadership", body: "Equipping students with the confidence and experience to lead initiatives of their own." },
+        { num: "04", title: "Transparency", body: "Keeping opportunities up to date and easy to verify, so trust runs both ways." }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#d7e6f9;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1e293b;-webkit-font-smoothing:antialiased}
+a{color:#2563eb;text-decoration:none}
+a:hover{color:#1d4ed8}
+.cc-select{appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%2394a3b8"><path d="M5.5 7.5l4.5 4.5 4.5-4.5" stroke="%2394a3b8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');background-repeat:no-repeat;background-position:right 12px center}
+@keyframes ccFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes ccFadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div style="max-width:100%;overflow-x:hidden">
+
+<header style="position:sticky;top:0;z-index:50;background:rgba(215,230,249,0.85);backdrop-filter:blur(14px) saturate(150%);border-bottom:1px solid #b9d2f0">
+<div style="max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+<a href="#" style="display:flex;align-items:center;gap:11px;color:#0f172a">
+<img src="docs/images/causecircuit-logo.png" alt="CauseCircuit" style="width:34px;height:34px;object-fit:cover;border-radius:50%">
+<span style="font-weight:800;font-size:1.12rem;letter-spacing:-0.02em">CauseCircuit</span>
+</a>
+<nav style="display:flex;align-items:center;gap:30px">
+<a href="#" style="color:#64748b;font-weight:500;font-size:0.92rem">Home</a>
+<a href="#" style="color:#64748b;font-weight:500;font-size:0.92rem">About Us</a>
+<a href="#" style="color:#0f172a;font-weight:600;font-size:0.92rem">Opportunities</a>
+<a href="#" style="display:inline-flex;align-items:center;gap:6px;background:#2563eb;color:#fff;font-weight:600;font-size:0.9rem;padding:9px 18px;border-radius:9px;box-shadow:0 6px 16px rgba(37,99,235,0.22)">Get Involved</a>
+</nav>
+</div>
+</header>
+
+<section style="position:relative;overflow:hidden;background:linear-gradient(160deg,#bcd6f5 0%,#d7e6f9 60%,#d7e6f9 100%);padding:64px 24px 56px;text-align:center">
+<div style="position:absolute;top:22%;left:12%;width:10px;height:10px;border-radius:50%;background:rgba(37,99,235,0.28);animation:ccFloat 6s ease-in-out infinite"></div>
+<div style="position:absolute;top:64%;left:84%;width:14px;height:14px;border-radius:50%;background:rgba(20,184,166,0.26);animation:ccFloat 7s ease-in-out infinite 1.5s"></div>
+<div style="position:absolute;top:78%;left:20%;width:8px;height:8px;border-radius:50%;background:rgba(249,115,22,0.3);animation:ccFloat 5.5s ease-in-out infinite 3s"></div>
+<div style="position:relative;z-index:1;max-width:680px;margin:0 auto;animation:ccFadeUp 1s cubic-bezier(0.22,1,0.36,1)">
+<h1 style="font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin:0 0 16px;color:#0f172a">Volunteer Opportunities</h1>
+<p style="font-size:1.12rem;line-height:1.65;color:#5b6472;font-family:'Raleway',sans-serif;margin:0">Discover meaningful ways to give back, learn new skills, and connect with your community across the Durham Region.</p>
+</div>
+</section>
+
+<section style="max-width:1180px;margin:0 auto;padding:44px 32px 80px">
+
+<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:end;background:#c5dbf5;border:1px solid #a9c8ec;border-radius:16px;padding:22px 24px;margin-bottom:28px">
+<div style="display:flex;flex-direction:column;gap:7px;flex:1;min-width:200px">
+<label style="color:#64748b;font-weight:600;font-size:0.82rem">Search Organization</label>
+<input type="text" placeholder="e.g. Red Cross" style="background:#fff;border:1px solid #a9c8ec;border-radius:9px;padding:10px 14px;font-size:0.92rem;font-family:inherit;height:42px;box-sizing:border-box;color:#1e293b">
+</div>
+<div style="display:flex;flex-direction:column;gap:7px;min-width:170px">
+<label style="color:#64748b;font-weight:600;font-size:0.82rem">Location</label>
+<select class="cc-select" style="background:#fff;border:1px solid #a9c8ec;border-radius:9px;padding:10px 30px 10px 14px;font-size:0.92rem;font-family:inherit;height:42px;box-sizing:border-box;color:#1e293b"><option>All Durham Region</option><option>Oshawa</option><option>Pickering</option><option>Ajax</option><option>Whitby</option></select>
+</div>
+<div style="display:flex;flex-direction:column;gap:7px;min-width:170px">
+<label style="color:#64748b;font-weight:600;font-size:0.82rem">Commitment</label>
+<select class="cc-select" style="background:#fff;border:1px solid #a9c8ec;border-radius:9px;padding:10px 30px 10px 14px;font-size:0.92rem;font-family:inherit;height:42px;box-sizing:border-box;color:#1e293b"><option>Any Hours</option><option>Short Term (1-3 hrs/wk)</option><option>Medium Term (4-10 hrs/wk)</option><option>Long Term (10+ hrs/wk)</option></select>
+</div>
+</div>
+
+<div style="background:linear-gradient(135deg,#bcd6f5,#d7e6f9);border:1px solid #a9c8ec;border-radius:16px;padding:26px 28px;margin-bottom:36px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+<div style="flex:1;min-width:260px">
+<h3 style="color:#0f172a;font-size:1.2rem;font-weight:700;margin:0 0 6px;letter-spacing:-0.01em">Host an Opportunity</h3>
+<p style="color:#5b6472;font-size:0.94rem;line-height:1.6;margin:0;font-family:'Raleway',sans-serif">Are you a local business or non-profit looking for passionate volunteers? Submit your listing to feature it directly on CauseCircuit.</p>
+</div>
+<a href="#" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:600;font-size:0.94rem;padding:13px 24px;border-radius:10px;box-shadow:0 8px 18px rgba(16,185,129,0.24);white-space:nowrap">Post an Opportunity →</a>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:22px">
+<sc-for list="{{ cards }}" as="card" hint-placeholder-count="6">
+<div style="background:#fff;border:1px solid #b9d2f0;border-radius:18px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,0.08);display:flex;flex-direction:column">
+<div style="position:relative;height:170px;overflow:hidden;background:#eef1f5">
+<img src="{{ card.img }}" alt="{{ card.title }}" style="width:100%;height:100%;object-fit:cover;display:block">
+<div style="position:absolute;top:13px;right:13px;background:rgba(15,23,42,0.82);color:#7dd3fc;padding:5px 12px;border-radius:20px;font-size:0.76rem;font-weight:600;backdrop-filter:blur(6px)">{{ card.city }}</div>
+</div>
+<div style="padding:20px 20px 22px;display:flex;flex-direction:column;flex:1">
+<h3 style="font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 5px;letter-spacing:-0.01em">{{ card.title }}</h3>
+<p style="color:#2563eb;font-weight:600;font-size:0.88rem;margin:0 0 10px">{{ card.org }}</p>
+<p style="color:#5b6472;line-height:1.6;font-size:0.95rem;margin:0 0 12px">{{ card.desc }}</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+<span style="background:#eef4ff;color:#2563eb;padding:4px 11px;border-radius:12px;font-size:0.76rem;font-weight:600">{{ card.commitment }}</span>
+</div>
+<p style="color:#94a3b8;font-size:0.86rem;margin:0 0 16px">Hours: {{ card.hours }}</p>
+<a href="#" style="margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;background:#2563eb;color:#fff;font-weight:600;font-size:0.88rem;padding:10px 20px;border-radius:9px;box-shadow:0 4px 12px rgba(37,99,235,0.2)">Learn more →</a>
+</div>
+</div>
+</sc-for>
+</div>
+<p style="text-align:center;color:#94a3b8;font-size:0.82rem;font-family:'Raleway',sans-serif;margin:28px 0 0">Cards shown are a live sample — the real grid pulls from your opportunities feed and responds to the filters above.</p>
+</section>
+
+<footer style="background:#0f172a;border-top:1px solid rgba(255,255,255,0.06)">
+<div style="max-width:1180px;margin:0 auto;padding:40px 32px;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:11px;color:#fff;font-weight:700">
+<img src="docs/images/causecircuit-logo.png" alt="CauseCircuit" style="width:30px;height:30px;object-fit:cover;border-radius:50%">CauseCircuit</div>
+<div style="display:flex;gap:26px">
+<a href="#" style="color:#cbd5e1;font-size:0.9rem">Home</a>
+<a href="#" style="color:#cbd5e1;font-size:0.9rem">About Us</a>
+<a href="#" style="color:#cbd5e1;font-size:0.9rem">Opportunities</a>
+</div>
+<p style="color:#64748b;font-size:0.8rem;width:100%;text-align:center;margin:16px 0 0;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)">© 2026 CauseCircuit. Serving the Durham Region.</p>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      cards: [
+        { title: "Meal Prep & Serving", org: "Feed the Needy", city: "Oshawa", img: "docs/images/pic01.jpg", desc: "Help prepare and serve warm meals to families in need.", commitment: "MEDIUM Commitment", hours: "4-10 hours" },
+        { title: "Community Cleanup Crew", org: "Durham Parks", city: "Whitby", img: "docs/images/pic02.jpg", desc: "Join weekend cleanup drives across local parks and trails.", commitment: "SHORT Commitment", hours: "1-3 hours" },
+        { title: "Youth Tutoring Program", org: "Learn Together", city: "Ajax", img: "docs/images/pic01.jpg", desc: "Support younger students with homework and reading.", commitment: "LONG Commitment", hours: "10+ hours" },
+        { title: "Animal Shelter Support", org: "Durham Humane Society", city: "Pickering", img: "docs/images/pic02.jpg", desc: "Assist with feeding, walking, and caring for shelter animals.", commitment: "MEDIUM Commitment", hours: "4-10 hours" },
+        { title: "Food Bank Sorting", org: "Community Foodbank", city: "Oshawa", img: "docs/images/pic01.jpg", desc: "Sort and pack donated food items for weekly distribution.", commitment: "SHORT Commitment", hours: "1-3 hours" },
+        { title: "Senior Companionship", org: "Durham Elder Care", city: "Whitby", img: "docs/images/pic02.jpg", desc: "Visit and spend time with seniors in the community.", commitment: "LONG Commitment", hours: "10+ hours" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
