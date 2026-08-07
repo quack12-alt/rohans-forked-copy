@@ -16,142 +16,231 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/site-theme.css" />
     <style>
-        /* Page-specific styles for About Us (mission/value cards) */
+        /* Page-specific styles for About Us (mission list, quote banner, vision section) */
 
-        /* Mission Cards */
-        .mission-grid {
+        /* Mission Section */
+        .mission-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-            margin-top: 10px;
+            grid-template-columns: 0.85fr 1fr;
+            gap: 64px;
+            align-items: start;
         }
 
-        .mission-card {
-            background: white;
-            padding: var(--space-lg) var(--space-md);
-            border-radius: var(--radius-lg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            transition: all 0.4s ease;
-            opacity: 0;
-            transform: translateY(40px);
+        .mission-intro {
+            position: sticky;
+            top: 96px;
+        }
+
+        .mission-intro h2 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: #0f172a;
+            margin: 0 0 18px;
+            line-height: 1.15;
+        }
+
+        .mission-intro > p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: #475569;
+            font-family: var(--font-display);
+            margin: 0 0 22px;
+        }
+
+        .mission-image {
             position: relative;
+            border-radius: var(--radius-md);
             overflow: hidden;
-            border: 1px solid rgba(15, 23, 42, 0.04);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
         }
 
-        .mission-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .mission-image img {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.6s ease;
+            height: 220px;
+            object-fit: cover;
+            display: block;
         }
 
-        .mission-card:hover::before {
-            left: 100%;
+        .mission-row {
+            display: flex;
+            gap: 24px;
+            padding: 28px 0;
+            border-bottom: 1px solid #a9c8ec;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.5s var(--ease);
         }
 
-        .mission-card.animate {
+        .mission-row.animate {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .mission-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        .mission-row:last-child {
+            border-bottom: none;
         }
 
-        .mission-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            border-radius: var(--radius-md);
+        .mission-num {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #9cc0ea;
+            letter-spacing: -0.02em;
+            font-family: var(--font-display);
+            line-height: 1;
+            flex-shrink: 0;
+            width: 52px;
+        }
+
+        .mission-row h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .mission-row p {
+            color: #5b6472;
+            line-height: 1.7;
+            font-family: var(--font-display);
+            font-size: 0.98rem;
+            margin: 0;
+        }
+
+        /* Quote Banner */
+        .quote-banner {
+            padding: 80px 0 0;
+        }
+
+        .quote-banner-inner {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            min-height: 260px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 0 22px;
-            font-size: 1.7rem;
-            color: white;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
         }
 
-        .mission-card:hover .mission-icon {
-            transform: scale(1.08) rotate(4deg);
+        .quote-banner-inner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .mission-card h3 {
-            font-size: 1.4rem;
-            color: var(--ink);
-            margin-bottom: 12px;
-            font-weight: 700;
-            letter-spacing: -0.01em;
+        .quote-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, rgba(15, 23, 42, 0.82) 20%, rgba(15, 23, 42, 0.35) 75%);
         }
 
-        .mission-card p {
-            color: #5b6472;
-            line-height: 1.6;
+        .quote-banner-inner p {
+            position: relative;
+            z-index: 1;
+            max-width: 620px;
+            margin: 0;
+            padding: 52px 56px;
+            color: #f1f5f9;
             font-family: var(--font-display);
-            font-size: 0.96rem;
-        }
-
-        /* Value Pillars (Vision section) */
-        .value-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin-top: 46px;
-        }
-
-        .value-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: var(--radius-md);
-            padding: 28px 26px;
-            text-align: left;
-            transition: all 0.3s var(--ease);
-        }
-
-        .value-card:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .value-card .value-number {
-            display: block;
-            color: var(--accent-light);
-            font-weight: 800;
-            font-size: 0.85rem;
-            letter-spacing: 0.06em;
-            margin-bottom: 10px;
-        }
-
-        .value-card h4 {
-            color: white;
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            font-weight: 500;
             letter-spacing: -0.01em;
         }
 
-        .value-card p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            font-size: 0.92rem;
+        /* Vision Section (dark) */
+        .vision-section {
+            background: #0f172a;
+            margin-top: 80px;
+            padding: 76px 0 84px;
+        }
+
+        .vision-layout {
+            display: grid;
+            grid-template-columns: 0.85fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .vision-eyebrow {
+            color: #5eead4;
+        }
+
+        .vision-intro h2 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: #fff;
+            margin: 0 0 18px;
+            line-height: 1.15;
+        }
+
+        .vision-intro p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: #94a3b8;
             font-family: var(--font-display);
             margin: 0;
         }
+
+        .value-row {
+            display: flex;
+            gap: 20px;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .value-row:last-child {
+            border-bottom: none;
+        }
+
+        .value-number {
+            color: #60a5fa;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            flex-shrink: 0;
+            width: 32px;
+            padding-top: 3px;
+        }
+
+        .value-row h4 {
+            color: #fff;
+            font-size: 1.12rem;
+            font-weight: 700;
+            margin: 0 0 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .value-row p {
+            color: #94a3b8;
+            line-height: 1.65;
+            font-size: 0.95rem;
+            font-family: var(--font-display);
+            margin: 0;
+        }
+
         /* Responsive Design: page-specific-only (shared breakpoints live in site-theme.css) */
         @media (max-width: 768px) {
-            .mission-grid,
-            .value-grid {
+            .mission-layout,
+            .vision-layout {
                 grid-template-columns: 1fr;
-                gap: 24px;
+                gap: 30px;
+            }
+
+            .mission-intro {
+                position: static;
+            }
+
+            .quote-banner-inner p {
+                padding: 36px 28px;
+                font-size: 1.2rem;
+            }
+
+            .vision-section {
+                margin-top: 40px;
             }
         }
     </style>
@@ -196,59 +285,91 @@
         <!-- Mission Section -->
         <section class="content-section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-eyebrow">Why We Exist</span>
-                    <h2>Our Mission</h2>
-                    <p>Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering. We strive to cultivate a culture of compassion, leadership, and civic responsibility by connecting students with opportunities that make a real difference in their communities.</p>
-                </div>
-                <div class="mission-grid">
-                    <div class="mission-card">
-                        <div class="mission-icon">🤝</div>
-                        <h3>Connect</h3>
-                        <p>We bring together student volunteers and community organizations, creating meaningful partnerships that drive positive change in the Durham region.</p>
+                <div class="mission-layout">
+                    <div class="mission-intro">
+                        <span class="section-eyebrow">Why We Exist</span>
+                        <h2>Our Mission</h2>
+                        <p>We strive to cultivate a culture of compassion, leadership, and civic responsibility by connecting students with opportunities that make a real difference in their communities.</p>
+                        <div class="mission-image">
+                            <img src="images/pic01.jpg" alt="Students volunteering" />
+                        </div>
                     </div>
-                    <div class="mission-card">
-                        <div class="mission-icon">🎯</div>
-                        <h3>Empower</h3>
-                        <p>By providing easy access to volunteer opportunities, we empower high school students to contribute their unique skills and talents where they're needed most.</p>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-icon">🌱</div>
-                        <h3>Grow</h3>
-                        <p>Every opportunity is a chance to build real-world skills, leadership experience, and confidence that students carry with them well beyond high school.</p>
+                    <div class="mission-list">
+                        <div class="mission-row">
+                            <span class="mission-num">01</span>
+                            <div>
+                                <h3>Connect</h3>
+                                <p>We bring together student volunteers and community organizations, creating meaningful partnerships that drive positive change in the Durham region.</p>
+                            </div>
+                        </div>
+                        <div class="mission-row">
+                            <span class="mission-num">02</span>
+                            <div>
+                                <h3>Empower</h3>
+                                <p>By providing easy access to volunteer opportunities, we empower high school students to contribute their unique skills and talents where they're needed most.</p>
+                            </div>
+                        </div>
+                        <div class="mission-row">
+                            <span class="mission-num">03</span>
+                            <div>
+                                <h3>Grow</h3>
+                                <p>Every opportunity is a chance to build real-world skills, leadership experience, and confidence that students carry with them well beyond high school.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Vision Section -->
-        <section class="content-section section-alt">
+        <!-- Quote Banner -->
+        <section class="quote-banner">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-eyebrow">Where We're Headed</span>
-                    <h2>Our Vision</h2>
-                    <p>We envision a vibrant and connected Durham Region where every high school student is inspired and equipped to contribute to positive change. By bridging the gap between youth and local organizations, Cause Circuit fosters a community where engagement, empathy, and collaboration thrive.</p>
+                <div class="quote-banner-inner">
+                    <img src="images/pic02.jpg" alt="Community impact" />
+                    <div class="quote-banner-overlay"></div>
+                    <p>"By bridging the gap between youth and local organizations, Cause Circuit fosters a community where engagement, empathy, and collaboration thrive."</p>
                 </div>
-                <div class="value-grid">
-                    <div class="value-card">
-                        <span class="value-number">01</span>
-                        <h4>Accessibility</h4>
-                        <p>Removing barriers so every student, regardless of background, can find and act on opportunities to give back.</p>
+            </div>
+        </section>
+
+        <!-- Vision Section -->
+        <section class="vision-section">
+            <div class="container">
+                <div class="vision-layout">
+                    <div class="vision-intro">
+                        <span class="section-eyebrow vision-eyebrow">Where We're Headed</span>
+                        <h2>Our Vision</h2>
+                        <p>We envision a vibrant and connected Durham Region where every high school student is inspired and equipped to contribute to positive change.</p>
                     </div>
-                    <div class="value-card">
-                        <span class="value-number">02</span>
-                        <h4>Community</h4>
-                        <p>Strengthening ties between students and the local organizations that keep the Durham Region thriving.</p>
-                    </div>
-                    <div class="value-card">
-                        <span class="value-number">03</span>
-                        <h4>Leadership</h4>
-                        <p>Equipping students with the confidence and experience to lead initiatives of their own.</p>
-                    </div>
-                    <div class="value-card">
-                        <span class="value-number">04</span>
-                        <h4>Transparency</h4>
-                        <p>Keeping opportunities up to date and easy to verify, so trust runs both ways.</p>
+                    <div class="value-list">
+                        <div class="value-row">
+                            <span class="value-number">01</span>
+                            <div>
+                                <h4>Accessibility</h4>
+                                <p>Removing barriers so every student, regardless of background, can find and act on opportunities to give back.</p>
+                            </div>
+                        </div>
+                        <div class="value-row">
+                            <span class="value-number">02</span>
+                            <div>
+                                <h4>Community</h4>
+                                <p>Strengthening ties between students and the local organizations that keep the Durham Region thriving.</p>
+                            </div>
+                        </div>
+                        <div class="value-row">
+                            <span class="value-number">03</span>
+                            <div>
+                                <h4>Leadership</h4>
+                                <p>Equipping students with the confidence and experience to lead initiatives of their own.</p>
+                            </div>
+                        </div>
+                        <div class="value-row">
+                            <span class="value-number">04</span>
+                            <div>
+                                <h4>Transparency</h4>
+                                <p>Keeping opportunities up to date and easy to verify, so trust runs both ways.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -296,12 +417,12 @@
 
         // Observe elements for animation
         document.addEventListener('DOMContentLoaded', () => {
-            const elementsToAnimate = document.querySelectorAll('.section-header, .mission-card');
+            const elementsToAnimate = document.querySelectorAll('.mission-row');
             elementsToAnimate.forEach(el => observer.observe(el));
 
             // Add staggered animation delays
-            document.querySelectorAll('.mission-card').forEach((card, index) => {
-                card.style.transitionDelay = `${index * 0.2}s`;
+            document.querySelectorAll('.mission-row').forEach((row, index) => {
+                row.style.transitionDelay = `${index * 0.15}s`;
             });
         });
 

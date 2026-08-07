@@ -14,14 +14,26 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/site-theme.css" />
 	<style>
-		/* Page-specific styles for Home (stats strip, about/social grids) */
+		/* Page-specific styles for Home (hero CTA, stats strip, about/social grids) */
+
+		.hero-highlight {
+			color: #2563eb;
+		}
+
+		.hero-cta-row {
+			display: flex;
+			gap: 14px;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin-top: 10px;
+		}
 
 		/* Quick Stats Strip */
 		.stats-strip {
-			background: var(--surface-deep);
-			border-top: 1px solid rgba(255, 255, 255, 0.06);
-			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-			padding: 36px 0;
+			background: #c5dbf5;
+			border-top: 1px solid #b9d2f0;
+			border-bottom: 1px solid #b9d2f0;
+			padding: 26px 0;
 		}
 
 		.stats-strip .container {
@@ -39,14 +51,14 @@
 			display: block;
 			font-size: 2.1rem;
 			font-weight: 800;
-			color: white;
+			color: #0f172a;
 			letter-spacing: -0.02em;
 		}
 
 		.stat-item .stat-label {
 			display: block;
 			margin-top: 4px;
-			color: var(--text-muted);
+			color: #64748b;
 			font-size: 0.85rem;
 			font-family: var(--font-display);
 			letter-spacing: 0.03em;
@@ -66,8 +78,8 @@
 			position: relative;
 			border-radius: var(--radius-lg);
 			overflow: hidden;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
-			border: 1px solid rgba(255, 255, 255, 0.08);
+			box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+			border: 1px solid #b9d2f0;
 		}
 
 		.about-image img {
@@ -77,13 +89,13 @@
 		}
 
 		.about-content {
-			color: #f8f9fa;
+			color: #0f172a;
 		}
 
 		.about-content h3 {
 			font-size: 1.9rem;
 			margin-bottom: 16px;
-			color: white;
+			color: #0f172a;
 			font-weight: 700;
 			letter-spacing: -0.01em;
 		}
@@ -92,7 +104,7 @@
 			font-size: 1.02rem;
 			line-height: 1.7;
 			margin-bottom: 22px;
-			color: var(--text-muted);
+			color: #5b6472;
 			font-family: var(--font-display);
 		}
 
@@ -104,9 +116,9 @@
 		}
 
 		.tag-pill {
-			background: rgba(255, 255, 255, 0.1);
-			border: 1px solid rgba(255, 255, 255, 0.14);
-			color: #e2e8f0;
+			background: #eef4ff;
+			border: none;
+			color: #2563eb;
 			padding: 5px 13px;
 			border-radius: 20px;
 			font-size: 0.78rem;
@@ -124,13 +136,13 @@
 		}
 
 		.social-content {
-			color: #f8f9fa;
+			color: #0f172a;
 		}
 
 		.social-content h3 {
 			font-size: 1.9rem;
 			margin-bottom: 16px;
-			color: white;
+			color: #0f172a;
 			font-weight: 700;
 			letter-spacing: -0.01em;
 		}
@@ -139,16 +151,26 @@
 			font-size: 1.02rem;
 			line-height: 1.7;
 			margin-bottom: 22px;
-			color: var(--text-muted);
+			color: #5b6472;
 			font-family: var(--font-display);
+		}
+
+		.social-content .tag-pill {
+			background: #e6fbf6;
+			color: #0d9488;
+		}
+
+		.social-content > a {
+			color: #0d9488;
+			font-weight: 700;
 		}
 
 		.social-image {
 			position: relative;
 			border-radius: var(--radius-lg);
 			overflow: hidden;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
-			border: 1px solid rgba(255, 255, 255, 0.08);
+			box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+			border: 1px solid #b9d2f0;
 		}
 
 		.social-image img {
@@ -167,7 +189,7 @@
 		}
 
 		.shuffle-btn {
-			background: var(--ink-soft);
+			background: #0f172a;
 			color: white;
 			border: none;
 			display: none;
@@ -222,8 +244,12 @@
 				<div class="logo">
 					<img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="logo-img">
 				</div>
-				<h1>CauseCircuit</h1>
-				<p>Volunteering Made Simple. Opportunities That Matter.</p>
+				<h1>Volunteering made simple.<br><span class="hero-highlight">Opportunities that matter.</span></h1>
+				<p>Cause Circuit connects Durham Region high school students with meaningful volunteer work — and the communities that need them.</p>
+				<div class="hero-cta-row">
+					<a href="#homepage-opportunities" class="btn btn-primary">Browse opportunities →</a>
+					<a href="aboutus.html" class="btn btn-light">About us</a>
+				</div>
 			</div>
 			<div class="particle particle-1"></div>
 			<div class="particle particle-2"></div>
@@ -290,7 +316,7 @@
 			</div>
 		</section>
 
-		<section class="content-section">
+		<section class="content-section" id="homepage-opportunities">
 			<div class="container">
 				<div class="section-header">
 					<span class="section-eyebrow">Get Involved</span>
