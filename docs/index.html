@@ -449,6 +449,7 @@
 			position: relative;
 			box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
 			border: 1px solid rgba(15, 23, 42, 0.04);
+			cursor: pointer;
 		}
 
 		.opportunity-card.animate {
@@ -610,34 +611,58 @@
 			margin: 0 0 20px 0;
 		}
 
-		.popup-info {
-			padding: 0 30px 10px 30px;
-			color: #b0b0b0;
-			font-size: 1rem;
-			border-bottom: 1px solid #404040;
-			margin-bottom: 20px;
+		.popup-info-panel {
+			margin: 0 30px 20px;
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid var(--border-soft);
+			border-radius: var(--radius-md);
+			padding: 4px 18px;
 		}
 
-		.popup-info-item {
+		.popup-info-row {
 			display: flex;
+			justify-content: space-between;
 			align-items: center;
-			margin-bottom: 10px;
+			gap: 16px;
+			padding: 13px 0;
+			border-bottom: 1px solid var(--border-soft);
 		}
 
-		.popup-info-item strong {
-			color: #4a90e2;
-			margin-right: 8px;
-			min-width: 80px;
+		.popup-info-row:last-child {
+			border-bottom: none;
 		}
 
-		.popup-info-item a {
-			color: #4a90e2;
+		.popup-info-label {
+			color: var(--text-muted);
+			font-size: 0.76rem;
+			font-weight: 600;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			white-space: nowrap;
+		}
+
+		.popup-info-value {
+			color: #f1f5f9;
+			font-weight: 500;
+			font-size: 0.95rem;
+			text-align: right;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.popup-info-value.muted {
+			color: var(--text-muted);
+			font-weight: 400;
+		}
+
+		.popup-info-value a {
+			color: var(--accent-light);
 			text-decoration: none;
-			transition: color 0.3s ease;
 		}
 
-		.popup-info-item a:hover {
-			color: #357abd;
+		.popup-info-value a:hover {
+			text-decoration: underline;
 		}
 
 		.popup-close {
@@ -715,6 +740,17 @@
 			.opportunities-grid {
 				grid-template-columns: 1fr;
 				gap: 30px;
+			}
+
+			.popup-info-row {
+				flex-wrap: wrap;
+				gap: 4px;
+			}
+
+			.popup-info-value {
+				text-align: left;
+				white-space: normal;
+				width: 100%;
 			}
 
 			.content-section {
@@ -895,6 +931,28 @@
 		let homepageOpportunities = [];
 		const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRINdpIfqYzmz7lNtKIkIuz75kA3wAOtAyE2lThkMty1Gpn7X9p3xIFLXV-hyX28PC-0LyFreFc1JXU/pub?gid=351680604&single=true&output=csv";
 
+		function resolveOpportunityImage(rawImagePath) {
+			if (!rawImagePath) return 'images/causecircuit-logo.png';
+
+			if (rawImagePath.includes('drive.google.com')) {
+				const matches = rawImagePath.match(/(?:id=|\/d\/)([a-zA-Z0-9-_]+)/);
+				if (matches && matches[1]) {
+					return `https://drive.google.com/thumbnail?id=${matches[1]}&sz=w1000`;
+				}
+				return 'images/causecircuit-logo.png';
+			}
+
+			return rawImagePath;
+		}
+
+		function resolveOpportunityUrl(opportunity) {
+			let targetUrl = opportunity.website ? opportunity.website.trim() : '#';
+			if (targetUrl !== '#' && targetUrl !== '' && !/^https?:\/\//i.test(targetUrl)) {
+				targetUrl = 'https://' + targetUrl;
+			}
+			return targetUrl;
+		}
+
 		const observerOptions = {
 			threshold: 0.1,
 			rootMargin: '0px 0px -50px 0px'
@@ -926,12 +984,14 @@
 							const descKey = keys.find(k => k.toLowerCase().includes('description') || k.toLowerCase().includes('detail') || k.toLowerCase().includes('about')) || keys[3];
 							const linkKey = keys.find(k => k.toLowerCase().includes('link') || k.toLowerCase().includes('website') || k.toLowerCase().includes('url') || k.toLowerCase().includes('form')) || keys[4];
 							const cityKey = keys.find(k => k.toLowerCase().includes('city') || k.toLowerCase().includes('town') || k.toLowerCase().includes('location')) || keys[5];
+							const imgKey = keys.find(k => k.toLowerCase().includes('image') || k.toLowerCase().includes('logo') || k.toLowerCase().includes('pic')) || '';
 
 							const title = row[titleKey] ? row[titleKey].trim() : '';
 							const org = row[orgKey] ? row[orgKey].trim() : '';
 							const desc = row[descKey] ? row[descKey].trim() : 'No description provided.';
 							const webLink = row[linkKey] ? row[linkKey].trim() : '#';
 							const city = row[cityKey] ? row[cityKey].trim() : 'Oshawa';
+							const rawImagePath = (imgKey && row[imgKey]) ? row[imgKey].trim() : '';
 
 							if (!title || !org) return null;
 
@@ -939,8 +999,8 @@
 								name: title,
 								company: org,
 								description: desc,
-								imagePath: 'images/causecircuit-logo.png',
-								website: webLink, 
+								imagePath: resolveOpportunityImage(rawImagePath),
+								website: webLink,
 								city: city
 							};
 						}).filter(item => item !== null);
@@ -990,10 +1050,10 @@
 					card.className = 'opportunity-card';
 					card.style.transitionDelay = `${index * 0.12}s`;
 
-					let targetUrl = opp.website ? opp.website.trim() : '#';
-					if (targetUrl !== '#' && targetUrl !== '' && !/^https?:\/\//i.test(targetUrl)) {
-						targetUrl = 'https://' + targetUrl;
-					}
+					const targetUrl = resolveOpportunityUrl(opp);
+					const buttonHTML = (targetUrl && targetUrl !== '#')
+						? `<a href="${targetUrl}" target="_blank" class="card-btn" style="text-decoration: none;">Learn more</a>`
+						: `<button class="card-btn special">Learn more</button>`;
 
 					card.innerHTML = `
 						<img src="${opp.imagePath}" alt="${opp.name}" onerror="this.src='images/causecircuit-logo.png'" />
@@ -1003,7 +1063,7 @@
 							<p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 72px;">
 								${opp.description}
 							</p>
-							<button class="card-btn special" data-website="${targetUrl}" data-city="${opp.city}">Learn more</button>
+							${buttonHTML}
 						</div>
 					`;
 
@@ -1035,50 +1095,59 @@
 		const popup = document.getElementById('popup');
 		const popupContent = document.getElementById('popup-content');
 
+		function openOpportunityPopup(opportunity) {
+			const websiteUrl = resolveOpportunityUrl(opportunity);
+			const hasWebsite = websiteUrl && websiteUrl !== '#';
+			const websiteValueClass = hasWebsite ? 'popup-info-value' : 'popup-info-value muted';
+			const websiteValueHTML = hasWebsite
+				? `<a href="${websiteUrl}" target="_blank" rel="noopener">${websiteUrl.replace(/^https?:\/\//i, '')}</a>`
+				: 'Not provided';
+
+			popupContent.innerHTML = `
+				<h2 class="popup-title">${opportunity.name}</h2>
+				<div class="popup-header">
+					<img src="${opportunity.imagePath}" alt="${opportunity.name}" onerror="this.src='images/causecircuit-logo.png'" />
+				</div>
+				<div class="popup-info-panel">
+					<div class="popup-info-row">
+						<span class="popup-info-label">Host</span>
+						<span class="popup-info-value">${opportunity.company}</span>
+					</div>
+					<div class="popup-info-row">
+						<span class="popup-info-label">Website</span>
+						<span class="${websiteValueClass}">${websiteValueHTML}</span>
+					</div>
+					<div class="popup-info-row">
+						<span class="popup-info-label">Location</span>
+						<span class="popup-info-value">${opportunity.city}</span>
+					</div>
+				</div>
+				<div class="popup-body">
+					<p>${opportunity.description}</p>
+				</div>
+				<button class="popup-close"></button>
+			`;
+
+			popup.classList.add('active');
+
+			popupContent.querySelector('.popup-close').addEventListener('click', () => {
+				popup.classList.remove('active');
+			});
+		}
+
 		document.addEventListener('click', function(event) {
-			if (event.target.classList.contains('special')) {
-				event.preventDefault();
+			const card = event.target.closest('.opportunity-card');
+			if (!card) return;
 
-				const card = event.target.closest('.opportunity-card');
-				if (card) {
-					const opportunityName = card.querySelector('h3').textContent;
-					const organizationImage = card.querySelector('img').src;
-					const companyName = card.querySelector('p').textContent;
-					
-					const fullOpp = homepageOpportunities.find(opp => opp.name === opportunityName);
-					const fullDescription = fullOpp ? fullOpp.description : card.querySelectorAll('p')[1].textContent;
+			const realLink = event.target.closest('a.card-btn');
+			if (realLink) return; // let the external link navigate normally
 
-					const website = event.target.getAttribute('data-website');
-					const city = event.target.getAttribute('data-city');
+			event.preventDefault();
 
-					popupContent.innerHTML = `
-						<h2 class="popup-title">${opportunityName}</h2>
-						<div class="popup-header">
-							<img src="${organizationImage}" alt="${opportunityName}" onerror="this.src='images/causecircuit-logo.png'" />
-						</div>
-						<div class="popup-info">
-							<div class="popup-info-item">
-								<strong>Host:</strong> ${companyName}
-							</div>
-							<div class="popup-info-item">
-								<strong>Website:</strong> ${website !== '#' ? `<a href="${website}" target="_blank">${website}</a>` : 'Not Provided'}
-							</div>
-							<div class="popup-info-item">
-								<strong>Location:</strong> ${city}
-							</div>
-						</div>
-						<div class="popup-body">
-							<p>${fullDescription}</p>
-						</div>
-						<button class="popup-close"></button>
-					`;
-
-					popup.classList.add('active');
-
-					popupContent.querySelector('.popup-close').addEventListener('click', () => {
-						popup.classList.remove('active');
-					});
-				}
+			const opportunityName = card.querySelector('h3').textContent;
+			const opportunity = homepageOpportunities.find(opp => opp.name === opportunityName);
+			if (opportunity) {
+				openOpportunityPopup(opportunity);
 			}
 		});
 
