@@ -21,7 +21,7 @@
     --success: #10b981;
     --success-dark: #059669;
 
-    --radius-lg: 22px;
+    --radius-lg: 18px;
     --radius-md: 14px;
     --radius-sm: 10px;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -244,9 +244,9 @@ body {
 }
 
 .container {
-    max-width: 1240px;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 0 var(--space-lg);
+    padding: 0 32px;
 }
 
 .section-eyebrow {
