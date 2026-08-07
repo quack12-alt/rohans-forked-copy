@@ -25,63 +25,6 @@
 		}, 100);
 	});
 
-	// Make header sticky and always visible
-	function makeHeaderSticky() {
-		if ($header.length > 0) {
-			// Add sticky class to header
-			$header.addClass('is-sticky');
-			
-			// Add CSS for sticky behavior - initially transparent at top
-			$header.css({
-				'position': 'fixed',
-				'top': '0',
-				'left': '0',
-				'right': '0',
-				'z-index': '10000',
-				'background-color': 'transparent', // Start transparent
-				'transition': 'all 0.3s ease' // Smooth transitions
-			});
-
-			// Add padding to body to prevent content from hiding behind header
-			var headerHeight = $header.outerHeight();
-			$body.css('padding-top', headerHeight + 'px');
-			
-			// Update padding when window resizes
-			$window.on('resize', function() {
-				var newHeaderHeight = $header.outerHeight();
-				$body.css('padding-top', newHeaderHeight + 'px');
-			});
-		}
-	}
-
-	// Handle header background based on scroll position
-	function handleHeaderScroll() {
-		if ($header.hasClass('is-sticky')) {
-			var scrollTop = $window.scrollTop();
-			
-			if (scrollTop > 50) { // Show background after scrolling 50px
-				$header.css({
-					'background-color': '#62687f', // Dark blue background
-					'box-shadow': '0 2px 10px rgba(0, 0, 0, 0.2)' // Add shadow
-				});
-			} else { // Hide background when at top
-				$header.css({
-					'background-color': 'transparent',
-					'box-shadow': 'none'
-				});
-			}
-		}
-	}
-
-	// Modified header functionality - add scroll listener for background changes
-	if ($banner.length > 0) {
-		$window.on('resize', function () { $window.trigger('scroll'); });
-		$window.on('scroll', handleHeaderScroll);
-	} else {
-		// If no banner, still handle scroll effects
-		$window.on('scroll', handleHeaderScroll);
-	}
-
 	// Ensure header has consistent structure on all pages
 	function ensureConsistentHeader() {
 		var $existingHeader = $('#header');
@@ -141,9 +84,6 @@
 
 	// Run the header consistency check
 	ensureConsistentHeader();
-
-	// Make header sticky after ensuring it exists
-	makeHeaderSticky();
 
 	// Mobile menu functionality
 	var $mobileMenu = $('#mobile-menu');
