@@ -10,6 +10,26 @@
 		<link rel="stylesheet" href="assets/css/noscript.css" />
 	</noscript>
 	<style>
+		:root {
+			--ink: #2c3e50;
+			--ink-soft: #34495e;
+			--surface-deep: #0f172a;
+			--surface: #1e293b;
+			--panel-blue: #4C5C96;
+			--panel-alt: #45558D;
+			--border-soft: rgba(148, 163, 184, 0.18);
+			--text-muted: #cbd5e1;
+			--accent: #3b82f6;
+			--accent-dark: #1d4ed8;
+			--accent-light: #60a5fa;
+			--radius-lg: 22px;
+			--radius-md: 14px;
+			--radius-sm: 10px;
+			--ease: cubic-bezier(0.22, 1, 0.36, 1);
+			--font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+			--font-display: Raleway, var(--font-body);
+		}
+
 		/* Header Override Styles */
 		#header {
 			position: fixed !important;
@@ -18,12 +38,13 @@
 			right: 0 !important;
 			width: 100% !important;
 			z-index: 10000 !important;
-			background: rgba(44, 62, 80, 0.95) !important;
-			backdrop-filter: blur(10px) !important;
+			background: rgba(44, 62, 80, 0.96) !important;
+			backdrop-filter: blur(14px) saturate(140%) !important;
 			opacity: 1 !important;
 			visibility: visible !important;
 			transform: translateY(0) !important;
 			transition: all 0.3s ease !important;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
 		}
 
 		#header h1 {
@@ -60,15 +81,16 @@
 
 		body {
 			background: #f8f9fa;
-			font-family: 'Arial', sans-serif;
+			font-family: var(--font-body);
 			overflow-x: hidden;
 			padding-top: 80px;
+			-webkit-font-smoothing: antialiased;
 		}
 
 		/* Hero Section */
 		.hero-section {
-			background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-			height: 100vh;
+			background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
+			min-height: 72vh;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -77,38 +99,88 @@
 			overflow: hidden;
 		}
 
+		.hero-section::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(ellipse at 50% 0%, rgba(96, 165, 250, 0.16), transparent 60%);
+			pointer-events: none;
+		}
+
 		.hero-content {
 			color: white;
 			max-width: 800px;
-			padding: 0 20px;
-			animation: fadeInUp 1.5s ease-out;
+			padding: 60px 20px 20px;
+			animation: fadeInUp 1.2s var(--ease);
+			position: relative;
+			z-index: 1;
 		}
 
 		/* Hero Logo Styling */
 		.logo {
-			margin-bottom: 40px;
+			margin-bottom: 28px;
 		}
 
 		.logo-img {
-			width: 120px;
-			height: 120px;
+			width: 96px;
+			height: 96px;
 			border-radius: 50%;
 			object-fit: cover;
+			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 		}
 
 		.hero-content h1 {
-			font-size: 4rem;
+			font-size: clamp(2.6rem, 5vw, 3.75rem);
 			font-weight: 700;
-			margin-bottom: 20px;
-			letter-spacing: -2px;
+			margin-bottom: 16px;
+			letter-spacing: -0.03em;
+			line-height: 1.1;
 		}
 
 		.hero-content p {
-			font-size: 1.4rem;
-			margin-bottom: 30px;
-			opacity: 0.9;
+			font-size: 1.25rem;
+			margin-bottom: 8px;
+			opacity: 0.85;
 			line-height: 1.6;
-			font-family: Raleway, Helvetica, sans-serif;
+			font-family: var(--font-display);
+			font-weight: 300;
+		}
+
+		/* Quick Stats Strip */
+		.stats-strip {
+			background: var(--surface-deep);
+			border-top: 1px solid rgba(255, 255, 255, 0.06);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+			padding: 36px 0;
+		}
+
+		.stats-strip .container {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 20px;
+			text-align: center;
+		}
+
+		.stat-item {
+			padding: 0 10px;
+		}
+
+		.stat-item .stat-number {
+			display: block;
+			font-size: 2.1rem;
+			font-weight: 800;
+			color: white;
+			letter-spacing: -0.02em;
+		}
+
+		.stat-item .stat-label {
+			display: block;
+			margin-top: 4px;
+			color: var(--text-muted);
+			font-size: 0.85rem;
+			font-family: var(--font-display);
+			letter-spacing: 0.03em;
+			text-transform: uppercase;
 		}
 
 		/* Floating particles */
@@ -161,16 +233,16 @@
 
 		/* Content Sections */
 		.content-section {
-			padding: 100px 0;
+			padding: 76px 0;
 			position: relative;
 		}
 
 		.section-blue {
-			background: #4C5C96;
+			background: var(--panel-blue);
 		}
 
 		.section-alt {
-			background: #45558D;
+			background: var(--panel-alt);
 		}
 
 		.container {
@@ -179,9 +251,20 @@
 			padding: 0 50px;
 		}
 
+		.section-eyebrow {
+			display: inline-block;
+			color: var(--accent-light);
+			font-family: var(--font-display);
+			font-size: 0.82rem;
+			font-weight: 700;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			margin-bottom: 12px;
+		}
+
 		.section-header {
 			text-align: center;
-			margin-bottom: 80px;
+			margin-bottom: 50px;
 			opacity: 0;
 			transform: translateY(30px);
 			transition: all 0.8s ease;
@@ -193,10 +276,11 @@
 		}
 
 		.section-header h2 {
-			font-size: 3rem;
+			font-size: 2.5rem;
 			color: #f8f9fa;
-			margin-bottom: 20px;
-			font-weight: 600;
+			margin-bottom: 16px;
+			font-weight: 700;
+			letter-spacing: -0.02em;
 			position: relative;
 		}
 
@@ -224,22 +308,23 @@
 		/* About Section Grid */
 		.about-grid {
 			display: grid;
-			grid-template-columns: 1fr 2fr;
-			gap: 60px;
+			grid-template-columns: 0.85fr 1fr;
+			gap: 50px;
 			align-items: center;
-			margin-top: 60px;
+			margin-top: 10px;
 		}
 
 		.about-image {
 			position: relative;
-			border-radius: 20px;
+			border-radius: var(--radius-lg);
 			overflow: hidden;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+			border: 1px solid rgba(255, 255, 255, 0.08);
 		}
 
 		.about-image img {
 			width: 100%;
-			height: 400px;
+			height: 320px;
 			object-fit: cover;
 		}
 
@@ -248,46 +333,68 @@
 		}
 
 		.about-content h3 {
-			font-size: 2rem;
-			margin-bottom: 25px;
+			font-size: 1.9rem;
+			margin-bottom: 16px;
 			color: white;
-			font-weight: 600;
+			font-weight: 700;
+			letter-spacing: -0.01em;
 		}
 
 		.about-content p {
-			font-size: 1.1rem;
-			line-height: 1.8;
-			margin-bottom: 30px;
-			font-family: Raleway, Helvetica, sans-serif;
+			font-size: 1.02rem;
+			line-height: 1.7;
+			margin-bottom: 22px;
+			color: var(--text-muted);
+			font-family: var(--font-display);
+		}
+
+		.tag-row {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-bottom: 22px;
+		}
+
+		.tag-pill {
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			color: #e2e8f0;
+			padding: 5px 13px;
+			border-radius: 20px;
+			font-size: 0.78rem;
+			font-weight: 600;
+			letter-spacing: 0.02em;
 		}
 
 		.learn-more-btn {
 			display: inline-flex;
 			align-items: center;
+			gap: 6px;
 			background: white;
-			color: #2c3e50;
-			padding: 15px 30px;
+			color: var(--ink);
+			padding: 13px 26px;
 			text-decoration: none;
-			border-radius: 30px;
+			border-radius: var(--radius-sm);
 			font-weight: 600;
-			transition: all 0.3s ease;
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+			font-size: 0.95rem;
+			transition: all 0.25s var(--ease);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 		}
 
 		.learn-more-btn:hover {
 			transform: translateY(-2px);
-			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-			background: #f8f9fa;
-			color: #007bff !important;
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
+			background: var(--accent-light);
+			color: white !important;
 		}
 
 		/* Social Media Section */
 		.social-grid {
 			display: grid;
-			grid-template-columns: 2fr 1fr;
-			gap: 60px;
+			grid-template-columns: 1fr 0.85fr;
+			gap: 50px;
 			align-items: center;
-			margin-top: 60px;
+			margin-top: 10px;
 		}
 
 		.social-content {
@@ -295,64 +402,53 @@
 		}
 
 		.social-content h3 {
-			font-size: 2rem;
-			margin-bottom: 25px;
+			font-size: 1.9rem;
+			margin-bottom: 16px;
 			color: white;
-			font-weight: 600;
+			font-weight: 700;
+			letter-spacing: -0.01em;
 		}
 
 		.social-content p {
-			font-size: 1.1rem;
-			line-height: 1.8;
-			margin-bottom: 30px;
-			font-family: Raleway, Helvetica, sans-serif;
+			font-size: 1.02rem;
+			line-height: 1.7;
+			margin-bottom: 22px;
+			color: var(--text-muted);
+			font-family: var(--font-display);
 		}
 
 		.social-image {
 			position: relative;
-			border-radius: 20px;
+			border-radius: var(--radius-lg);
 			overflow: hidden;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+			border: 1px solid rgba(255, 255, 255, 0.08);
 		}
 
 		.social-image img {
 			width: 100%;
-			height: 400px;
+			height: 320px;
 			object-fit: cover;
 		}
 
 		/* Opportunities Grid */
 		.opportunities-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-			gap: 40px;
-			margin-top: 60px;
+			grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+			gap: 30px;
+			margin-top: 10px;
 		}
 
 		.opportunity-card {
 			background: white;
-			border-radius: 20px;
+			border-radius: var(--radius-lg);
 			overflow: hidden;
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-			transition: all 0.4s ease;
+			transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
 			opacity: 0;
-			transform: translateY(40px);
+			transform: translateY(28px);
 			position: relative;
-		}
-
-		.opportunity-card::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-			transition: left 0.6s ease;
-		}
-
-		.opportunity-card:hover::before {
-			left: 100%;
+			box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+			border: 1px solid rgba(15, 23, 42, 0.04);
 		}
 
 		.opportunity-card.animate {
@@ -361,73 +457,83 @@
 		}
 
 		.opportunity-card:hover {
-			transform: translateY(-10px);
-			box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+			transform: translateY(-6px);
+			box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
 		}
 
 		.opportunity-card img {
 			width: 100%;
-			height: 200px;
+			height: 180px;
 			object-fit: cover;
+			transition: transform 0.5s var(--ease);
+		}
+
+		.opportunity-card:hover img {
+			transform: scale(1.06);
 		}
 
 		.card-content {
-			padding: 30px;
+			padding: 26px 28px 28px;
 		}
 
 		.card-content h3 {
-			font-size: 1.5rem;
-			color: #2c3e50;
-			margin-bottom: 15px;
-			font-weight: 600;
+			font-size: 1.22rem;
+			color: var(--ink);
+			margin-bottom: 4px;
+			font-weight: 700;
+			letter-spacing: -0.01em;
 		}
 
 		.card-content p {
-			color: #464c4d;
-			line-height: 1.6;
-			margin-bottom: 25px;
-			font-family: Raleway, Helvetica, sans-serif;
+			color: #5b6472;
+			line-height: 1.55;
+			margin-bottom: 20px;
+			font-size: 0.92rem;
+			font-family: var(--font-display);
 		}
 
 		.card-btn {
 			display: inline-flex;
 			align-items: center;
-			background: #34495e;
+			background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
 			color: white;
-			padding: 12px 25px;
+			padding: 11px 22px;
 			text-decoration: none;
-			border-radius: 25px;
-			font-weight: 500;
-			transition: all 0.3s ease;
+			border-radius: var(--radius-sm);
+			font-weight: 600;
+			font-size: 0.9rem;
+			transition: all 0.25s ease;
 			cursor: pointer;
 			border: none;
+			box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
 		}
 
 		.card-btn:hover {
-			background: #2c3e50;
 			transform: translateY(-2px);
+			box-shadow: 0 10px 22px rgba(37, 99, 235, 0.36);
 		}
 
 		.browse-all-btn {
 			display: inline-flex;
 			align-items: center;
+			gap: 6px;
 			background: white;
-			color: #2c3e50;
-			padding: 15px 40px;
+			color: var(--ink);
+			padding: 13px 30px;
 			text-decoration: none;
-			border-radius: 30px;
+			border-radius: var(--radius-sm);
 			font-weight: 600;
-			font-size: 1.1rem;
-			transition: all 0.3s ease;
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-			margin-bottom: 40px;
+			font-size: 1rem;
+			transition: all 0.25s var(--ease);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+			margin-bottom: 0;
 		}
 
 		.browse-all-btn:hover {
 			transform: translateY(-2px);
-			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-			background: #f8f9fa;
-			color: #007bff !important;
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
+			background: var(--accent-light);
+			color: white !important;
 		}
 
 		/* Modern Popup Styling */
@@ -612,7 +718,16 @@
 			}
 
 			.content-section {
-				padding: 60px 0;
+				padding: 50px 0;
+			}
+
+			.stats-strip .container {
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+			}
+
+			.stat-item .stat-number {
+				font-size: 1.5rem;
 			}
 
 			.popup-content {
@@ -687,6 +802,23 @@
 			<div class="particle particle-5"></div>
 		</section>
 
+		<section class="stats-strip">
+			<div class="container">
+				<div class="stat-item">
+					<span class="stat-number">8</span>
+					<span class="stat-label">Durham Communities</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-number">100%</span>
+					<span class="stat-label">Student Led</span>
+				</div>
+				<div class="stat-item">
+					<span class="stat-number">Live</span>
+					<span class="stat-label">Opportunities Feed</span>
+				</div>
+			</div>
+		</section>
+
 		<section class="content-section section-blue">
 			<div class="container">
 				<div class="about-grid">
@@ -694,9 +826,15 @@
 						<img src="images/pic01.jpg" alt="About CauseCircuit" />
 					</div>
 					<div class="about-content">
+						<span class="section-eyebrow">Who We Are</span>
 						<h3>About Us</h3>
 						<p>Cause Circuit is a youth driven organization that encourages high school students within the Durham Region to make a positive impact on their communities by getting involved in meaningful volunteer work, assisting in the creation of a compassionate and connected community.</p>
-						<a href="aboutus.html" class="learn-more-btn">Learn more</a>
+						<div class="tag-row">
+							<span class="tag-pill">Youth Led</span>
+							<span class="tag-pill">Durham Region</span>
+							<span class="tag-pill">Community Focused</span>
+						</div>
+						<a href="aboutus.html" class="learn-more-btn">Learn more →</a>
 					</div>
 				</div>
 			</div>
@@ -706,9 +844,14 @@
 			<div class="container">
 				<div class="social-grid">
 					<div class="social-content">
+						<span class="section-eyebrow">Stay Connected</span>
 						<h3>Social Media</h3>
-						<p>Check out our instagram page for updates and new information!</p>
-						<a href="#" class="learn-more-btn">Learn more</a>
+						<p>Check out our Instagram page for updates, event recaps, and new volunteer opportunities as soon as they drop.</p>
+						<div class="tag-row">
+							<span class="tag-pill">Event Updates</span>
+							<span class="tag-pill">Behind the Scenes</span>
+						</div>
+						<a href="#" class="learn-more-btn">Learn more →</a>
 					</div>
 					<div class="social-image">
 						<img src="images/pic02.jpg" alt="Social Media" />
@@ -720,13 +863,14 @@
 		<section class="content-section section-blue">
 			<div class="container">
 				<div class="section-header">
+					<span class="section-eyebrow">Get Involved</span>
 					<h2>Volunteer Opportunities</h2>
 					<p>Here is a short list of some of the opportunities available in the Durham Region. Click "Learn more" to explore or shuffle through them!</p>
 				</div>
-				
-				<div style="text-align: center; margin-bottom: 40px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+
+				<div style="text-align: center; margin-bottom: 36px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
 					<a href="opportunities.html" class="browse-all-btn" style="margin-bottom: 0;">Browse All Opportunities</a>
-					<button id="shuffle-btn" class="browse-all-btn" style="margin-bottom: 0; background: #34495e; color: white; border: none; cursor: pointer; display: none;">
+					<button id="shuffle-btn" class="browse-all-btn" style="margin-bottom: 0; background: var(--ink-soft); color: white; border: none; cursor: pointer; display: none;">
 						🔄 Shuffle Grid
 					</button>
 				</div>

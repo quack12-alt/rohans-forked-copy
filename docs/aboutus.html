@@ -13,6 +13,24 @@
     </noscript>
     <style>
         /* Custom styles for About Us page */
+        :root {
+            --ink: #2c3e50;
+            --ink-soft: #34495e;
+            --surface-deep: #0f172a;
+            --panel-blue: #4C5C96;
+            --panel-alt: #45558D;
+            --text-muted: #cbd5e1;
+            --accent: #3b82f6;
+            --accent-dark: #1d4ed8;
+            --accent-light: #60a5fa;
+            --radius-lg: 22px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-display: Raleway, var(--font-body);
+        }
+
         /* Header Override Styles */
         #header {
             position: fixed !important;
@@ -21,12 +39,13 @@
             right: 0 !important;
             width: 100% !important;
             z-index: 10000 !important;
-            background: rgba(44, 62, 80, 0.95) !important;
-            backdrop-filter: blur(10px) !important;
+            background: rgba(44, 62, 80, 0.96) !important;
+            backdrop-filter: blur(14px) saturate(140%) !important;
             opacity: 1 !important;
             visibility: visible !important;
             transform: translateY(0) !important;
             transition: all 0.3s ease !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
         }
 
         #header h1 a {
@@ -47,15 +66,16 @@
 
         body {
             background: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            font-family: var(--font-body);
             overflow-x: hidden;
             padding-top: 80px; /* Add space for fixed header */
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            height: 100vh;
+            background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
+            min-height: 62vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -64,26 +84,38 @@
             overflow: hidden;
         }
 
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(96, 165, 250, 0.16), transparent 60%);
+            pointer-events: none;
+        }
+
         .hero-content {
             color: white;
-            max-width: 800px;
-            padding: 0 20px;
-            animation: fadeInUp 1.5s ease-out;
+            max-width: 780px;
+            padding: 60px 20px 20px;
+            animation: fadeInUp 1.2s var(--ease);
+            position: relative;
+            z-index: 1;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: clamp(2.6rem, 5vw, 3.75rem);
             font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
+            margin-bottom: 18px;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
         }
 
         .hero-content p {
-            font-size: 1.4rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            line-height: 1.6;
-            font-family: Raleway, Helvetica, sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            opacity: 0.85;
+            line-height: 1.65;
+            font-family: var(--font-display);
+            font-weight: 300;
         }
 
         /* Floating particles */
@@ -96,13 +128,13 @@
 
         /* Main Content Sections */
         .content-section {
-            padding: 100px 0;
+            padding: 76px 0;
             position: relative;
-            background: #4C5C96;
+            background: var(--panel-blue);
         }
 
         .section-alt {
-            background: #45558D;
+            background: var(--panel-alt);
         }
 
         .container {
@@ -111,9 +143,20 @@
             padding: 0 50px;
         }
 
+        .section-eyebrow {
+            display: inline-block;
+            color: var(--accent-light);
+            font-family: var(--font-display);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 50px;
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s ease;
@@ -125,10 +168,11 @@
         }
 
         .section-header h2 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #f8f9fa;
-            margin-bottom: 20px;
-            font-weight: 600;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             position: relative;
         }
 
@@ -156,22 +200,23 @@
         /* Mission Cards */
         .mission-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 10px;
         }
 
         .mission-card {
             background: white;
-            padding: 50px 40px;
-            border-radius: 20px;
+            padding: 40px 34px;
+            border-radius: var(--radius-lg);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            text-align: left;
             transition: all 0.4s ease;
             opacity: 0;
             transform: translateY(40px);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(15, 23, 42, 0.04);
         }
 
         .mission-card::before {
@@ -200,90 +245,85 @@
         }
 
         .mission-icon {
-            width: 80px;
-            height: 80px;
-            background: #34495e;
-            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 2rem;
+            margin: 0 0 22px;
+            font-size: 1.7rem;
             color: white;
             transition: all 0.4s ease;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
         }
 
         .mission-card:hover .mission-icon {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.08) rotate(4deg);
         }
 
         .mission-card h3 {
-            font-size: 1.5rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-weight: 600;
+            font-size: 1.4rem;
+            color: var(--ink);
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
 
         .mission-card p {
-            color: #464c4d;
+            color: #5b6472;
             line-height: 1.6;
-            font-family: Raleway, Helvetica, sans-serif;
+            font-family: var(--font-display);
+            font-size: 0.96rem;
         }
 
-        /* Team Section Styles */
-        .team-grid {
+        /* Value Pillars (Vision section) */
+        .value-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 46px;
         }
 
-        .team-member {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
+        .value-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: var(--radius-md);
+            padding: 28px 26px;
+            text-align: left;
+            transition: all 0.3s var(--ease);
         }
 
-        .team-member:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        .value-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.12);
         }
 
-        .team-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            margin: 0 auto 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-        }
-
-        .team-member h4 {
-            font-size: 1.5rem;
-            color: #2c3e50;
+        .value-card .value-number {
+            display: block;
+            color: var(--accent-light);
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
             margin-bottom: 10px;
-            font-weight: 600;
         }
 
-        .role {
-            color: #34495e;
-            font-weight: 500;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+        .value-card h4 {
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
         }
 
-        .team-member p {
-            color: #7f8c8d;
+        .value-card p {
+            color: var(--text-muted);
             line-height: 1.6;
+            font-size: 0.92rem;
+            font-family: var(--font-display);
+            margin: 0;
         }
 
 
@@ -328,17 +368,13 @@
             }
 
             .mission-grid,
-            .team-grid {
+            .value-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 24px;
             }
 
             .content-section {
-                padding: 60px 0;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+                padding: 50px 0;
             }
         }
     </style>
@@ -384,6 +420,7 @@
         <section class="content-section">
             <div class="container">
                 <div class="section-header">
+                    <span class="section-eyebrow">Why We Exist</span>
                     <h2>Our Mission</h2>
                     <p>Cause Circuit is a youth-led initiative that empowers high school students across the Durham Region to take meaningful action through volunteering. We strive to cultivate a culture of compassion, leadership, and civic responsibility by connecting students with opportunities that make a real difference in their communities.</p>
                 </div>
@@ -398,7 +435,11 @@
                         <h3>Empower</h3>
                         <p>By providing easy access to volunteer opportunities, we empower high school students to contribute their unique skills and talents where they're needed most.</p>
                     </div>
-
+                    <div class="mission-card">
+                        <div class="mission-icon">🌱</div>
+                        <h3>Grow</h3>
+                        <p>Every opportunity is a chance to build real-world skills, leadership experience, and confidence that students carry with them well beyond high school.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -407,13 +448,34 @@
         <section class="content-section section-alt">
             <div class="container">
                 <div class="section-header">
+                    <span class="section-eyebrow">Where We're Headed</span>
                     <h2>Our Vision</h2>
                     <p>We envision a vibrant and connected Durham Region where every high school student is inspired and equipped to contribute to positive change. By bridging the gap between youth and local organizations, Cause Circuit fosters a community where engagement, empathy, and collaboration thrive.</p>
                 </div>
+                <div class="value-grid">
+                    <div class="value-card">
+                        <span class="value-number">01</span>
+                        <h4>Accessibility</h4>
+                        <p>Removing barriers so every student, regardless of background, can find and act on opportunities to give back.</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="value-number">02</span>
+                        <h4>Community</h4>
+                        <p>Strengthening ties between students and the local organizations that keep the Durham Region thriving.</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="value-number">03</span>
+                        <h4>Leadership</h4>
+                        <p>Equipping students with the confidence and experience to lead initiatives of their own.</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="value-number">04</span>
+                        <h4>Transparency</h4>
+                        <p>Keeping opportunities up to date and easy to verify, so trust runs both ways.</p>
+                    </div>
+                </div>
             </div>
         </section>
-
-
 
     </div>
 
