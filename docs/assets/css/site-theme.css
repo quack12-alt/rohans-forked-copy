@@ -84,23 +84,79 @@ body {
 }
 
 .header-logo {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    margin-right: var(--space-sm);
+    margin-right: 11px;
     object-fit: cover;
 }
 
 #header #nav ul.links li a {
     color: #64748b !important;
+    font-weight: 500;
+    font-size: 0.92rem;
 }
 
 #header #nav ul.links li a:hover {
     color: #0f172a !important;
 }
 
+#header #nav ul.links li a.active {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+}
+
 #header #mobile-menu-toggle {
     color: #0f172a !important;
+}
+
+#nav a.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #2563eb;
+    color: #fff !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    padding: 9px 18px !important;
+    border-radius: 9px !important;
+    border: none !important;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.22);
+    text-decoration: none;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    margin-left: 8px;
+    transition: all 0.25s var(--ease);
+}
+
+#nav a.nav-cta:hover {
+    background-color: #1d4ed8;
+    color: #fff !important;
+    border-color: transparent !important;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.32);
+}
+
+.text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #2563eb;
+    font-weight: 700;
+    font-size: 0.98rem;
+    text-decoration: none;
+}
+
+.text-link:hover {
+    color: #1d4ed8;
+}
+
+.text-link-teal {
+    color: #0d9488;
+}
+
+.text-link-teal:hover {
+    color: #0f766e;
 }
 
 /* ---------- Hero shell ---------- */
@@ -152,11 +208,11 @@ body {
 }
 
 .logo-img {
-    width: 88px;
-    height: 88px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
 }
 
 /* ---------- Particles ---------- */
