@@ -47,9 +47,23 @@
     --text-3xl: clamp(2.6rem, 5vw, 3.75rem);
 }
 
+html {
+    font-size: 16px;
+}
+
+body,
+input,
+select,
+textarea {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #1e293b;
+}
+
 body {
     background: #d7e6f9;
-    font-family: var(--font-body);
     overflow-x: hidden;
     padding-top: 80px;
     -webkit-font-smoothing: antialiased;
