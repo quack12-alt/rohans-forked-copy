@@ -69,12 +69,13 @@
 			var mobileMenuHTML = `
 				<nav id="mobile-menu">
 					<div class="inner">
+						<a href="#" class="close" aria-label="Close menu">&times;</a>
 						<ul class="links">
 							<li><a href="index.html">Home</a></li>
 							<li><a href="aboutus.html">About Us</a></li>
 							<li><a href="opportunities.html">Opportunities</a></li>
-							
 						</ul>
+						<a href="opportunities.html" class="mobile-nav-cta">Get Involved</a>
 					</div>
 				</nav>
 			`;
@@ -89,43 +90,48 @@
 	var $mobileMenu = $('#mobile-menu');
 	var $mobileToggle = $('#mobile-menu-toggle');
 
+	function closeMobileMenu() {
+		$mobileMenu.removeClass('is-visible');
+		$mobileToggle.removeClass('is-active');
+		$body.removeClass('nav-open');
+	}
+
 	// Mobile menu toggle
 	$body.on('click', '#mobile-menu-toggle', function (event) {
 		event.preventDefault();
 		event.stopPropagation();
-		$mobileMenu.toggleClass('is-visible');
-		$(this).toggleClass('is-active');
+		var opening = !$mobileMenu.hasClass('is-visible');
+		$mobileMenu.toggleClass('is-visible', opening);
+		$(this).toggleClass('is-active', opening);
+		$body.toggleClass('nav-open', opening);
 	});
 
 	// Close mobile menu when clicking close button
 	$body.on('click', '#mobile-menu .close', function (event) {
 		event.preventDefault();
-		$mobileMenu.removeClass('is-visible');
-		$mobileToggle.removeClass('is-active');
+		closeMobileMenu();
 	});
 
 	// Close mobile menu when clicking on a menu link
 	$body.on('click', '#mobile-menu a:not(.close)', function () {
-		$mobileMenu.removeClass('is-visible');
-		$mobileToggle.removeClass('is-active');
+		closeMobileMenu();
 	});
 
 	// Close mobile menu when clicking outside
 	$(document).on('click', function (event) {
-		if (!$mobileMenu.is(event.target) &&
-			!$mobileToggle.is(event.target) &&
+		if ($mobileMenu.hasClass('is-visible') &&
+			!$mobileMenu.is(event.target) &&
 			$mobileMenu.has(event.target).length === 0 &&
-			!$mobileToggle.has(event.target).length === 0) {
-			$mobileMenu.removeClass('is-visible');
-			$mobileToggle.removeClass('is-active');
+			!$mobileToggle.is(event.target) &&
+			$mobileToggle.has(event.target).length === 0) {
+			closeMobileMenu();
 		}
 	});
 
 	// Close mobile menu on escape key
 	$body.on('keydown', function (event) {
 		if (event.keyCode == 27) {
-			$mobileMenu.removeClass('is-visible');
-			$mobileToggle.removeClass('is-active');
+			closeMobileMenu();
 		}
 	});
 
@@ -147,7 +153,7 @@
 	highlightActivePage();
 
 	// Smooth scrolling for anchor links (if any) - account for sticky header
-	$body.on('click', 'a[href^="#"]', function (event) {
+	$body.on('click', 'a[href^="#"]:not([href="#"]):not(#mobile-menu-toggle)', function (event) {
 		var target = $(this.getAttribute('href'));
 		if (target.length) {
 			event.preventDefault();

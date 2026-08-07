@@ -4,7 +4,7 @@
 	<title>CauseCircuit</title>
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" type="x-icon" href="images/causecircuit-logo.png">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
@@ -225,7 +225,7 @@
 	<div id="page-wrapper">
 
 		<header id="header">
-			<h1><a href="index.html"><img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="header-logo">CauseCircuit</a></h1>
+			<h1><a href="index.html"><img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="header-logo" width="34" height="34" decoding="async">CauseCircuit</a></h1>
 
 			<nav id="nav">
 				<ul class="links">
@@ -244,7 +244,7 @@
 		<section class="hero-section">
 			<div class="hero-content">
 				<div class="logo">
-					<img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="logo-img">
+					<img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="logo-img" width="96" height="96" decoding="async">
 				</div>
 				<h1>Volunteering made simple.<br><span class="hero-highlight">Opportunities that matter.</span></h1>
 				<p>Cause Circuit connects Durham Region high school students with meaningful volunteer work — and the communities that need them.</p>
@@ -281,7 +281,7 @@
 			<div class="container">
 				<div class="about-grid">
 					<div class="about-image">
-						<img src="images/pic01.jpg" alt="About CauseCircuit" />
+						<img src="images/pic01.jpg" alt="About CauseCircuit" loading="lazy" decoding="async" />
 					</div>
 					<div class="about-content">
 						<span class="section-eyebrow">Who We Are</span>
@@ -312,7 +312,7 @@
 						<a href="#" class="text-link text-link-teal">Follow us →</a>
 					</div>
 					<div class="social-image">
-						<img src="images/pic02.jpg" alt="Social Media" />
+						<img src="images/pic02.jpg" alt="Social Media" loading="lazy" decoding="async" />
 					</div>
 				</div>
 			</div>
@@ -343,7 +343,7 @@
 	<footer class="site-footer">
 		<div class="container">
 			<div class="footer-brand">
-				<img src="images/causecircuit-logo.png" alt="CauseCircuit Logo">
+				<img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" width="28" height="28" loading="lazy" decoding="async">
 				CauseCircuit
 			</div>
 			<ul class="footer-links">
@@ -492,7 +492,7 @@
 
 					card.innerHTML = `
 						<div class="card-image-container">
-							<img src="${opp.imagePath}" alt="${opp.name}" onerror="this.src='images/causecircuit-logo.png'" />
+							<img src="${opp.imagePath}" alt="${opp.name}" loading="lazy" decoding="async" onerror="this.src='images/causecircuit-logo.png'" />
 							<div class="location-tag">${opp.city}</div>
 						</div>
 						<div class="card-content">
@@ -533,7 +533,7 @@
 
 			popupContent.innerHTML = `
 				<div class="popup-header">
-					<img src="${opportunity.imagePath}" alt="${opportunity.name}" onerror="this.src='images/causecircuit-logo.png'" />
+					<img src="${opportunity.imagePath}" alt="${opportunity.name}" decoding="async" onerror="this.src='images/causecircuit-logo.png'" />
 					<div class="popup-location-tag">${opportunity.city}</div>
 				</div>
 				<h2 class="popup-title">${opportunity.name}</h2>
@@ -562,10 +562,14 @@
 			`;
 
 			popup.classList.add('active');
+			document.body.classList.add('modal-open');
 
-			popupContent.querySelector('.popup-close').addEventListener('click', () => {
-				popup.classList.remove('active');
-			});
+			popupContent.querySelector('.popup-close').addEventListener('click', closeOpportunityPopup);
+		}
+
+		function closeOpportunityPopup() {
+			popup.classList.remove('active');
+			document.body.classList.remove('modal-open');
 		}
 
 		document.addEventListener('click', function(event) {
@@ -586,7 +590,13 @@
 
 		popup.addEventListener('click', (event) => {
 			if (event.target === popup) {
-				popup.classList.remove('active');
+				closeOpportunityPopup();
+			}
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && popup.classList.contains('active')) {
+				closeOpportunityPopup();
 			}
 		});
 	</script>

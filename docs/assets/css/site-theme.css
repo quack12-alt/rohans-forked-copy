@@ -155,6 +155,69 @@ body {
 
 #header #mobile-menu-toggle {
     color: #0f172a !important;
+    width: 44px;
+    height: 44px;
+    margin: -6px -6px -6px 0;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 980px) {
+    #header #mobile-menu-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ---------- Mobile menu & scroll lock ---------- */
+body.nav-open,
+body.modal-open {
+    overflow: hidden;
+}
+
+#mobile-menu .inner {
+    position: relative;
+}
+
+#mobile-menu .close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    box-sizing: border-box;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: none !important;
+}
+
+#mobile-menu a {
+    margin-top: 0 !important;
+    padding: 14px 0 !important;
+    min-height: 44px;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center;
+}
+
+#mobile-menu .mobile-nav-cta {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18px;
+    padding: 13px 20px !important;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #fff !important;
+    font-weight: 600;
+    border-bottom: none !important;
 }
 
 #nav a.nav-cta {

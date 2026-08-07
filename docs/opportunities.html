@@ -5,7 +5,7 @@
     <title>CauseCircuit - Volunteer Opportunities</title>
     <meta charset="utf-8" />
     <link rel="shortcut icon" type="x-icon" href="images/causecircuit-logo.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" />
@@ -211,9 +211,11 @@
             }
 
             .filter-dropdown,
-            .filter-search {
+            input.filter-search {
                 width: 100%;
                 min-width: 0;
+                /* >=16px prevents iOS Safari from auto-zooming the viewport on focus */
+                font-size: 16px;
             }
 
             .hours-tracker-box {
@@ -243,7 +245,7 @@
     <div id="page-wrapper">
 
         <header id="header">
-            <h1><a href="index.html"><img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="header-logo">CauseCircuit</a></h1>
+            <h1><a href="index.html"><img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" class="header-logo" width="34" height="34" decoding="async">CauseCircuit</a></h1>
             <nav id="nav">
                 <ul class="links">
                     <li><a href="index.html">Home</a></li>
@@ -325,7 +327,7 @@
     <footer class="site-footer">
         <div class="container">
             <div class="footer-brand">
-                <img src="images/causecircuit-logo.png" alt="CauseCircuit Logo">
+                <img src="images/causecircuit-logo.png" alt="CauseCircuit Logo" width="28" height="28" loading="lazy" decoding="async">
                 CauseCircuit
             </div>
             <ul class="footer-links">
@@ -406,7 +408,7 @@
                 
                 card.innerHTML = `
                     <div class="card-image-container">
-                        <img src="${opportunity.imagePath}" alt="${opportunity.name}" onerror="this.src='images/causecircuit-logo.png'" />
+                        <img src="${opportunity.imagePath}" alt="${opportunity.name}" loading="lazy" decoding="async" onerror="this.src='images/causecircuit-logo.png'" />
                         <div class="location-tag">${opportunity.city}</div>
                     </div>
                     <div class="card-content">
@@ -545,7 +547,7 @@
 
             popupContent.innerHTML = `
                 <div class="popup-header">
-                    <img src="${opportunity.imagePath}" alt="${opportunity.name}" onerror="this.src='images/causecircuit-logo.png'" />
+                    <img src="${opportunity.imagePath}" alt="${opportunity.name}" decoding="async" onerror="this.src='images/causecircuit-logo.png'" />
                     <div class="popup-location-tag">${opportunity.city}</div>
                 </div>
                 <h2 class="popup-title">${opportunity.name}</h2>
@@ -573,9 +575,14 @@
                 </div>
             `;
             popup.classList.add('active');
-            popupContent.querySelector('.popup-close').addEventListener('click', () => {
-                popup.classList.remove('active');
-            });
+            document.body.classList.add('modal-open');
+            popupContent.querySelector('.popup-close').addEventListener('click', closeOpportunityPopup);
+        }
+
+        function closeOpportunityPopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.remove('active');
+            document.body.classList.remove('modal-open');
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -605,7 +612,13 @@
 
             popup.addEventListener('click', (event) => {
                 if (event.target === popup) {
-                    popup.classList.remove('active');
+                    closeOpportunityPopup();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && popup.classList.contains('active')) {
+                    closeOpportunityPopup();
                 }
             });
         });
