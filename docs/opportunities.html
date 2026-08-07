@@ -1052,7 +1052,10 @@
                                 if (rawImagePath.includes('drive.google.com')) {
                                     const matches = rawImagePath.match(/(?:id=|\/d\/)([a-zA-Z0-9-_]+)/);
                                     if (matches && matches[1]) {
-                                        finalImagePath = `https://docs.google.com/uc?export=view&id=${matches[1]}`;
+                                        // Drive's thumbnail endpoint reliably hotlinks (uc?export=view
+                                        // frequently 403s) and lets us request one fixed size so every
+                                        // host photo arrives pre-scaled to match the tile.
+                                        finalImagePath = `https://drive.google.com/thumbnail?id=${matches[1]}&sz=w1000`;
                                     }
                                 } else {
                                     finalImagePath = rawImagePath;
