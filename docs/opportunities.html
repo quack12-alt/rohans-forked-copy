@@ -555,11 +555,58 @@
             font-size: 1.02rem;
         }
 
-        .popup-org {
-            color: var(--accent-light);
+        .popup-info-panel {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 4px 18px;
+            margin-bottom: 20px;
+        }
+
+        .popup-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .popup-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .popup-info-label {
+            color: var(--text-muted);
+            font-size: 0.76rem;
             font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .popup-info-value {
+            color: #f1f5f9;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .popup-info-value.muted {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .popup-info-value a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        .popup-info-value a:hover {
+            text-decoration: underline;
         }
 
         .popup-actions {
@@ -712,6 +759,17 @@
                 font-size: 0.78rem;
             }
 
+            .popup-info-row {
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .popup-info-value {
+                text-align: left;
+                white-space: normal;
+                width: 100%;
+            }
+
             .popup-actions {
                 flex-direction: column;
             }
@@ -858,6 +916,14 @@
         let volunteerOpportunities = [];
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRINdpIfqYzmz7lNtKIkIuz75kA3wAOtAyE2lThkMty1Gpn7X9p3xIFLXV-hyX28PC-0LyFreFc1JXU/pub?gid=351680604&single=true&output=csv";
 
+        function resolveOpportunityUrl(opportunity) {
+            let targetUrl = opportunity.website ? opportunity.website.trim() : '#';
+            if (targetUrl !== '#' && targetUrl !== '' && !/^https?:\/\//i.test(targetUrl)) {
+                targetUrl = 'https://' + targetUrl;
+            }
+            return targetUrl;
+        }
+
         function filterOpportunities(location, commitment, orgSearch) {
             let filtered = [...volunteerOpportunities];
 
@@ -897,10 +963,7 @@
                 
                 let hoursHTML = opportunity.hoursPerWeek ? `<div class="hours-per-week">Hours Required: ${opportunity.hoursPerWeek}</div>` : '';
                 
-                let targetUrl = opportunity.website ? opportunity.website.trim() : '#';
-                if (targetUrl !== '#' && targetUrl !== '' && !/^https?:\/\//i.test(targetUrl)) {
-                    targetUrl = 'https://' + targetUrl;
-                }
+                let targetUrl = resolveOpportunityUrl(opportunity);
 
                 let buttonHTML = '';
                 if (targetUrl && targetUrl !== '#') {
@@ -1038,6 +1101,13 @@
             const popup = document.getElementById('popup');
             const popupContent = document.getElementById('popup-content');
 
+            const websiteUrl = resolveOpportunityUrl(opportunity);
+            const hasWebsite = websiteUrl && websiteUrl !== '#';
+            const websiteValueClass = hasWebsite ? 'popup-info-value' : 'popup-info-value muted';
+            const websiteValueHTML = hasWebsite
+                ? `<a href="${websiteUrl}" target="_blank" rel="noopener">${websiteUrl.replace(/^https?:\/\//i, '')}</a>`
+                : 'Not provided';
+
             popupContent.innerHTML = `
                 <div class="popup-header">
                     <img src="${opportunity.imagePath}" alt="${opportunity.name}" onerror="this.src='images/causecircuit-logo.png'" />
@@ -1045,8 +1115,21 @@
                 </div>
                 <h2 class="popup-title">${opportunity.name}</h2>
                 <div class="popup-scroll-content">
+                    <div class="popup-info-panel">
+                        <div class="popup-info-row">
+                            <span class="popup-info-label">Host</span>
+                            <span class="popup-info-value">${opportunity.company}</span>
+                        </div>
+                        <div class="popup-info-row">
+                            <span class="popup-info-label">Website</span>
+                            <span class="${websiteValueClass}">${websiteValueHTML}</span>
+                        </div>
+                        <div class="popup-info-row">
+                            <span class="popup-info-label">Location</span>
+                            <span class="popup-info-value">${opportunity.city}</span>
+                        </div>
+                    </div>
                     <div class="popup-body">
-                        <p class="popup-org">Organization: ${opportunity.company}</p>
                         <p>${opportunity.detailedDescription}</p>
                     </div>
                 </div>
