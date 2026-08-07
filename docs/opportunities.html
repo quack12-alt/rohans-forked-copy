@@ -41,8 +41,8 @@
         }
 
         .filter-group-search {
-            flex: 1;
-            min-width: 200px;
+            flex: 2;
+            min-width: 240px;
         }
 
         .filter-label {
@@ -87,7 +87,7 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
         }
 
-        .filter-search {
+        input.filter-search {
             background: #fff;
             color: #1e293b;
             padding: 10px 14px;
@@ -101,15 +101,15 @@
             box-sizing: border-box;
         }
 
-        .filter-search::placeholder {
+        input.filter-search::placeholder {
             color: #94a3b8;
         }
 
-        .filter-search:hover {
+        input.filter-search:hover {
             border-color: #2563eb;
         }
 
-        .filter-search:focus {
+        input.filter-search:focus {
             outline: none;
             border-color: #2563eb;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
@@ -288,17 +288,6 @@
                             <option value="Uxbridge">Uxbridge</option>
                             <option value="Scugog">Scugog</option>
                             <option value="Brock">Brock</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label" for="distance-filter">Distance:</label>
-                        <select id="distance-filter" class="filter-dropdown">
-                            <option value="all">Any Distance</option>
-                            <option value="5">Within 5 km</option>
-                            <option value="10">Within 10 km</option>
-                            <option value="25">Within 25 km</option>
-                            <option value="50">Within 50 km</option>
                         </select>
                     </div>
 
@@ -592,7 +581,6 @@
 
             document.getElementById('location-filter').addEventListener('change', applyFilters);
             document.getElementById('commitment-filter').addEventListener('change', applyFilters);
-            document.getElementById('distance-filter').addEventListener('change', applyFilters);
             document.getElementById('org-search').addEventListener('input', applyFilters);
 
             const popup = document.getElementById('popup');
@@ -616,14 +604,6 @@
             popup.addEventListener('click', (event) => {
                 if (event.target === popup) {
                     popup.classList.remove('active');
-                }
-            });
-
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const heroContent = document.querySelector('.hero-content');
-                if (heroContent) {
-                    heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
                 }
             });
         });

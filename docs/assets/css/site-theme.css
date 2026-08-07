@@ -72,21 +72,24 @@ h1, h2, h3, h4, h5, h6 {
     color: inherit;
 }
 
+html {
+    scroll-padding-top: 90px;
+}
+
 body {
     background: #d7e6f9;
     overflow-x: hidden;
-    padding-top: 80px;
     -webkit-font-smoothing: antialiased;
 }
 
 /* ---------- Header ---------- */
 #header {
-    position: fixed !important;
+    position: sticky !important;
     top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
+    left: auto !important;
+    right: auto !important;
     width: 100% !important;
-    z-index: 10000 !important;
+    z-index: 50 !important;
     background: rgba(215, 230, 249, 0.85) !important;
     backdrop-filter: blur(14px) saturate(150%) !important;
     opacity: 1 !important;
@@ -94,6 +97,11 @@ body {
     transform: translateY(0) !important;
     transition: all 0.3s ease !important;
     border-bottom: 1px solid #b9d2f0 !important;
+    box-sizing: border-box !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    padding-left: max(32px, calc((100% - 1180px) / 2)) !important;
+    padding-right: max(32px, calc((100% - 1180px) / 2)) !important;
 }
 
 #header h1 {
@@ -105,6 +113,9 @@ body {
     color: #0f172a !important;
     display: flex !important;
     align-items: center !important;
+    font-size: 1.12rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
 }
 
 .header-logo {
@@ -119,6 +130,16 @@ body {
     color: #64748b !important;
     font-weight: 500;
     font-size: 0.92rem;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+#header #nav ul.links li a:hover {
+    background: transparent !important;
+    border-color: transparent !important;
 }
 
 #header #nav ul.links li a:hover {
@@ -211,7 +232,7 @@ body {
 
 .hero-content h1 {
     font-size: var(--text-3xl);
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: var(--space-sm);
     letter-spacing: -0.03em;
     line-height: 1.1;
@@ -301,7 +322,7 @@ body {
     font-size: var(--text-2xl);
     color: #0f172a;
     margin-bottom: var(--space-sm);
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.02em;
     position: relative;
 }

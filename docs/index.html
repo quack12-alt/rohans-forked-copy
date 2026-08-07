@@ -517,14 +517,6 @@
 				shuffleBtn.addEventListener('click', renderHomepageCards);
 			}
 
-			window.addEventListener('scroll', () => {
-				const scrolled = window.pageYOffset;
-				const heroContent = document.querySelector('.hero-content');
-				if (heroContent) {
-					heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
-				}
-			});
-
 			document.querySelectorAll('.section-header').forEach(el => cardObserver.observe(el));
 		});
 
