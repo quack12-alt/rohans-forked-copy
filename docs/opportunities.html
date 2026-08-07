@@ -163,8 +163,9 @@
 
         .filter-group {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
         }
 
         .filter-label {
@@ -184,6 +185,9 @@
             font-family: inherit;
             transition: all 0.25s ease;
             cursor: pointer;
+            min-width: 190px;
+            height: 42px;
+            box-sizing: border-box;
         }
 
         .filter-dropdown option {
@@ -196,6 +200,34 @@
         }
 
         .filter-dropdown:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+        }
+
+        .filter-search {
+            background: var(--surface-deep);
+            color: white;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            font-size: 0.92rem;
+            font-family: inherit;
+            transition: all 0.25s ease;
+            min-width: 220px;
+            height: 42px;
+            box-sizing: border-box;
+        }
+
+        .filter-search::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .filter-search:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .filter-search:focus {
             outline: none;
             border-color: var(--accent-light);
             box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
@@ -623,14 +655,16 @@
             }
 
             .filter-group {
+                width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 6px;
             }
 
-            .filter-dropdown {
+            .filter-dropdown,
+            .filter-search {
                 width: 100%;
-                justify-content: center;
+                min-width: 0;
             }
 
             .hours-tracker-box {
@@ -742,6 +776,11 @@
 
                 <div class="filter-container">
                     <div class="filter-group">
+                        <label class="filter-label" for="org-search">Search Organization:</label>
+                        <input type="text" id="org-search" class="filter-search" placeholder="e.g. Red Cross" autocomplete="off" />
+                    </div>
+
+                    <div class="filter-group">
                         <label class="filter-label" for="location-filter">Location:</label>
                         <select id="location-filter" class="filter-dropdown">
                             <option value="all">All Durham Region</option>
@@ -807,7 +846,7 @@
         let volunteerOpportunities = [];
         const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRINdpIfqYzmz7lNtKIkIuz75kA3wAOtAyE2lThkMty1Gpn7X9p3xIFLXV-hyX28PC-0LyFreFc1JXU/pub?gid=351680604&single=true&output=csv";
 
-        function filterOpportunities(location, commitment) {
+        function filterOpportunities(location, commitment, orgSearch) {
             let filtered = [...volunteerOpportunities];
 
             if (location !== 'all') {
@@ -817,7 +856,12 @@
             if (commitment !== 'all') {
                 filtered = filtered.filter(opp => opp.timeCommitment === commitment);
             }
-            
+
+            if (orgSearch) {
+                const query = orgSearch.trim().toLowerCase();
+                filtered = filtered.filter(opp => opp.company.toLowerCase().includes(query));
+            }
+
             return filtered;
         }
 
@@ -886,8 +930,9 @@
         function applyFilters() {
             const locationFilter = document.getElementById('location-filter').value;
             const commitmentFilter = document.getElementById('commitment-filter').value;
-            
-            const filteredOpportunities = filterOpportunities(locationFilter, commitmentFilter);
+            const orgSearch = document.getElementById('org-search').value;
+
+            const filteredOpportunities = filterOpportunities(locationFilter, commitmentFilter, orgSearch);
             generateOpportunityCards(filteredOpportunities);
         }
 
@@ -983,6 +1028,7 @@
             document.getElementById('location-filter').addEventListener('change', applyFilters);
             document.getElementById('commitment-filter').addEventListener('change', applyFilters);
             document.getElementById('distance-filter').addEventListener('change', applyFilters);
+            document.getElementById('org-search').addEventListener('input', applyFilters);
 
             const popup = document.getElementById('popup');
             const popupContent = document.getElementById('popup-content');
