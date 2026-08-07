@@ -62,6 +62,16 @@ textarea {
     color: #1e293b;
 }
 
+/* main.css's legacy template forces h1-h6 to Raleway, uppercase, and
+   letter-spaced — override so Inter is the real default everywhere
+   the design doesn't explicitly call for Raleway body copy. */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-body);
+    text-transform: none;
+    letter-spacing: normal;
+    color: inherit;
+}
+
 body {
     background: #d7e6f9;
     overflow-x: hidden;
