@@ -507,11 +507,22 @@ body.modal-open {
 }
 
 /* ---------- Opportunity cards (shared: index + opportunities pages) ---------- */
+/* Fixed column counts rather than auto-fill. auto-fill derives the count from
+   the container, so anywhere above ~950px it lands on four tracks while the
+   homepage only ever renders six cards - the second row then sits half empty,
+   and dragging the window makes the grid jump between three and four columns.
+   Three columns keeps six cards as two even rows at every desktop width. */
 .opportunities-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-md);
     margin-top: var(--space-xs);
+}
+
+@media (max-width: 980px) {
+    .opportunities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .opportunity-card {
@@ -974,10 +985,10 @@ body.modal-open {
     }
 
     .opportunities-grid {
-        /* Default minmax(260px) only ever fits one column on phone-width
-           screens; shrink the minimum so two narrower cards fit side by
-           side instead of one column taking the full width. */
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        /* Two per row on phones, same as the 980px rule above - only the gap
+           tightens here. Stated explicitly so the count cannot drift back to
+           three on wider phones the way the old auto-fill minimum did. */
+        grid-template-columns: repeat(2, 1fr);
         gap: var(--space-sm);
     }
 
