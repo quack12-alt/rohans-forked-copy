@@ -1,4 +1,6 @@
-@import url(fontawesome-all.min.css);
+/* FontAwesome import removed: the only glyph the site used was the fa-bars
+   hamburger, now an inline SVG in each page's header. Nothing else references
+   an `icon` class, so the ~78KB webfont was being downloaded unused. */
 @import url("https://fonts.googleapis.com/css?family=Raleway:200,700|Source+Sans+Pro:300,600,300italic,600italic");
 
 

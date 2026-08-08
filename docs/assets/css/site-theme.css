@@ -142,9 +142,6 @@ body {
 #header #nav ul.links li a:hover {
     background: transparent !important;
     border-color: transparent !important;
-}
-
-#header #nav ul.links li a:hover {
     color: #0f172a !important;
 }
 
@@ -159,6 +156,15 @@ body {
     height: 44px;
     margin: -6px -6px -6px 0;
     box-sizing: border-box;
+}
+
+/* The hamburger is an inline SVG rather than a Font Awesome glyph: the
+   template's `icon solid fa-bars` span needed fontawesome-all.min.css,
+   which no page ever loaded, so the button rendered blank. */
+#header #mobile-menu-toggle .menu-icon {
+    width: 24px;
+    height: 24px;
+    display: block;
 }
 
 @media screen and (max-width: 980px) {

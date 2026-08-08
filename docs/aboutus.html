@@ -1,16 +1,14 @@
 <!DOCTYPE HTML>
 
-<html>
+<html lang="en">
 
 <head>
     <title>CauseCircuit - About Us</title>
     <meta charset="utf-8" />
+    <meta name="description" content="CauseCircuit is a youth-led initiative empowering Durham Region high school students to take meaningful action through volunteering." />
     <link rel="shortcut icon" type="x-icon" href="images/causecircuit-logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript>
-        <link rel="stylesheet" href="assets/css/noscript.css" />
-    </noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
@@ -264,8 +262,10 @@
                 <a href="opportunities.html" class="nav-cta">Get Involved</a>
             </nav>
             <!-- Mobile Menu Toggle -->
-            <a href="#mobile-menu" id="mobile-menu-toggle">
-                <span class="icon solid fa-bars"></span>
+            <a href="#mobile-menu" id="mobile-menu-toggle" role="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
             </a>
         </header>
 
@@ -394,36 +394,23 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
     <script>
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
+        // Stagger the mission rows in as they scroll into view.
         document.addEventListener('DOMContentLoaded', () => {
-            const elementsToAnimate = document.querySelectorAll('.mission-row');
-            elementsToAnimate.forEach(el => observer.observe(el));
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-            // Add staggered animation delays
             document.querySelectorAll('.mission-row').forEach((row, index) => {
                 row.style.transitionDelay = `${index * 0.15}s`;
+                observer.observe(row);
             });
         });
     </script>

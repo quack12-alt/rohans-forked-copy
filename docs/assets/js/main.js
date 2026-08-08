@@ -1,166 +1,122 @@
 /*
-	Solid State by HTML5 UP - Modified for Consistent Top Navigation with Sticky Header
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+	Site chrome: preload flag, mobile menu, active nav link, smooth scrolling.
+
+	Originally the Solid State theme's main.js (html5up.net, CCA 3.0). Every
+	template feature the site actually uses is reimplemented here without
+	jQuery, so the page no longer ships jQuery, scrollex, browser.js,
+	breakpoints.js or util.js just to run ~100 lines of DOM work.
 */
-(function ($) {
-	var $window = $(window),
-		$body = $('body'),
-		$header = $('#header'),
-		$banner = $('#banner');
+(function () {
+	'use strict';
 
-	// Breakpoints.
-	breakpoints({
-		xlarge: '(max-width: 1680px)',
-		large: '(max-width: 1280px)',
-		medium: '(max-width: 980px)',
-		small: '(max-width: 736px)',
-		xsmall: '(max-width: 480px)'
-	});
+	var body = document.body;
+	var header = document.getElementById('header');
 
-	// Play initial animations on page load.
-	$window.on('load', function () {
+	// main.css suppresses all animation/transition while .is-preload is set,
+	// so nothing animates mid-layout on first paint.
+	window.addEventListener('load', function () {
 		window.setTimeout(function () {
-			$body.removeClass('is-preload');
+			body.classList.remove('is-preload');
 		}, 100);
 	});
 
-	// Ensure header has consistent structure on all pages
-	function ensureConsistentHeader() {
-		var $existingHeader = $('#header');
+	/* ---------- Mobile menu ---------- */
 
-		// If header exists but doesn't have the new navigation structure, update it
-		if ($existingHeader.length > 0) {
-			var $nav = $existingHeader.find('#nav');
-			var $mobileToggle = $existingHeader.find('#mobile-menu-toggle');
-
-			// If the header doesn't have the new nav structure, add it
-			if ($nav.length === 0) {
-				// Remove old menu link if it exists
-				$existingHeader.find('nav a[href="#menu"]').parent().remove();
-
-				// Add new navigation structure
-				var navHTML = `
-					<nav id="nav">
-						<ul class="links">
-							<li><a href="index.html">Home</a></li>
-							<li><a href="aboutus.html">About Us</a></li>
-							<li><a href="opportunities.html">Opportunities</a></li>
-							
-						</ul>
-					</nav>
-				`;
-
-				// Add mobile menu toggle
-				var mobileToggleHTML = `
-					<a href="#mobile-menu" id="mobile-menu-toggle">
-						<span class="icon solid fa-bars"></span>
-					</a>
-				`;
-
-				$existingHeader.append(navHTML);
-				$existingHeader.append(mobileToggleHTML);
-			}
-		}
-
-		// Ensure mobile menu exists with consistent structure
-		var $mobileMenu = $('#mobile-menu');
-		if ($mobileMenu.length === 0) {
-			var mobileMenuHTML = `
-				<nav id="mobile-menu">
-					<div class="inner">
-						<a href="#" class="close" aria-label="Close menu">&times;</a>
-						<ul class="links">
-							<li><a href="index.html">Home</a></li>
-							<li><a href="aboutus.html">About Us</a></li>
-							<li><a href="opportunities.html">Opportunities</a></li>
-						</ul>
-						<a href="opportunities.html" class="mobile-nav-cta">Get Involved</a>
-					</div>
-				</nav>
-			`;
-			$body.append(mobileMenuHTML);
-		}
+	/*
+		The slide-out menu is injected rather than repeated in all three
+		pages' markup, so the links only need updating in one place. The
+		desktop <nav> is hand-authored per page (it carries the page's
+		active link and CTA), so nothing is injected for it.
+	*/
+	function buildMobileMenu() {
+		var nav = document.createElement('nav');
+		nav.id = 'mobile-menu';
+		nav.innerHTML =
+			'<div class="inner">' +
+				'<a href="#" class="close" aria-label="Close menu">&times;</a>' +
+				'<ul class="links">' +
+					'<li><a href="index.html">Home</a></li>' +
+					'<li><a href="aboutus.html">About Us</a></li>' +
+					'<li><a href="opportunities.html">Opportunities</a></li>' +
+				'</ul>' +
+				'<a href="opportunities.html" class="mobile-nav-cta">Get Involved</a>' +
+			'</div>';
+		body.appendChild(nav);
+		return nav;
 	}
 
-	// Run the header consistency check
-	ensureConsistentHeader();
+	var mobileMenu = document.getElementById('mobile-menu') || buildMobileMenu();
+	var mobileToggle = document.getElementById('mobile-menu-toggle');
 
-	// Mobile menu functionality
-	var $mobileMenu = $('#mobile-menu');
-	var $mobileToggle = $('#mobile-menu-toggle');
+	function setMenuOpen(open) {
+		mobileMenu.classList.toggle('is-visible', open);
+		body.classList.toggle('nav-open', open);
+		if (mobileToggle) {
+			mobileToggle.classList.toggle('is-active', open);
+			mobileToggle.setAttribute('aria-expanded', String(open));
+		}
+	}
 
 	function closeMobileMenu() {
-		$mobileMenu.removeClass('is-visible');
-		$mobileToggle.removeClass('is-active');
-		$body.removeClass('nav-open');
+		if (mobileMenu.classList.contains('is-visible')) setMenuOpen(false);
 	}
 
-	// Mobile menu toggle
-	$body.on('click', '#mobile-menu-toggle', function (event) {
-		event.preventDefault();
-		event.stopPropagation();
-		var opening = !$mobileMenu.hasClass('is-visible');
-		$mobileMenu.toggleClass('is-visible', opening);
-		$(this).toggleClass('is-active', opening);
-		$body.toggleClass('nav-open', opening);
-	});
-
-	// Close mobile menu when clicking close button
-	$body.on('click', '#mobile-menu .close', function (event) {
-		event.preventDefault();
-		closeMobileMenu();
-	});
-
-	// Close mobile menu when clicking on a menu link
-	$body.on('click', '#mobile-menu a:not(.close)', function () {
-		closeMobileMenu();
-	});
-
-	// Close mobile menu when clicking outside
-	$(document).on('click', function (event) {
-		if ($mobileMenu.hasClass('is-visible') &&
-			!$mobileMenu.is(event.target) &&
-			$mobileMenu.has(event.target).length === 0 &&
-			!$mobileToggle.is(event.target) &&
-			$mobileToggle.has(event.target).length === 0) {
-			closeMobileMenu();
-		}
-	});
-
-	// Close mobile menu on escape key
-	$body.on('keydown', function (event) {
-		if (event.keyCode == 27) {
-			closeMobileMenu();
-		}
-	});
-
-	// Highlight active page in navigation
-	function highlightActivePage() {
-		var currentPage = window.location.pathname.split('/').pop();
-		if (currentPage === '' || currentPage === '/') {
-			currentPage = 'index.html';
-		}
-
-		// Remove active class from all nav links
-		$('#nav a, #mobile-menu a').removeClass('active');
-
-		// Add active class to current page link
-		$('#nav a[href="' + currentPage + '"], #mobile-menu a[href="' + currentPage + '"]').addClass('active');
-	}
-
-	// Run active page highlighting
-	highlightActivePage();
-
-	// Smooth scrolling for anchor links (if any) - account for sticky header
-	$body.on('click', 'a[href^="#"]:not([href="#"]):not(#mobile-menu-toggle)', function (event) {
-		var target = $(this.getAttribute('href'));
-		if (target.length) {
+	if (mobileToggle) {
+		mobileToggle.addEventListener('click', function (event) {
 			event.preventDefault();
-			$('html, body').animate({
-				scrollTop: target.offset().top - ($header.outerHeight() || 0)
-			}, 800);
-		}
+			// Without this the document-level handler below sees the same
+			// click and closes the menu again immediately.
+			event.stopPropagation();
+			setMenuOpen(!mobileMenu.classList.contains('is-visible'));
+		});
+	}
+
+	mobileMenu.addEventListener('click', function (event) {
+		if (!event.target.closest('a')) return;
+		if (event.target.closest('.close')) event.preventDefault();
+		closeMobileMenu();
 	});
 
-})(jQuery);
+	document.addEventListener('click', function (event) {
+		if (!mobileMenu.contains(event.target)) closeMobileMenu();
+	});
+
+	document.addEventListener('keydown', function (event) {
+		if (event.key === 'Escape') closeMobileMenu();
+	});
+
+	/* ---------- Active nav link ---------- */
+
+	/*
+		Each page hand-marks its own active link; this only fills in the
+		mobile menu, which is injected and so cannot. The "Get Involved"
+		CTAs point at opportunities.html too, and are deliberately excluded -
+		they are buttons, not nav state.
+	*/
+	(function highlightActivePage() {
+		var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+		var links = mobileMenu.querySelectorAll('ul.links a[href="' + currentPage + '"]');
+		Array.prototype.forEach.call(links, function (link) {
+			link.classList.add('active');
+		});
+	})();
+
+	/* ---------- Smooth scrolling for in-page anchors ---------- */
+
+	document.addEventListener('click', function (event) {
+		var link = event.target.closest('a[href^="#"]');
+		if (!link) return;
+
+		var hash = link.getAttribute('href');
+		if (hash === '#' || link.id === 'mobile-menu-toggle') return;
+
+		var target = document.querySelector(hash);
+		if (!target) return;
+
+		event.preventDefault();
+		// Offset by the sticky header so the target isn't hidden underneath it.
+		var top = target.getBoundingClientRect().top + window.pageYOffset -
+			(header ? header.offsetHeight : 0);
+		window.scrollTo({ top: top, behavior: 'smooth' });
+	});
+})();
