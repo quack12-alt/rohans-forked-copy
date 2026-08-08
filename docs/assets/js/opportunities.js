@@ -40,6 +40,11 @@
 			.replace(/'/g, '&#39;');
 	}
 
+	// Case- and whitespace-insensitive, since these are free-text form answers.
+	function isSameText(a, b) {
+		return String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
+	}
+
 	function resolveImage(rawImagePath) {
 		if (!rawImagePath) return FALLBACK_IMAGE;
 
@@ -185,7 +190,15 @@
 			imagePath: resolveImage(read(pick(['image', 'logo', 'pic']))),
 			timeCommitment: commitment,
 			commitmentLabel: COMMITMENT_LABELS[commitment],
-			hoursPerWeek: formatHours(rawHours)
+			hoursPerWeek: formatHours(rawHours),
+			/*
+				Kept separate from the hours bucket above rather than folded
+				into it: "Weekdays" answers when you would volunteer, not how
+				much of your week it costs, and the commitment filter needs the
+				latter. Shown as its own popup row, and only when the form
+				actually collected one.
+			*/
+			schedule: read(pick(['schedule']))
 		};
 	}
 
@@ -259,6 +272,16 @@
 			? '<a href="' + escapeHtml(targetUrl) + '" target="_blank" rel="noopener noreferrer" class="card-btn">Learn more</a>'
 			: '<button type="button" class="card-btn special">Learn more</button>';
 
+		/*
+			The form has no separate opportunity-title question, so the title
+			falls back to the organization name and the subtitle would repeat
+			the heading verbatim. Drop it in that case; it returns on its own
+			once the form collects a real title.
+		*/
+		var orgHTML = isSameText(opportunity.company, opportunity.name)
+			? ''
+			: '<p class="card-org">' + escapeHtml(opportunity.company) + '</p>';
+
 		var commitmentHTML = '';
 		var hoursHTML = '';
 		if (options.showCommitment) {
@@ -280,7 +303,7 @@
 			'</div>' +
 			'<div class="card-content">' +
 				'<h3>' + escapeHtml(opportunity.name) + '</h3>' +
-				'<p class="card-org">' + escapeHtml(opportunity.company) + '</p>' +
+				orgHTML +
 				'<p class="card-desc-clamp">' + escapeHtml(opportunity.description) + '</p>' +
 				commitmentHTML +
 				hoursHTML +
@@ -338,6 +361,17 @@
 				'</div>';
 		}
 
+		// Same reasoning as the card subtitle: with no title question on the
+		// form, Host repeats the popup heading word for word.
+		var hostRow = isSameText(opportunity.company, opportunity.name)
+			? ''
+			: row('Host', escapeHtml(opportunity.company));
+
+		// Only present once the form asks for a schedule.
+		var scheduleRow = opportunity.schedule
+			? row('Schedule', escapeHtml(opportunity.schedule))
+			: '';
+
 		return '' +
 			'<div class="popup-header">' +
 				'<img src="' + escapeHtml(opportunity.imagePath) + '" alt="' + escapeHtml(opportunity.name) + '"' +
@@ -347,10 +381,11 @@
 			'<h2 class="popup-title" id="popup-title">' + escapeHtml(opportunity.name) + '</h2>' +
 			'<div class="popup-scroll-content">' +
 				'<div class="popup-info-panel">' +
-					row('Host', escapeHtml(opportunity.company)) +
+					hostRow +
 					row('Website', websiteValue, websiteUrl ? '' : ' muted') +
 					row('Location', escapeHtml(opportunity.city)) +
 					row('Time Commitment', escapeHtml(opportunity.hoursPerWeek)) +
+					scheduleRow +
 				'</div>' +
 				'<div class="popup-body"><p>' + escapeHtml(opportunity.description) + '</p></div>' +
 			'</div>' +
