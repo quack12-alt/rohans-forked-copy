@@ -536,12 +536,20 @@ body.modal-open {
     height: 190px;
     overflow: hidden;
     background: #eef1f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
 }
 
 .opportunity-card img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* Org-submitted images vary wildly in aspect ratio (square logos,
+       wide banners, tall photos) - contain keeps the whole image legible
+       instead of cover cropping the edges/subject off. */
+    object-fit: contain;
     transition: transform 0.5s var(--ease);
 }
 
@@ -716,12 +724,20 @@ body.modal-open {
     position: relative;
     height: clamp(180px, 28vw, 280px);
     overflow: hidden;
+    background: #eef1f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .popup-header img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* Match card thumbnails: contain instead of cover so full-size org
+       logos/photos of any aspect ratio stay legible, not cropped. */
+    object-fit: contain;
 }
 
 .popup-location-tag {
