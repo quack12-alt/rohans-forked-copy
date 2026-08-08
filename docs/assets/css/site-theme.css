@@ -489,13 +489,14 @@ body.modal-open {
 }
 
 .btn-ghost {
-    background: rgba(255, 255, 255, 0.08);
-    color: #f1f5f9;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #ffffff;
+    color: var(--ink);
+    border: 1px solid #dce8f7;
 }
 
 .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.16);
+    background: #f4f8fd;
+    border-color: #b9d2f0;
 }
 
 /* ---------- Opportunity cards (shared: index + opportunities pages) ---------- */
@@ -692,8 +693,8 @@ body.modal-open {
 }
 
 .popup-content {
-    background: linear-gradient(160deg, var(--surface) 0%, var(--surface-soft) 100%);
-    border: 1px solid var(--border-soft);
+    background: #ffffff;
+    border: 1px solid #b9d2f0;
     border-radius: 24px;
     max-width: min(90vw, 680px);
     width: 100%;
@@ -744,11 +745,11 @@ body.modal-open {
     left: 0;
     right: 0;
     height: 90px;
-    background: linear-gradient(transparent, rgba(30, 41, 59, 0.95));
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.95));
 }
 
 .popup-title {
-    color: #f8fafc;
+    color: var(--ink);
     padding: 22px 26px 8px;
     margin: 0;
     font-size: var(--text-xl);
@@ -763,14 +764,14 @@ body.modal-open {
 }
 
 .popup-body {
-    color: var(--text-muted);
+    color: var(--ink-soft);
     line-height: 1.7;
     font-size: var(--text-md);
 }
 
 .popup-info-panel {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border-soft);
+    background: #f4f8fd;
+    border: 1px solid #dce8f7;
     border-radius: var(--radius-md);
     padding: 4px 18px;
     margin-bottom: var(--space-md);
@@ -782,7 +783,7 @@ body.modal-open {
     align-items: center;
     gap: 16px;
     padding: 13px 0;
-    border-bottom: 1px solid var(--border-soft);
+    border-bottom: 1px solid #dce8f7;
 }
 
 .popup-info-row:last-child {
@@ -790,7 +791,7 @@ body.modal-open {
 }
 
 .popup-info-label {
-    color: var(--text-muted);
+    color: #64748b;
     font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -799,7 +800,7 @@ body.modal-open {
 }
 
 .popup-info-value {
-    color: #f1f5f9;
+    color: var(--ink);
     font-weight: 500;
     font-size: var(--text-sm);
     text-align: right;
@@ -809,12 +810,12 @@ body.modal-open {
 }
 
 .popup-info-value.muted {
-    color: var(--text-muted);
+    color: #94a3b8;
     font-weight: 400;
 }
 
 .popup-info-value a {
-    color: var(--accent-light);
+    color: var(--accent-dark);
     text-decoration: none;
 }
 
@@ -824,11 +825,11 @@ body.modal-open {
 
 .popup-actions {
     padding: var(--space-sm) 26px;
-    background: rgba(15, 23, 42, 0.35);
+    background: #f4f8fd;
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    border-top: 1px solid var(--border-soft);
+    border-top: 1px solid #dce8f7;
 }
 
 /* ---------- Footer ---------- */
