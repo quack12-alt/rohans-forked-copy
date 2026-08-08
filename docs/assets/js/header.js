@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <!-- Mobile Menu Toggle -->
             <a href="#mobile-menu" id="mobile-menu-toggle">
-                <span class="icon fa-bars"></span>
+                <span class="icon solid fa-bars"></span>
             </a>
         </header>
 
