@@ -507,10 +507,11 @@
                                 if (rawImagePath.includes('drive.google.com')) {
                                     const matches = rawImagePath.match(/(?:id=|\/d\/)([a-zA-Z0-9-_]+)/);
                                     if (matches && matches[1]) {
-                                        // Drive's thumbnail endpoint reliably hotlinks (uc?export=view
-                                        // frequently 403s) and lets us request one fixed size so every
-                                        // host photo arrives pre-scaled to match the tile.
-                                        finalImagePath = `https://drive.google.com/thumbnail?id=${matches[1]}&sz=w1000`;
+                                        // lh3.googleusercontent.com is Google's stable public image CDN.
+                                        // drive.google.com/thumbnail and uc?export=view both intermittently
+                                        // 403/block on mobile browsers due to referrer/UA checks; this endpoint
+                                        // hotlinks reliably across devices and still supports a fixed size.
+                                        finalImagePath = `https://lh3.googleusercontent.com/d/${matches[1]}=w1000`;
                                     }
                                 } else {
                                     finalImagePath = rawImagePath;

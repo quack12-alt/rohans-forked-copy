@@ -372,7 +372,7 @@
 			if (rawImagePath.includes('drive.google.com')) {
 				const matches = rawImagePath.match(/(?:id=|\/d\/)([a-zA-Z0-9-_]+)/);
 				if (matches && matches[1]) {
-					return `https://drive.google.com/thumbnail?id=${matches[1]}&sz=w1000`;
+					return `https://lh3.googleusercontent.com/d/${matches[1]}=w1000`;
 				}
 				return 'images/causecircuit-logo.png';
 			}
