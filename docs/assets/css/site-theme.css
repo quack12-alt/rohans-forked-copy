@@ -489,14 +489,14 @@ body.modal-open {
 }
 
 .btn-ghost {
-    background: #ffffff;
+    background: linear-gradient(135deg, #eaf2fc 0%, #d7e6f9 100%);
     color: var(--ink);
-    border: 1px solid #dce8f7;
+    border: 1px solid #b9d2f0;
 }
 
 .btn-ghost:hover {
-    background: #f4f8fd;
-    border-color: #b9d2f0;
+    background: linear-gradient(135deg, #d7e6f9 0%, #c3daf5 100%);
+    border-color: #9dc0ee;
 }
 
 /* ---------- Opportunity cards (shared: index + opportunities pages) ---------- */
