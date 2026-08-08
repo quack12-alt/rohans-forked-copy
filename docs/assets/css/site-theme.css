@@ -175,6 +175,20 @@ body.modal-open {
     overflow: hidden;
 }
 
+/* main.css's legacy template ships a flat dark #1e1e1e panel with white
+   text and a red hover - restyle it to match the site's light header
+   palette (same tokens used by the desktop #nav links) instead of the
+   template default. */
+#mobile-menu {
+    background: #eef4fb !important;
+    border-left: 1px solid #b9d2f0;
+    box-shadow: -18px 0 48px rgba(15, 23, 42, 0.22);
+}
+
+#mobile-menu h2 {
+    color: var(--ink) !important;
+}
+
 #mobile-menu .inner {
     position: relative;
 }
@@ -193,7 +207,7 @@ body.modal-open {
     box-sizing: border-box;
     font-size: 1.8rem;
     line-height: 1;
-    color: #ffffff;
+    color: var(--ink);
     text-decoration: none;
     border-bottom: none !important;
 }
@@ -205,6 +219,13 @@ body.modal-open {
     box-sizing: border-box;
     display: flex !important;
     align-items: center;
+    color: #64748b !important;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+#mobile-menu a:hover {
+    color: var(--accent-dark) !important;
 }
 
 #mobile-menu .mobile-nav-cta {
