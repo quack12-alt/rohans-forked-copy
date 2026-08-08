@@ -187,6 +187,15 @@
 			flex-wrap: wrap;
 		}
 
+		/* Overrides .btn-light from site-theme.css so the shuffle button reads
+		   as the dark accent against the light card grid. The :hover there is
+		   more specific, so it still lifts to blue on hover. */
+		.shuffle-btn {
+			background: #0f172a;
+			color: white;
+			border: none;
+		}
+
 		/* Visibility is driven by the `hidden` attribute from JS - the button
 		   only earns its place when there are more opportunities than the
 		   homepage shows. */
@@ -367,7 +376,7 @@
 			const container = document.getElementById('homepage-opportunities-container');
 			let homepageOpportunities = [];
 
-			function renderHomepageCards() {
+			function swapInShuffledCards() {
 				const shuffled = [...homepageOpportunities];
 				for (let i = shuffled.length - 1; i > 0; i--) {
 					const j = Math.floor(Math.random() * (i + 1));
@@ -377,6 +386,29 @@
 				CauseCircuit.renderCards(container, shuffled.slice(0, MAX_CARDS), {
 					emptyMessage: 'No opportunities available right now — check back soon!'
 				});
+			}
+
+			/*
+				Dropping .animate lets the outgoing cards transition back out
+				before they are replaced, so a shuffle reads as a swap rather
+				than a snap. The new cards animate themselves back in via the
+				shared reveal observer. Nothing to wait for on first render.
+			*/
+			const FADE_OUT_MS = 150;
+			let fadeOutTimer = null;
+
+			function renderHomepageCards() {
+				// Impatient clicking would otherwise queue a re-render per click.
+				window.clearTimeout(fadeOutTimer);
+
+				const existing = container.querySelectorAll('.opportunity-card');
+				if (!existing.length) {
+					swapInShuffledCards();
+					return;
+				}
+
+				existing.forEach(card => card.classList.remove('animate'));
+				fadeOutTimer = window.setTimeout(swapInShuffledCards, FADE_OUT_MS);
 			}
 
 			document.addEventListener('DOMContentLoaded', () => {

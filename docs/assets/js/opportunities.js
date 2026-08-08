@@ -66,6 +66,16 @@
 			// A value carrying any other scheme (javascript:, data:, ...) is
 			// not a website - drop it instead of prefixing https:// onto it.
 			if (/^[a-z][a-z0-9+.-]*:/i.test(raw)) return '';
+
+			/*
+				The form asks submitters to "Write N/A if none", and they also
+				type free text like "none" or a bare handle. Prefixing https://
+				onto those produced links to hosts that cannot resolve, so
+				require something that at least looks like a hostname: a dot
+				with label characters on both sides.
+			*/
+			if (!/^[^\s\/]+\.[a-z]{2,}/i.test(raw)) return '';
+
 			raw = 'https://' + raw.replace(/^\/+/, '');
 		}
 
@@ -105,6 +115,16 @@
 	}
 
 	/*
+		Response-metadata columns that never hold opportunity content. They are
+		excluded from matching entirely because they collide with real
+		matchers: Google Forms prepends a "Timestamp" column to every response
+		sheet, and "timestamp" contains "time", so the hours lookup below used
+		to resolve to the submission time - every opportunity was bucketed
+		4-10 hrs/week and its popup read "Time Commitment: 8/6/2026 11:20:11".
+	*/
+	var IGNORED_COLUMNS = ['timestamp', 'date of submission', 'status'];
+
+	/*
 		The sheet's headers are whatever the form asks, so columns are matched
 		by keyword with a positional fallback. Keep the two in sync with the
 		form: the positional fallbacks are a last resort and will pick the
@@ -113,12 +133,26 @@
 	function mapRow(row) {
 		var keys = Object.keys(row);
 
-		function pick(matchers, fallbackIndex) {
-			var found = keys.find(function (key) {
-				var lower = key.toLowerCase();
-				return matchers.some(function (m) { return lower.indexOf(m) !== -1; });
+		var eligible = keys.filter(function (key) {
+			var lower = key.toLowerCase();
+			return !IGNORED_COLUMNS.some(function (ignored) {
+				return lower.indexOf(ignored) !== -1;
 			});
-			if (found) return found;
+		});
+
+		function pick(matchers, fallbackIndex) {
+			/*
+				Matchers are tried in their own order rather than the sheet's,
+				so a precise term ("hour") wins over a loose one ("time") no
+				matter which column happens to come first.
+			*/
+			for (var i = 0; i < matchers.length; i++) {
+				var matcher = matchers[i];
+				var found = eligible.find(function (key) {
+					return key.toLowerCase().indexOf(matcher) !== -1;
+				});
+				if (found) return found;
+			}
 			return typeof fallbackIndex === 'number' ? keys[fallbackIndex] : '';
 		}
 
@@ -133,7 +167,13 @@
 		// A row without both of these isn't a renderable opportunity.
 		if (!title || !org) return null;
 
-		var rawHours = read(pick(['hour', 'commitment', 'time'], 6));
+		/*
+			No positional fallback here on purpose. The form has no hours
+			question at all, and column 6 is "Primary Phone Number:" - falling
+			back to it would parse a phone number into an hours bucket. With no
+			match the row is simply "Flexible", which is at least true.
+		*/
+		var rawHours = read(pick(['hour', 'commitment', 'time']));
 		var commitment = classifyCommitment(rawHours);
 
 		return {
