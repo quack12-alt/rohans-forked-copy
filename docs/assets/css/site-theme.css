@@ -158,9 +158,10 @@ body {
     box-sizing: border-box;
 }
 
-/* The hamburger is an inline SVG rather than a Font Awesome glyph: the
-   template's `icon solid fa-bars` span needed fontawesome-all.min.css,
-   which no page ever loaded, so the button rendered blank. */
+/* The hamburger is an inline SVG rather than the template's `icon solid
+   fa-bars` span. That glyph did render - main.css pulled in Font Awesome
+   with an @import - but it was the only one on the site, so the whole
+   icon font was loading for a single 24px shape. */
 #header #mobile-menu-toggle .menu-icon {
     width: 24px;
     height: 24px;
