@@ -950,11 +950,19 @@ body.modal-open {
     }
 
     .opportunities-grid {
+        /* Default minmax(260px) only ever fits one column on phone-width
+           screens; shrink the minimum so two narrower cards fit side by
+           side instead of one column taking the full width. */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: var(--space-sm);
     }
 
+    .card-image-container {
+        height: 130px;
+    }
+
     .card-content {
-        padding: 18px 20px 20px;
+        padding: 14px 16px 16px;
     }
 
     .popup-content {
