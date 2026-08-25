@@ -267,10 +267,10 @@
 		// whenever two opportunities shared a name.
 		card.dataset.index = String(index);
 
-		var targetUrl = resolveUrl(opportunity);
-		var buttonHTML = targetUrl
-			? '<a href="' + escapeHtml(targetUrl) + '" target="_blank" rel="noopener noreferrer" class="card-btn">Learn more</a>'
-			: '<button type="button" class="card-btn special">Learn more</button>';
+		// Always a plain button, never a direct link - clicking anywhere on
+		// the card (including this button) opens the popup, where the
+		// site's actual link lives. See resolveUrl()/popupMarkup().
+		var buttonHTML = '<button type="button" class="card-btn">Learn more</button>';
 
 		/*
 			The form has no separate opportunity-title question, so the title
@@ -429,9 +429,6 @@
 		document.addEventListener('click', function (event) {
 			var card = event.target.closest('.opportunity-card');
 			if (!card) return;
-
-			// Let the "Learn more" external link navigate normally.
-			if (event.target.closest('a.card-btn')) return;
 
 			var container = card.parentElement;
 			var list = container && container.renderedOpportunities;
