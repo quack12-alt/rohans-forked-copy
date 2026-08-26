@@ -196,7 +196,30 @@
 			company: org,
 			description: read(pick(['description', 'detail', 'about'], 3), 'No description provided.'),
 			website: read(pick(['link', 'website', 'url', 'form'], 4)),
-			city: read(pick(['city', 'town', 'location'], 5), 'Oshawa'),
+			/*
+				No positional fallback, unlike the fields above. Column 5 is
+				"Primary Contact Name & Email", so a form edit that dropped the
+				words city/town/location from the question - "What *area* in
+				Durham are you located in?" being the obvious rewording -
+				resolved every listing's city to a contact email, which then
+				showed in the card's location pill and became an option in the
+				location filter. Silently: nothing errored, the towns just
+				turned into email addresses.
+
+				The extra matchers cover the likely rewordings - no other
+				current header contains "durham", "area" or "municipal", so
+				none of them can capture the wrong column - and with the
+				fallback gone an unmatched column leaves the city empty rather
+				than confidently wrong. "location" stays last because it is the
+				loosest: it would also match an "Address/Meeting site" question
+				reworded to "Location of the opportunity". "city"/"town" are
+				tried first, so the real column still wins whenever it is there.
+
+				There is no 'Oshawa' default any more either - a blank cell used
+				to put the listing in a town it had never claimed. Callers omit
+				the pill and the popup row when this is empty.
+			*/
+			city: read(pick(['city', 'town', 'durham', 'area', 'municipal', 'location'])),
 			imagePath: resolveImage(read(pick(['image', 'logo', 'pic']))),
 			timeCommitment: commitment,
 			commitmentLabel: COMMITMENT_LABELS[commitment],
@@ -320,6 +343,12 @@
 			? ''
 			: '<p class="card-org">' + escapeHtml(opportunity.company) + '</p>';
 
+		// An unresolved or unanswered city leaves no pill, rather than an
+		// empty one floating over the image. See mapRow's city matcher.
+		var locationTagHTML = opportunity.city
+			? '<div class="location-tag">' + escapeHtml(opportunity.city) + '</div>'
+			: '';
+
 		var commitmentHTML = '';
 		var hoursHTML = '';
 		if (options.showCommitment) {
@@ -337,7 +366,7 @@
 					' loading="lazy" decoding="async"' +
 					// onerror is cleared first so a failing fallback can't loop.
 					' onerror="this.onerror=null;this.src=\'' + FALLBACK_IMAGE + '\'" />' +
-				'<div class="location-tag">' + escapeHtml(opportunity.city) + '</div>' +
+				locationTagHTML +
 			'</div>' +
 			'<div class="card-content">' +
 				'<h3>' + escapeHtml(opportunity.name) + '</h3>' +
@@ -468,7 +497,7 @@
 		]);
 
 		var locationHTML = infoSection('Location', [
-			infoRow('City', escapeHtml(opportunity.city)),
+			opportunity.city ? infoRow('City', escapeHtml(opportunity.city)) : '',
 			opportunity.address ? infoRow('Address', escapeHtml(opportunity.address), { wide: true }) : ''
 		]);
 
@@ -516,7 +545,9 @@
 			'<div class="popup-header">' +
 				'<img src="' + escapeHtml(opportunity.imagePath) + '" alt="' + escapeHtml(opportunity.name) + '"' +
 					' decoding="async" onerror="this.onerror=null;this.src=\'' + FALLBACK_IMAGE + '\'" />' +
-				'<div class="popup-location-tag">' + escapeHtml(opportunity.city) + '</div>' +
+				(opportunity.city
+					? '<div class="popup-location-tag">' + escapeHtml(opportunity.city) + '</div>'
+					: '') +
 			'</div>' +
 			'<h2 class="popup-title" id="popup-title">' + escapeHtml(opportunity.name) + '</h2>' +
 			'<div class="popup-scroll-content">' +
