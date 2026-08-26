@@ -366,52 +366,132 @@
 
 	/* ---------- Popup ---------- */
 
+	/*
+		A labelled fact, rendered as its own small card inside a section's
+		grid. `wide` makes a value that needs the whole width (a street
+		address) span every column instead of being squeezed into one.
+	*/
+	function infoRow(label, value, opts) {
+		opts = opts || {};
+		return '<div class="popup-info-row' + (opts.wide ? ' popup-info-row--wide' : '') + '">' +
+			'<span class="popup-info-label">' + label + '</span>' +
+			'<span class="popup-info-value">' + value + '</span>' +
+			'</div>';
+	}
+
+	/*
+		Contact entries make the entire row the link rather than just the
+		value text. A phone number or address is something you act on, and a
+		full-row target is far easier to hit on a phone than one short line
+		of link text.
+	*/
+	function infoLinkRow(label, href, text, attrs) {
+		return '<a class="popup-info-row popup-info-row--wide popup-contact-row" href="' + escapeHtml(href) + '"' +
+			(attrs || '') + '>' +
+			'<span class="popup-info-label">' + label + '</span>' +
+			'<span class="popup-info-value">' + escapeHtml(text) + '</span>' +
+			'</a>';
+	}
+
+	/*
+		Groups related facts into their own bordered card. Returns '' when
+		every row in the group is missing, so an organization that skipped a
+		whole category of questions leaves no empty section behind.
+	*/
+	function infoSection(title, rows, extraClass) {
+		var body = rows.filter(Boolean).join('');
+		if (!body) return '';
+
+		return '<section class="popup-section' + (extraClass ? ' ' + extraClass : '') + '">' +
+			'<h3 class="popup-section-title">' + title + '</h3>' +
+			'<div class="popup-info-grid">' + body + '</div>' +
+			'</section>';
+	}
+
+	/*
+		Short categorical answers (category, format, organization type) read
+		better as pills under the title than as three more label/value rows -
+		they are the at-a-glance framing for everything below. The label is
+		kept for screen readers, which would otherwise get a bare word with
+		no indication of what it describes.
+	*/
+	function metaTag(label, value) {
+		if (!value) return '';
+		return '<span class="popup-meta-tag" aria-label="' + label + ': ' + escapeHtml(value) + '">' +
+			escapeHtml(value) + '</span>';
+	}
+
 	function popupMarkup(opportunity) {
-		var websiteUrl = resolveUrl(opportunity);
-		var websiteValue = websiteUrl
-			? '<a href="' + escapeHtml(websiteUrl) + '" target="_blank" rel="noopener noreferrer">' +
-				escapeHtml(websiteUrl.replace(/^https?:\/\//i, '')) + '</a>'
-			: 'Not provided';
-
-		var emailValue = opportunity.contactEmail
-			? '<a href="mailto:' + escapeHtml(opportunity.contactEmail) + '">' + escapeHtml(opportunity.contactEmail) + '</a>'
-			: '';
-
-		// A tel: link only makes sense once the free-text answer is reduced to
-		// digits (plus a leading +); the visible label keeps the original text.
-		var phoneDigits = String(opportunity.phone || '').replace(/[^\d+]/g, '');
-		var phoneValue = phoneDigits
-			? '<a href="tel:' + escapeHtml(phoneDigits) + '">' + escapeHtml(opportunity.phone) + '</a>'
-			: escapeHtml(opportunity.phone);
-
-		// wide rows span both grid columns - for values too long to sit
-		// comfortably next to a neighbour (a URL, an email, a street address).
-		function row(label, value, opts) {
-			opts = opts || {};
-			return '<div class="popup-info-row' + (opts.wide ? ' popup-info-row--wide' : '') + '">' +
-				'<span class="popup-info-label">' + label + '</span>' +
-				'<span class="popup-info-value' + (opts.muted ? ' muted' : '') + '">' + value + '</span>' +
-				'</div>';
-		}
-
 		// Same reasoning as the card subtitle: with no title question on the
-		// form, Host repeats the popup heading word for word.
-		var hostRow = isSameText(opportunity.company, opportunity.name)
+		// form, the host name repeats the popup heading word for word.
+		var hostHTML = isSameText(opportunity.company, opportunity.name)
 			? ''
-			: row('Host', escapeHtml(opportunity.company));
+			: '<p class="popup-host">' + escapeHtml(opportunity.company) + '</p>';
 
-		// Every row below is only present once the matching form question was
-		// actually answered, so an org that skipped an optional field doesn't
-		// leave a blank/"Not provided" row cluttering the popup.
-		var orgTypeRow = opportunity.orgType ? row('Organization Type', escapeHtml(opportunity.orgType)) : '';
-		var categoryRow = opportunity.category ? row('Category', escapeHtml(opportunity.category)) : '';
-		var formatRow = opportunity.format ? row('Format', escapeHtml(opportunity.format)) : '';
-		var addressRow = opportunity.address ? row('Address', escapeHtml(opportunity.address), { wide: true }) : '';
-		var minAgeRow = opportunity.minAge ? row('Minimum Age', escapeHtml(opportunity.minAge)) : '';
-		var scheduleRow = opportunity.schedule ? row('Schedule', escapeHtml(opportunity.schedule)) : '';
-		var deadlineRow = opportunity.deadline ? row('Application Deadline', escapeHtml(opportunity.deadline)) : '';
-		var emailRow = emailValue ? row('Email', emailValue, { wide: true }) : '';
-		var phoneRow = opportunity.phone ? row('Phone', phoneValue) : '';
+		var metaTags =
+			metaTag('Category', opportunity.category) +
+			metaTag('Format', opportunity.format) +
+			metaTag('Organization type', opportunity.orgType);
+		var metaHTML = metaTags ? '<div class="popup-meta">' + metaTags + '</div>' : '';
+
+		// Leads the popup: what the opportunity actually is matters more than
+		// any single logistical detail below it.
+		var aboutHTML =
+			'<section class="popup-section">' +
+				'<h3 class="popup-section-title">About</h3>' +
+				'<p class="popup-about">' + escapeHtml(opportunity.description) + '</p>' +
+			'</section>';
+
+		var scheduleHTML = infoSection('Schedule &amp; Commitment', [
+			opportunity.schedule ? infoRow('Schedule', escapeHtml(opportunity.schedule)) : '',
+			infoRow('Time Commitment', escapeHtml(opportunity.hoursPerWeek)),
+			opportunity.deadline ? infoRow('Application Deadline', escapeHtml(opportunity.deadline)) : ''
+		]);
+
+		var locationHTML = infoSection('Location', [
+			infoRow('City', escapeHtml(opportunity.city)),
+			opportunity.address ? infoRow('Address', escapeHtml(opportunity.address), { wide: true }) : ''
+		]);
+
+		var eligibilityHTML = infoSection('Eligibility', [
+			opportunity.minAge ? infoRow('Minimum Age', escapeHtml(opportunity.minAge)) : ''
+		]);
+
+		/*
+			Contact closes the popup rather than opening it: you read what the
+			opportunity is and whether it fits before you reach for how to get
+			in touch about it.
+		*/
+		var websiteUrl = resolveUrl(opportunity);
+		// A tel: link only works once the free-text answer is reduced to digits
+		// (plus a leading +); the visible label keeps the original formatting.
+		var phoneDigits = String(opportunity.phone || '').replace(/[^\d+]/g, '');
+
+		var contactRows = [
+			websiteUrl
+				? infoLinkRow('Website', websiteUrl, websiteUrl.replace(/^https?:\/\//i, ''),
+					' target="_blank" rel="noopener noreferrer"')
+				: '',
+			opportunity.contactEmail
+				? infoLinkRow('Email', 'mailto:' + opportunity.contactEmail, opportunity.contactEmail)
+				: '',
+			phoneDigits
+				? infoLinkRow('Phone', 'tel:' + phoneDigits, opportunity.phone)
+				: (opportunity.phone ? infoRow('Phone', escapeHtml(opportunity.phone), { wide: true }) : '')
+		].filter(Boolean);
+
+		/*
+			The one section that says something by being empty. Every other
+			group can simply disappear, but a reader who has decided they want
+			this opportunity needs to know the organization left no way to
+			reach it - silently dropping the section reads as a page bug.
+		*/
+		var contactHTML = contactRows.length
+			? infoSection('Contact', contactRows, 'popup-section--contact')
+			: '<section class="popup-section popup-section--contact">' +
+					'<h3 class="popup-section-title">Contact</h3>' +
+					'<p class="popup-empty-note">This organization did not provide contact details.</p>' +
+				'</section>';
 
 		return '' +
 			'<div class="popup-header">' +
@@ -421,25 +501,13 @@
 			'</div>' +
 			'<h2 class="popup-title" id="popup-title">' + escapeHtml(opportunity.name) + '</h2>' +
 			'<div class="popup-scroll-content">' +
-				'<div class="popup-info-panel">' +
-					'<div class="popup-panel-heading">Opportunity Details</div>' +
-					hostRow +
-					orgTypeRow +
-					categoryRow +
-					formatRow +
-					row('Location', escapeHtml(opportunity.city)) +
-					addressRow +
-					minAgeRow +
-					scheduleRow +
-					row('Time Commitment', escapeHtml(opportunity.hoursPerWeek)) +
-					deadlineRow +
-					'<div class="popup-panel-heading popup-panel-heading--spaced">Contact</div>' +
-					row('Website', websiteValue, { muted: !websiteUrl, wide: true }) +
-					emailRow +
-					phoneRow +
-				'</div>' +
-				'<div class="popup-panel-heading popup-panel-heading--standalone">About</div>' +
-				'<div class="popup-body"><p>' + escapeHtml(opportunity.description) + '</p></div>' +
+				hostHTML +
+				metaHTML +
+				aboutHTML +
+				scheduleHTML +
+				locationHTML +
+				eligibilityHTML +
+				contactHTML +
 			'</div>' +
 			'<div class="popup-actions">' +
 				'<button type="button" class="btn btn-ghost popup-close">Close</button>' +
