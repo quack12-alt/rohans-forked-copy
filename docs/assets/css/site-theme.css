@@ -1214,6 +1214,26 @@ body.modal-open {
         flex-direction: column;
         text-align: center;
     }
+
+    /* Touch targets. These are sized by their text, which left the footer
+       links 19px tall and .text-link 26px - comfortable for a cursor,
+       fiddly for a thumb. Grow the target with padding rather than type so
+       the visual scale is untouched; the desktop rules keep their sizing,
+       since this is only about fingers. */
+    .footer-links a,
+    .text-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+
+    /* The row is centred by the column layout above, so the extra height
+       does not need matching horizontal padding to stay aligned. */
+    .footer-links {
+        gap: var(--space-sm);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 /* Portrait phones. Two columns held all the way down to 320px, which left
