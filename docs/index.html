@@ -402,24 +402,49 @@
 	<script src="assets/js/opportunities.js"></script>
 
 	<script>
-		// Homepage feed: a shuffled sample of six live opportunities.
+		// Homepage feed: a shuffled sample of live opportunities.
 		// Fetching, parsing, card markup and the popup all live in
 		// assets/js/opportunities.js, shared with opportunities.html.
 		(function () {
-			const MAX_CARDS = 6;
+			/*
+				Six is two tidy rows of three on a desktop. On a phone the grid
+				is a single column, so the same six became six full-height
+				tiles - roughly 2300px of scrolling before the rest of the page
+				even starts. Three is the same one screen of browsing that the
+				desktop gets, and the full list is one tap away.
+
+				Matches the 560px breakpoint in site-theme.css where
+				.opportunities-grid drops to one column. Read at render time
+				rather than cached, and the query is kept so a rotation across
+				the breakpoint can redraw - see the change listener below.
+			*/
+			const phoneQuery = window.matchMedia('(max-width: 560px)');
+			const maxCards = () => (phoneQuery.matches ? 3 : 6);
+
 			const container = document.getElementById('homepage-opportunities-container');
 			let homepageOpportunities = [];
 
-			function swapInShuffledCards() {
-				const shuffled = [...homepageOpportunities];
-				for (let i = shuffled.length - 1; i > 0; i--) {
-					const j = Math.floor(Math.random() * (i + 1));
-					[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-				}
+			/*
+				Kept between renders so the slice can be redrawn at a different
+				length - rotating the phone should show more or fewer of the
+				same cards, not deal a new hand.
+			*/
+			let shuffledOrder = [];
 
-				CauseCircuit.renderCards(container, shuffled.slice(0, MAX_CARDS), {
+			function paint() {
+				CauseCircuit.renderCards(container, shuffledOrder.slice(0, maxCards()), {
 					emptyMessage: 'No opportunities available right now — check back soon!'
 				});
+			}
+
+			function swapInShuffledCards() {
+				shuffledOrder = [...homepageOpportunities];
+				for (let i = shuffledOrder.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+				}
+
+				paint();
 			}
 
 			/*
@@ -466,9 +491,22 @@
 					.then(opportunities => {
 						homepageOpportunities = opportunities;
 						// Shuffling only means something when there is more to
-						// show than fits on the homepage.
-						shuffleBtn.hidden = homepageOpportunities.length <= MAX_CARDS;
+						// show than fits on the homepage - and that threshold
+						// moves with the breakpoint.
+						shuffleBtn.hidden = homepageOpportunities.length <= maxCards();
 						renderHomepageCards();
+
+						/*
+							Rotating across the breakpoint changes how many
+							cards fit. Redraw the slice at the new length, and
+							recheck the shuffle button against the new
+							threshold. Attached here rather than at DOM ready
+							so it cannot fire before there is anything to draw.
+						*/
+						phoneQuery.addEventListener('change', () => {
+							shuffleBtn.hidden = homepageOpportunities.length <= maxCards();
+							paint();
+						});
 					})
 					.catch(error => {
 						console.error('Error loading live feed:', error);
