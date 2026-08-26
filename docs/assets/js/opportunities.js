@@ -438,6 +438,7 @@
 					emailRow +
 					phoneRow +
 				'</div>' +
+				'<div class="popup-panel-heading popup-panel-heading--standalone">About</div>' +
 				'<div class="popup-body"><p>' + escapeHtml(opportunity.description) + '</p></div>' +
 			'</div>' +
 			'<div class="popup-actions">' +
