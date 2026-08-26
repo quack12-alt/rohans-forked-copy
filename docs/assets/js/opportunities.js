@@ -45,6 +45,16 @@
 		return String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
 	}
 
+	/*
+		The form's contact question asks for "Name: Email" as one free-text
+		answer, but only the email is worth showing in the popup - pull just
+		that out and drop the name.
+	*/
+	function extractEmail(raw) {
+		var match = String(raw || '').match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/);
+		return match ? match[0] : '';
+	}
+
 	function resolveImage(rawImagePath) {
 		if (!rawImagePath) return FALLBACK_IMAGE;
 
@@ -198,7 +208,16 @@
 				latter. Shown as its own popup row, and only when the form
 				actually collected one.
 			*/
-			schedule: read(pick(['schedule']))
+			schedule: read(pick(['schedule'])),
+			orgType: read(pick(['type of organization'])),
+			category: read(pick(['category'])),
+			format: read(pick(['format'])),
+			address: read(pick(['address'])),
+			// Form asks for "Minimum age", not a grade - closest thing it collects.
+			minAge: read(pick(['grade', 'minimum age', 'age'])),
+			deadline: read(pick(['deadline'])),
+			contactEmail: extractEmail(read(pick(['contact']))),
+			phone: read(pick(['phone']))
 		};
 	}
 
@@ -354,10 +373,24 @@
 				escapeHtml(websiteUrl.replace(/^https?:\/\//i, '')) + '</a>'
 			: 'Not provided';
 
-		function row(label, value, extraClass) {
-			return '<div class="popup-info-row">' +
+		var emailValue = opportunity.contactEmail
+			? '<a href="mailto:' + escapeHtml(opportunity.contactEmail) + '">' + escapeHtml(opportunity.contactEmail) + '</a>'
+			: '';
+
+		// A tel: link only makes sense once the free-text answer is reduced to
+		// digits (plus a leading +); the visible label keeps the original text.
+		var phoneDigits = String(opportunity.phone || '').replace(/[^\d+]/g, '');
+		var phoneValue = phoneDigits
+			? '<a href="tel:' + escapeHtml(phoneDigits) + '">' + escapeHtml(opportunity.phone) + '</a>'
+			: escapeHtml(opportunity.phone);
+
+		// wide rows span both grid columns - for values too long to sit
+		// comfortably next to a neighbour (a URL, an email, a street address).
+		function row(label, value, opts) {
+			opts = opts || {};
+			return '<div class="popup-info-row' + (opts.wide ? ' popup-info-row--wide' : '') + '">' +
 				'<span class="popup-info-label">' + label + '</span>' +
-				'<span class="popup-info-value' + (extraClass || '') + '">' + value + '</span>' +
+				'<span class="popup-info-value' + (opts.muted ? ' muted' : '') + '">' + value + '</span>' +
 				'</div>';
 		}
 
@@ -367,10 +400,18 @@
 			? ''
 			: row('Host', escapeHtml(opportunity.company));
 
-		// Only present once the form asks for a schedule.
-		var scheduleRow = opportunity.schedule
-			? row('Schedule', escapeHtml(opportunity.schedule))
-			: '';
+		// Every row below is only present once the matching form question was
+		// actually answered, so an org that skipped an optional field doesn't
+		// leave a blank/"Not provided" row cluttering the popup.
+		var orgTypeRow = opportunity.orgType ? row('Organization Type', escapeHtml(opportunity.orgType)) : '';
+		var categoryRow = opportunity.category ? row('Category', escapeHtml(opportunity.category)) : '';
+		var formatRow = opportunity.format ? row('Format', escapeHtml(opportunity.format)) : '';
+		var addressRow = opportunity.address ? row('Address', escapeHtml(opportunity.address), { wide: true }) : '';
+		var minAgeRow = opportunity.minAge ? row('Minimum Age', escapeHtml(opportunity.minAge)) : '';
+		var scheduleRow = opportunity.schedule ? row('Schedule', escapeHtml(opportunity.schedule)) : '';
+		var deadlineRow = opportunity.deadline ? row('Application Deadline', escapeHtml(opportunity.deadline)) : '';
+		var emailRow = emailValue ? row('Email', emailValue, { wide: true }) : '';
+		var phoneRow = opportunity.phone ? row('Phone', phoneValue) : '';
 
 		return '' +
 			'<div class="popup-header">' +
@@ -381,11 +422,21 @@
 			'<h2 class="popup-title" id="popup-title">' + escapeHtml(opportunity.name) + '</h2>' +
 			'<div class="popup-scroll-content">' +
 				'<div class="popup-info-panel">' +
+					'<div class="popup-panel-heading">Opportunity Details</div>' +
 					hostRow +
-					row('Website', websiteValue, websiteUrl ? '' : ' muted') +
+					orgTypeRow +
+					categoryRow +
+					formatRow +
 					row('Location', escapeHtml(opportunity.city)) +
-					row('Time Commitment', escapeHtml(opportunity.hoursPerWeek)) +
+					addressRow +
+					minAgeRow +
 					scheduleRow +
+					row('Time Commitment', escapeHtml(opportunity.hoursPerWeek)) +
+					deadlineRow +
+					'<div class="popup-panel-heading popup-panel-heading--spaced">Contact</div>' +
+					row('Website', websiteValue, { muted: !websiteUrl, wide: true }) +
+					emailRow +
+					phoneRow +
 				'</div>' +
 				'<div class="popup-body"><p>' + escapeHtml(opportunity.description) + '</p></div>' +
 			'</div>' +
