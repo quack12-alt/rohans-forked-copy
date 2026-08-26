@@ -322,9 +322,18 @@
                         <label class="filter-label" for="location-filter">Location:</label>
                         <!-- Only the "all" option is authored. The rest are
                              built from the feed once it loads - see
-                             populateLocationFilter(). -->
+                             populateChoiceFilter(). -->
                         <select id="location-filter" class="filter-dropdown">
                             <option value="all">All Durham Region</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label" for="category-filter">Category:</label>
+                        <!-- Authored empty like the location filter above;
+                             the options come from the feed. -->
+                        <select id="category-filter" class="filter-dropdown">
+                            <option value="all">All Categories</option>
                         </select>
                     </div>
 
@@ -384,63 +393,63 @@
         (function () {
             const container = document.getElementById('opportunities-container');
             const locationFilter = document.getElementById('location-filter');
+            const categoryFilter = document.getElementById('category-filter');
             const commitmentFilter = document.getElementById('commitment-filter');
             const orgSearch = document.getElementById('org-search');
 
             let volunteerOpportunities = [];
 
             /*
-                The location options used to be eight hardcoded municipalities
-                matched against the city column with an exact compare. City is
-                free text on a public form, so anything outside that list - an
-                org that wrote "Bowmanville" rather than "Clarington", or a
-                town nobody thought to author - became a value no option could
-                select: the listing showed under "All Durham Region" and was
-                unreachable any other way. Worse, it failed silently and got
-                steadily worse as organizations posted.
+                Both of these dropdowns are authored with only their "all"
+                option and filled from the feed. The location list used to be
+                eight hardcoded municipalities matched with an exact compare,
+                so any value the form produced outside that list was
+                unreachable - it showed under "All Durham Region" and nowhere
+                else. Building from the feed keeps the options and the data in
+                step by construction: every option is a value some listing
+                carries, so none is dead and none is missing.
 
-                Building the list from the feed keeps the dropdown and the data
-                in step by construction - every option is a value some listing
-                actually carries, so every option matches something and nothing
-                is unreachable. Cities with no listings simply do not appear.
+                Category works the same way, which is why this is one function
+                rather than two - the only difference is the field it reads.
             */
-            function populateLocationFilter(opportunities) {
-                // Keyed by lowercase so "oshawa" and "Oshawa" collapse into one
-                // option, matching how applyFilters compares them. The first
-                // spelling seen wins as the label.
+            function populateChoiceFilter(select, opportunities, field) {
+                // Keyed by lowercase so "community" and "Community" collapse
+                // into one option, matching how applyFilters compares them.
+                // The first spelling seen wins as the label.
                 const byKey = new Map();
                 opportunities.forEach(opp => {
-                    const city = (opp.city || '').trim();
-                    if (!city) return;
-                    const key = city.toLowerCase();
-                    if (!byKey.has(key)) byKey.set(key, city);
+                    const value = (opp[field] || '').trim();
+                    if (!value) return;
+                    const key = value.toLowerCase();
+                    if (!byKey.has(key)) byKey.set(key, value);
                 });
 
-                const cities = [...byKey.values()].sort((a, b) => a.localeCompare(b));
+                const values = [...byKey.values()].sort((a, b) => a.localeCompare(b));
 
                 // Survive a refresh of the list without resetting the reader's
-                // choice, but fall back to "all" if that city is gone.
-                const previous = locationFilter.value;
+                // choice, but fall back to "all" if that value is gone.
+                const previous = select.value;
 
-                locationFilter.length = 1; // keep the authored "all" option
-                cities.forEach(city => {
-                    locationFilter.add(new Option(city, city));
+                select.length = 1; // keep the authored "all" option
+                values.forEach(value => {
+                    select.add(new Option(value, value));
                 });
 
                 // byKey.get() returns the canonical spelling, which is the
                 // option value we just added - so this cannot select a value
                 // that no option carries.
-                locationFilter.value =
-                    byKey.get(previous.toLowerCase()) || 'all';
+                select.value = byKey.get(previous.toLowerCase()) || 'all';
             }
 
             function applyFilters() {
                 const location = locationFilter.value;
+                const category = categoryFilter.value;
                 const commitment = commitmentFilter.value;
                 const query = orgSearch.value.trim().toLowerCase();
 
                 const filtered = volunteerOpportunities.filter(opp => {
                     if (location !== 'all' && opp.city.toLowerCase() !== location.toLowerCase()) return false;
+                    if (category !== 'all' && opp.category.toLowerCase() !== category.toLowerCase()) return false;
                     if (commitment !== 'all' && opp.timeCommitment !== commitment) return false;
                     if (query && !opp.company.toLowerCase().includes(query)) return false;
                     return true;
@@ -468,13 +477,15 @@
                 CauseCircuit.initPopup();
 
                 locationFilter.addEventListener('change', applyFilters);
+                categoryFilter.addEventListener('change', applyFilters);
                 commitmentFilter.addEventListener('change', applyFilters);
                 orgSearch.addEventListener('input', debouncedFilter);
 
                 CauseCircuit.fetchOpportunities()
                     .then(opportunities => {
                         volunteerOpportunities = opportunities;
-                        populateLocationFilter(opportunities);
+                        populateChoiceFilter(locationFilter, opportunities, 'city');
+                        populateChoiceFilter(categoryFilter, opportunities, 'category');
                         applyFilters();
                     })
                     .catch(error => {
