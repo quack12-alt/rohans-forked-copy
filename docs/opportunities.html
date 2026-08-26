@@ -303,16 +303,11 @@
 
                     <div class="filter-group">
                         <label class="filter-label" for="location-filter">Location:</label>
+                        <!-- Only the "all" option is authored. The rest are
+                             built from the feed once it loads - see
+                             populateLocationFilter(). -->
                         <select id="location-filter" class="filter-dropdown">
                             <option value="all">All Durham Region</option>
-                            <option value="Oshawa">Oshawa</option>
-                            <option value="Pickering">Pickering</option>
-                            <option value="Ajax">Ajax</option>
-                            <option value="Whitby">Whitby</option>
-                            <option value="Clarington">Clarington</option>
-                            <option value="Uxbridge">Uxbridge</option>
-                            <option value="Scugog">Scugog</option>
-                            <option value="Brock">Brock</option>
                         </select>
                     </div>
 
@@ -377,6 +372,51 @@
 
             let volunteerOpportunities = [];
 
+            /*
+                The location options used to be eight hardcoded municipalities
+                matched against the city column with an exact compare. City is
+                free text on a public form, so anything outside that list - an
+                org that wrote "Bowmanville" rather than "Clarington", or a
+                town nobody thought to author - became a value no option could
+                select: the listing showed under "All Durham Region" and was
+                unreachable any other way. Worse, it failed silently and got
+                steadily worse as organizations posted.
+
+                Building the list from the feed keeps the dropdown and the data
+                in step by construction - every option is a value some listing
+                actually carries, so every option matches something and nothing
+                is unreachable. Cities with no listings simply do not appear.
+            */
+            function populateLocationFilter(opportunities) {
+                // Keyed by lowercase so "oshawa" and "Oshawa" collapse into one
+                // option, matching how applyFilters compares them. The first
+                // spelling seen wins as the label.
+                const byKey = new Map();
+                opportunities.forEach(opp => {
+                    const city = (opp.city || '').trim();
+                    if (!city) return;
+                    const key = city.toLowerCase();
+                    if (!byKey.has(key)) byKey.set(key, city);
+                });
+
+                const cities = [...byKey.values()].sort((a, b) => a.localeCompare(b));
+
+                // Survive a refresh of the list without resetting the reader's
+                // choice, but fall back to "all" if that city is gone.
+                const previous = locationFilter.value;
+
+                locationFilter.length = 1; // keep the authored "all" option
+                cities.forEach(city => {
+                    locationFilter.add(new Option(city, city));
+                });
+
+                // byKey.get() returns the canonical spelling, which is the
+                // option value we just added - so this cannot select a value
+                // that no option carries.
+                locationFilter.value =
+                    byKey.get(previous.toLowerCase()) || 'all';
+            }
+
             function applyFilters() {
                 const location = locationFilter.value;
                 const commitment = commitmentFilter.value;
@@ -417,6 +457,7 @@
                 CauseCircuit.fetchOpportunities()
                     .then(opportunities => {
                         volunteerOpportunities = opportunities;
+                        populateLocationFilter(opportunities);
                         applyFilters();
                     })
                     .catch(error => {
