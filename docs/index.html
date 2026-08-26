@@ -220,6 +220,40 @@
 				font-size: 1.5rem;
 			}
 		}
+
+		/* Portrait phones. Three columns were held all the way down to 320px,
+		   which left each stat a ~90px track - narrower than the single word
+		   "OPPORTUNITIES" in the label - so the strip ran ~53px off the right
+		   edge of the screen. One per row instead, with the number and label
+		   on the same line so three stacked rows stay a strip rather than
+		   becoming a section. */
+		@media (max-width: 560px) {
+			.stats-strip {
+				padding: 18px 0;
+			}
+
+			.stats-strip .container {
+				grid-template-columns: 1fr;
+				gap: 8px;
+			}
+
+			.stat-item {
+				padding: 0;
+				display: flex;
+				align-items: baseline;
+				justify-content: center;
+				gap: 10px;
+				min-width: 0;
+			}
+
+			.stat-item .stat-number {
+				font-size: 1.35rem;
+			}
+
+			.stat-item .stat-label {
+				margin-top: 0;
+			}
+		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>

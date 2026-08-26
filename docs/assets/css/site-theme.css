@@ -536,6 +536,10 @@ body.modal-open {
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     cursor: pointer;
     border: 1px solid #b9d2f0;
+    /* A grid item's automatic minimum size is its min-content width, so
+       without this a card refuses to shrink below its widest child and
+       spills past the 1fr track (the card clips it - see .card-btn). */
+    min-width: 0;
 }
 
 .opportunity-card.animate {
@@ -589,6 +593,9 @@ body.modal-open {
     letter-spacing: 0.01em;
     border: 1px solid rgba(96, 165, 250, 0.28);
     z-index: 2;
+    /* Absolutely positioned off the right edge, so a long city name would
+       grow leftwards past the card and be clipped. Cap it and let it wrap. */
+    max-width: calc(100% - var(--space-sm) * 2);
 }
 
 .card-content {
@@ -645,6 +652,7 @@ body.modal-open {
     font-size: var(--text-xs);
     font-weight: 600;
     letter-spacing: 0.02em;
+    max-width: 100%;
 }
 
 .hours-per-week {
@@ -670,6 +678,14 @@ body.modal-open {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+    /* main.css's template `button` rule sets white-space: nowrap alongside
+       uppercase + 0.1em tracking, which made this an unshrinkable ~197px
+       block. In a narrow tile it overflowed the card and got clipped by the
+       card's overflow: hidden, so the CTA read "LEARN MOR". Let the label
+       wrap and cap the button at the tile width instead. */
+    white-space: normal;
+    max-width: 100%;
+    text-align: center;
 }
 
 .card-btn:hover {
@@ -1116,9 +1132,10 @@ body.modal-open {
     }
 
     .opportunities-grid {
-        /* Two per row on phones, same as the 980px rule above - only the gap
-           tightens here. Stated explicitly so the count cannot drift back to
-           three on wider phones the way the old auto-fill minimum did. */
+        /* Still two per row here - this range is landscape phones and small
+           tablets, where a half-width tile is ~260px and up. Stated
+           explicitly so the count cannot drift back to three the way the old
+           auto-fill minimum did; the 560px rule below takes it to one. */
         grid-template-columns: repeat(2, 1fr);
         gap: var(--space-sm);
     }
@@ -1196,5 +1213,38 @@ body.modal-open {
     .site-footer .container {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+/* Portrait phones. Two columns held all the way down to 320px, which left
+   each tile 139-186px wide: titles broke over four lines, the description
+   clamped to a few words, and the "Learn more" button - nowrap, uppercase
+   and letter-spaced by main.css's template button rule - ran 58px past the
+   card and was clipped by its overflow: hidden. One column gives the tile
+   the full width of the screen instead. Above this, two still fit. */
+@media (max-width: 560px) {
+    .opportunities-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Full-width tiles can afford the taller thumbnail back; 130px was a
+       concession to the cramped two-up layout. */
+    .card-image-container {
+        height: 170px;
+    }
+
+    /* The clamp reserves three lines of description. At full width that is
+       real text rather than the four words a half-width tile fit, so the
+       reserved height tracks the wider measure. */
+    .card-desc-clamp {
+        min-height: 0;
+    }
+
+    /* A tile is now as wide as the screen, so a left-aligned CTA sits a long
+       way from the text it follows - stretch it to the card like the popup's
+       buttons do at this size. */
+    .card-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
