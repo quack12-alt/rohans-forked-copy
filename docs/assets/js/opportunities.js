@@ -253,6 +253,19 @@
 	*/
 	var revealObserver = null;
 
+	/*
+		Cards enter with a short cascade rather than all at once. That delay
+		used to be baked into each card at build time as index * 0.1s, which
+		suited the homepage's six and broke down on the full list: the 40th
+		card carried a four-second delay, so once the feed grew, scrolling
+		reached cards that sat invisible for seconds after they were already
+		on screen. Staggering the batch that crosses the threshold together
+		keeps the cascade and bounds the wait - a batch is only ever as large
+		as what fits on one screen, however long the list gets.
+	*/
+	var REVEAL_STAGGER_MS = 60;
+	var REVEAL_STAGGER_CAP = 6;
+
 	// Adds .animate to an element once it scrolls into view.
 	function reveal(element) {
 		if (!element) return;
@@ -264,12 +277,19 @@
 
 		if (!revealObserver) {
 			revealObserver = new IntersectionObserver(function (entries, observer) {
+				var shown = 0;
+
 				entries.forEach(function (entry) {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('animate');
-						// Fire-once: stop tracking the element after it animates in.
-						observer.unobserve(entry.target);
-					}
+					if (!entry.isIntersecting) return;
+
+					// Position within this batch, not within the whole list.
+					entry.target.style.transitionDelay =
+						(Math.min(shown, REVEAL_STAGGER_CAP) * REVEAL_STAGGER_MS) + 'ms';
+					shown++;
+
+					entry.target.classList.add('animate');
+					// Fire-once: stop tracking the element after it animates in.
+					observer.unobserve(entry.target);
 				});
 			}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 		}
@@ -280,7 +300,6 @@
 	function buildCard(opportunity, index, options) {
 		var card = document.createElement('div');
 		card.className = 'opportunity-card';
-		card.style.transitionDelay = (index * 0.1) + 's';
 		// Index into the currently rendered list. Looked up on click instead of
 		// matching the card's title text, which silently opened the wrong popup
 		// whenever two opportunities shared a name.

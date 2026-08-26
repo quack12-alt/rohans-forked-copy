@@ -441,7 +441,16 @@
 					return;
 				}
 
-				existing.forEach(card => card.classList.remove('animate'));
+				/*
+					The reveal observer leaves a stagger delay on each card.
+					Left in place it would delay the fade-out too, past the
+					FADE_OUT_MS this waits for, so the swap would snap on the
+					later cards - clear it before taking .animate off.
+				*/
+				existing.forEach(card => {
+					card.style.transitionDelay = '';
+					card.classList.remove('animate');
+				});
 				fadeOutTimer = window.setTimeout(swapInShuffledCards, FADE_OUT_MS);
 			}
 
