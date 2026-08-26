@@ -1110,13 +1110,24 @@ body.modal-open {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
+    /* The hero was 302px tall to hold 222px of content, and on a phone it
+       sits between the header and everything the page is actually for - on
+       the opportunities page the first listing started 1095px down, more
+       than a full screen of scrolling before a single opportunity. Let the
+       content set the height and tighten the padding around it. */
     .hero-section {
-        min-height: 300px;
-        padding: var(--space-lg) 0;
+        min-height: 0;
+        padding: var(--space-md) 0;
     }
 
     .hero-content p {
         font-size: 1.05rem;
+    }
+
+    /* 52px above and below every section is desktop breathing room; at this
+       width it is a screenful across a page with several sections. */
+    .content-section {
+        padding: var(--space-lg) 0;
     }
 
     .container {
@@ -1243,6 +1254,21 @@ body.modal-open {
    card and was clipped by its overflow: hidden. One column gives the tile
    the full width of the screen instead. Above this, two still fit. */
 @media (max-width: 560px) {
+    /* --text-3xl bottoms out at 2.6rem, which is 41.6px here and wraps the
+       page title over two deep lines. 2.1rem still reads as the heading and
+       gives the rest of the page back about 20px. */
+    .hero-content h1 {
+        font-size: 2.1rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .content-section {
+        padding: var(--space-md) 0 var(--space-lg);
+    }
+
     .opportunities-grid {
         grid-template-columns: 1fr;
     }
