@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/site-theme.css" />
     <style>
-        /* Page-specific styles for Opportunities (filters, tracker CTA, popup location tag) */
+        /* Page-specific styles for Opportunities (filters, post-opportunity banner, popup location tag) */
 
         /* Filters Section */
         .filter-container {
@@ -136,8 +136,8 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
         }
 
-        /* Hours Tracker Section Styling */
-        .hours-tracker-box {
+        /* Banner inviting organizations to submit through the Google Form. */
+        .post-opportunity {
             background: linear-gradient(135deg, #bcd6f5, #d7e6f9);
             border: 1px solid #a9c8ec;
             border-radius: 16px;
@@ -146,7 +146,7 @@
             box-shadow: none;
         }
 
-        .tracker-content {
+        .post-opportunity-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -154,12 +154,12 @@
             flex-wrap: wrap;
         }
 
-        .tracker-text {
+        .post-opportunity-text {
             flex: 1;
             min-width: 260px;
         }
 
-        .tracker-text h3 {
+        .post-opportunity-text h3 {
             color: #0f172a;
             font-size: 1.2rem;
             margin-bottom: 6px;
@@ -168,7 +168,7 @@
             letter-spacing: -0.01em;
         }
 
-        .tracker-text p {
+        .post-opportunity-text p {
             color: #5b6472;
             font-size: 0.94rem;
             line-height: 1.6;
@@ -176,7 +176,7 @@
             font-family: var(--font-display);
         }
 
-        .tracker-btn {
+        .post-opportunity-btn {
             background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white !important;
             padding: 13px 24px;
@@ -192,16 +192,16 @@
             box-shadow: 0 8px 18px rgba(16, 185, 129, 0.24);
         }
 
-        .tracker-btn:hover {
+        .post-opportunity-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 24px rgba(16, 185, 129, 0.4);
         }
 
-        .tracker-btn span {
+        .post-opportunity-btn span {
             transition: transform 0.25s ease;
         }
 
-        .tracker-btn:hover span {
+        .post-opportunity-btn:hover span {
             transform: translateX(4px);
         }
 
@@ -237,16 +237,16 @@
                 font-size: 16px;
             }
 
-            .hours-tracker-box {
+            .post-opportunity {
                 padding: 24px;
             }
 
-            .tracker-content {
+            .post-opportunity-content {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .tracker-btn {
+            .post-opportunity-btn {
                 width: 100%;
                 justify-content: center;
             }
@@ -323,13 +323,13 @@
                     </div>
                 </div>
 
-                <div class="hours-tracker-box">
-                    <div class="tracker-content">
-                        <div class="tracker-text">
+                <div class="post-opportunity">
+                    <div class="post-opportunity-content">
+                        <div class="post-opportunity-text">
                             <h3>Host an Opportunity</h3>
                             <p>Are you a local business or non-profit organization looking for passionate volunteers? Submit your upcoming events or positions through our registration form to feature them directly on CauseCircuit.</p>
                         </div>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScPTGMjG8bAwur0PfyHHqny6MrITTyP1jQ2j-aAMlXtHO_wMQ/viewform?usp=header" target="_blank" class="btn btn-success tracker-btn">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScPTGMjG8bAwur0PfyHHqny6MrITTyP1jQ2j-aAMlXtHO_wMQ/viewform?usp=header" target="_blank" class="btn btn-success post-opportunity-btn">
                             Post an Opportunity <span>→</span>
                         </a>
                     </div>
