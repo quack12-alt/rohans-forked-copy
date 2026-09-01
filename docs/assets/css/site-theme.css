@@ -661,23 +661,51 @@ body.modal-open {
     margin-bottom: var(--space-sm);
 }
 
-.card-btn {
+/*
+    Row for the tile's two CTAs. flex-wrap plus each button's own flex-basis
+    below means they sit side by side wherever there's room and drop to
+    their own line - rather than being crushed - the moment a tile is too
+    narrow for both, which is exactly what the wrapping button text already
+    does at the single-button width this row inherited from .card-btn.
+*/
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.card-actions .card-btn,
+.card-actions .card-website-btn {
+    flex: 1 1 130px;
+}
+
+.card-btn,
+.card-website-btn {
     display: inline-flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-    color: white !important;
+    justify-content: center;
     padding: 11px 22px;
     text-decoration: none;
     border-radius: var(--radius-sm);
     font-weight: 600;
     transition: all 0.25s ease;
     cursor: pointer;
-    border: none;
     font-size: var(--text-sm);
     gap: 6px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+    /*
+        main.css's template `button` rule also pins height/line-height to a
+        single fixed 3.75em line (its own centering trick, built for a label
+        that never wraps). Once two buttons share a flex row and one wraps to
+        two lines while the other stays on one, the row stretches both to
+        match the taller item, but that fixed line-height stayed pinned to
+        one line's worth - so the second line rendered outside the pill
+        instead of inside a taller one. auto/normal let the box size to
+        however many lines its own label actually takes.
+    */
+    height: auto;
+    line-height: 1.3;
     /* main.css's template `button` rule sets white-space: nowrap alongside
        uppercase + 0.1em tracking, which made this an unshrinkable ~197px
        block. In a narrow tile it overflowed the card and got clipped by the
@@ -686,6 +714,16 @@ body.modal-open {
     white-space: normal;
     max-width: 100%;
     text-align: center;
+}
+
+.card-btn {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: white !important;
+    /* Transparent, not none: .card-website-btn sits next to this in the same
+       row with a real 1px border, and an unset border here would leave the
+       two buttons 2px different in height. */
+    border: 1px solid transparent;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
 }
 
 .card-btn:hover {
@@ -700,6 +738,26 @@ body.modal-open {
 
 .card-btn:hover:after {
     transform: translateX(3px);
+}
+
+/*
+    Secondary to .card-btn - an organization's own site is worth surfacing
+    on the tile (see mapRow's website matcher), but "Learn more" stays the
+    primary action since it's the one guaranteed to exist and carries the
+    full listing plus contact details. The outlined ghost treatment and
+    static (always-visible, not hover-revealed) external-link glyph mark it
+    as the secondary, leave-the-site action rather than a second "Learn more".
+*/
+.card-website-btn {
+    background: linear-gradient(135deg, #eaf2fc 0%, #d7e6f9 100%);
+    color: var(--accent-dark) !important;
+    border: 1px solid #b9d2f0;
+}
+
+.card-website-btn:hover {
+    background: linear-gradient(135deg, #d7e6f9 0%, #c3daf5 100%);
+    border-color: #9dc0ee;
+    transform: translateY(-2px);
 }
 
 .empty-state {
@@ -1288,8 +1346,15 @@ body.modal-open {
 
     /* A tile is now as wide as the screen, so a left-aligned CTA sits a long
        way from the text it follows - stretch it to the card like the popup's
-       buttons do at this size. */
-    .card-btn {
+       buttons do at this size. Both actions stack full-width rather than
+       splitting the row in half, the same call popup-actions already makes
+       for its own two-button row at its mobile breakpoint. */
+    .card-actions {
+        flex-direction: column;
+    }
+
+    .card-btn,
+    .card-website-btn {
         width: 100%;
         justify-content: center;
     }

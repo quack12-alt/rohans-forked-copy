@@ -343,6 +343,21 @@
 			? ''
 			: '<p class="card-org">' + escapeHtml(opportunity.company) + '</p>';
 
+		/*
+			Shown on the tile itself rather than only inside the popup, so a
+			reader can reach the organization's site without opening "Learn
+			more" first. Sits next to that button rather than under the org
+			name so the tile keeps a single row of actions. stopPropagation
+			keeps the click on the button instead of also triggering the
+			card's own click handler, which would pop the details modal open
+			behind the new tab.
+		*/
+		var websiteUrl = resolveUrl(opportunity);
+		var websiteButtonHTML = websiteUrl
+			? '<a class="card-website-btn" href="' + escapeHtml(websiteUrl) + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">' +
+				'Visit Website <span aria-hidden="true">&#8599;</span></a>'
+			: '';
+
 		// An unresolved or unanswered city leaves no pill, rather than an
 		// empty one floating over the image. See mapRow's city matcher.
 		var locationTagHTML = opportunity.city
@@ -374,7 +389,7 @@
 				'<p class="card-desc-clamp">' + escapeHtml(opportunity.description) + '</p>' +
 				commitmentHTML +
 				hoursHTML +
-				buttonHTML +
+				'<div class="card-actions">' + websiteButtonHTML + buttonHTML + '</div>' +
 			'</div>';
 
 		return card;
