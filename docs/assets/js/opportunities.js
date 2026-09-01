@@ -155,6 +155,28 @@
 			});
 		});
 
+		/*
+			Once a column has won a field by keyword, it's off the table for
+			every keyword search after it. Free-text question wording can
+			accidentally contain another field's keyword - the description
+			question asks submitters to write something "to use on our
+			website for your opportunity", so its own column contains the
+			word "website" and, sitting earlier in the sheet than the real
+			website-link column, used to win the website field's match
+			outright. Fields are picked in a fixed order below (description
+			before website), so claiming a column the moment a keyword wins
+			it lets the later, real match win instead of the earlier
+			coincidental one.
+
+			Only keyword wins claim a column - a positional fallback does
+			not. Several fields fall back to the same column on purpose (this
+			form has no dedicated title question, so title's fallback reuses
+			company's own name column - see the isSameText check on the
+			card/popup subtitle); claiming on fallback would make the first
+			of those to run lock the column out for the rest.
+		*/
+		var claimed = {};
+
 		function pick(matchers, fallbackIndex) {
 			/*
 				Matchers are tried in their own order rather than the sheet's,
@@ -164,9 +186,12 @@
 			for (var i = 0; i < matchers.length; i++) {
 				var matcher = matchers[i];
 				var found = eligible.find(function (key) {
-					return key.toLowerCase().indexOf(matcher) !== -1;
+					return !claimed[key] && key.toLowerCase().indexOf(matcher) !== -1;
 				});
-				if (found) return found;
+				if (found) {
+					claimed[found] = true;
+					return found;
+				}
 			}
 			return typeof fallbackIndex === 'number' ? keys[fallbackIndex] : '';
 		}
