@@ -770,9 +770,11 @@ body.modal-open {
     background: #ffffff;
     border: 1px solid #b9d2f0;
     border-radius: 24px;
-    max-width: min(90vw, 680px);
+    /* Wide enough for the two-column body to breathe on a laptop; the vw cap
+       keeps a margin around it on smaller windows. */
+    max-width: min(94vw, 1000px);
     width: 100%;
-    max-height: 85vh;
+    max-height: 90vh;
     overflow: hidden;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
     transform: scale(0.94) translateY(24px);
@@ -788,7 +790,7 @@ body.modal-open {
 
 .popup-header {
     position: relative;
-    height: clamp(180px, 28vw, 280px);
+    height: clamp(160px, 20vw, 230px);
     overflow: hidden;
     background: #eef1f5;
     display: flex;
@@ -832,21 +834,47 @@ body.modal-open {
 
 .popup-title {
     color: var(--ink);
-    padding: 22px 26px 8px;
     margin: 0;
     font-size: var(--text-xl);
     font-weight: 700;
     letter-spacing: -0.01em;
+    line-height: 1.2;
 }
 
-.popup-scroll-content {
+.popup-body {
     overflow-y: auto;
     /* Keeps a flick at the end of the popup's own scroll from continuing
        into the page behind it, which on mobile reads as the modal leaking. */
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
-    padding: 0 26px 22px;
+    padding: 22px 28px 26px;
     flex: 1;
+}
+
+/* Title, host and meta pills sit above the column split and span its full
+   width, so the heading is never boxed into one narrow column. */
+.popup-intro {
+    margin-bottom: 18px;
+}
+
+/*
+    The core of the redesign. Every card (About plus the logistics sections)
+    flows through a two-column masonry rather than a fixed left/right split, so
+    the browser balances the two columns by height and neither is left
+    half-empty when a section is short. This fills the horizontal space a laptop
+    offers while keeping About at a readable measure. Collapses to one column at
+    the mobile breakpoint. */
+.popup-columns {
+    column-count: 2;
+    column-gap: 16px;
+}
+
+/* Keep each card whole within a column, and space cards by their own bottom
+   margin (multicol has no row gap). Zero top margin so the first card in each
+   column aligns to the top edge. */
+.popup-columns .popup-section {
+    break-inside: avoid;
+    margin: 0 0 16px;
 }
 
 /* Organization name under the title - same treatment as .card-org on the
@@ -926,6 +954,41 @@ body.modal-open {
     color: var(--ink-soft);
     line-height: 1.7;
     font-size: var(--text-md);
+}
+
+/* Applied by setupReadMore() only when the copy actually overflows: clamps the
+   description to a few lines so a long About cannot force the popup to scroll. */
+.popup-about--clamped {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* A bare text button. Explicitly unwinds main.css's template <button> rule
+   (fixed height/line-height, uppercase, letter-spacing, pill background, and a
+   `color: #fff !important` that would otherwise render this white-on-white) so
+   it reads as an inline link rather than a second CTA. */
+.popup-readmore {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 0;
+    height: auto;
+    line-height: 1.4;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: var(--accent-dark) !important;
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: normal;
+    cursor: pointer;
+}
+
+.popup-readmore:hover {
+    text-decoration: underline;
 }
 
 .popup-empty-note {
@@ -1219,12 +1282,21 @@ body.modal-open {
     }
 
     .popup-title {
-        padding: 16px 18px 6px;
         font-size: 1.32rem;
     }
 
-    .popup-scroll-content {
-        padding: 0 18px 18px;
+    .popup-body {
+        padding: 18px;
+    }
+
+    .popup-intro {
+        margin-bottom: 14px;
+    }
+
+    /* Stack into a single vertical flow: side-by-side columns are too cramped
+       once the popup is only a phone wide. */
+    .popup-columns {
+        column-count: 1;
     }
 
     .popup-section {

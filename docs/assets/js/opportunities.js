@@ -566,6 +566,17 @@
 					'<p class="popup-empty-note">This organization did not provide contact details.</p>' +
 				'</section>';
 
+		/*
+			Layout has three bands: a full-width image header, a scrollable body,
+			and a pinned actions bar. Inside the body the title, host and meta
+			pills span the full width, then every card (About plus the logistics
+			sections) flows through a two-column masonry that balances the two
+			columns by height. That fills the horizontal space a laptop offers
+			without leaving one column half-empty when a section is short, and it
+			keeps About at a readable measure rather than one page-wide line. The
+			columns collapse to a single stack on narrow screens (see
+			.popup-columns in the stylesheet).
+		*/
 		return '' +
 			'<div class="popup-header">' +
 				'<img src="' + escapeHtml(opportunity.imagePath) + '" alt="' + escapeHtml(opportunity.name) + '"' +
@@ -574,19 +585,54 @@
 					? '<div class="popup-location-tag">' + escapeHtml(opportunity.city) + '</div>'
 					: '') +
 			'</div>' +
-			'<h2 class="popup-title" id="popup-title">' + escapeHtml(opportunity.name) + '</h2>' +
-			'<div class="popup-scroll-content">' +
-				hostHTML +
-				metaHTML +
-				aboutHTML +
-				scheduleHTML +
-				locationHTML +
-				eligibilityHTML +
-				contactHTML +
+			'<div class="popup-body">' +
+				'<div class="popup-intro">' +
+					'<h2 class="popup-title" id="popup-title">' + escapeHtml(opportunity.name) + '</h2>' +
+					hostHTML +
+					metaHTML +
+				'</div>' +
+				'<div class="popup-columns">' +
+					aboutHTML +
+					scheduleHTML +
+					locationHTML +
+					eligibilityHTML +
+					contactHTML +
+				'</div>' +
 			'</div>' +
 			'<div class="popup-actions">' +
 				'<button type="button" class="btn btn-ghost popup-close">Close</button>' +
 			'</div>';
+	}
+
+	/*
+		Most descriptions fit the About column, but an occasional long one would
+		push the whole popup into a tall scroll. Clamp anything past a few lines
+		and add a Read more toggle, so the fold stays predictable and the
+		logistics beside it stay in view. Runs after the markup is in the DOM so
+		the clamp can be measured against the column's real width.
+	*/
+	function setupReadMore(root) {
+		var about = root.querySelector('.popup-about');
+		if (!about) return;
+
+		// Clamp first, then compare: an unclamped block reports no overflow, so
+		// there would be nothing to test against to decide if a toggle is worth
+		// showing. The 4px slack absorbs sub-pixel line-height rounding.
+		about.classList.add('popup-about--clamped');
+		if (about.scrollHeight <= about.clientHeight + 4) {
+			about.classList.remove('popup-about--clamped');
+			return;
+		}
+
+		var toggle = document.createElement('button');
+		toggle.type = 'button';
+		toggle.className = 'popup-readmore';
+		toggle.textContent = 'Read more';
+		toggle.addEventListener('click', function () {
+			var clamped = about.classList.toggle('popup-about--clamped');
+			toggle.textContent = clamped ? 'Read more' : 'Show less';
+		});
+		about.insertAdjacentElement('afterend', toggle);
 	}
 
 	/*
@@ -613,6 +659,7 @@
 		function open(opportunity) {
 			lastFocused = document.activeElement;
 			popupContent.innerHTML = popupMarkup(opportunity);
+			setupReadMore(popupContent);
 			popup.classList.add('active');
 			document.body.classList.add('modal-open');
 
