@@ -674,13 +674,11 @@ body.modal-open {
     gap: var(--space-xs);
 }
 
-.card-actions .card-btn,
-.card-actions .card-website-btn {
+.card-actions .card-btn {
     flex: 1 1 130px;
 }
 
-.card-btn,
-.card-website-btn {
+.card-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -719,10 +717,6 @@ body.modal-open {
 .card-btn {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
     color: white !important;
-    /* Transparent, not none: .card-website-btn sits next to this in the same
-       row with a real 1px border, and an unset border here would leave the
-       two buttons 2px different in height. */
-    border: 1px solid transparent;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
 }
 
@@ -738,26 +732,6 @@ body.modal-open {
 
 .card-btn:hover:after {
     transform: translateX(3px);
-}
-
-/*
-    Secondary to .card-btn - an organization's own site is worth surfacing
-    on the tile (see mapRow's website matcher), but "Learn more" stays the
-    primary action since it's the one guaranteed to exist and carries the
-    full listing plus contact details. The outlined ghost treatment and
-    static (always-visible, not hover-revealed) external-link glyph mark it
-    as the secondary, leave-the-site action rather than a second "Learn more".
-*/
-.card-website-btn {
-    background: linear-gradient(135deg, #eaf2fc 0%, #d7e6f9 100%);
-    color: var(--accent-dark) !important;
-    border: 1px solid #b9d2f0;
-}
-
-.card-website-btn:hover {
-    background: linear-gradient(135deg, #d7e6f9 0%, #c3daf5 100%);
-    border-color: #9dc0ee;
-    transform: translateY(-2px);
 }
 
 .empty-state {
@@ -1346,15 +1320,12 @@ body.modal-open {
 
     /* A tile is now as wide as the screen, so a left-aligned CTA sits a long
        way from the text it follows - stretch it to the card like the popup's
-       buttons do at this size. Both actions stack full-width rather than
-       splitting the row in half, the same call popup-actions already makes
-       for its own two-button row at its mobile breakpoint. */
+       buttons do at this size. */
     .card-actions {
         flex-direction: column;
     }
 
-    .card-btn,
-    .card-website-btn {
+    .card-btn {
         width: 100%;
         justify-content: center;
     }
